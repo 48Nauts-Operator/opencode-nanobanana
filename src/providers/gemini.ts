@@ -52,7 +52,7 @@ export class GeminiProvider {
   }
 
   /**
-   * Generate images from text prompt using Imagen
+   * Generate images from text prompt using Gemini 2.5 Flash Image
    *
    * @param prompt Text description of the image to generate
    * @param options Generation options (aspect ratio, count, etc.)
@@ -63,26 +63,34 @@ export class GeminiProvider {
     options: ImageGenerationOptions = {}
   ): Promise<Buffer[]> {
     try {
-      const {
-        aspectRatio = '1:1',
-        count = 1,
-        width,
-        height
-      } = options;
+      const { count = 1 } = options;
 
-      // Validate count
       if (count < 1 || count > 8) {
         throw new Error('Count must be between 1 and 8');
       }
 
-      // Generate multiple images if count > 1
-      const promises: Promise<Buffer>[] = [];
+      const buffers: Buffer[] = [];
 
       for (let i = 0; i < count; i++) {
-        promises.push(this.generateSingleImage(prompt, { width, height, aspectRatio }));
+        const response = await this.client.models.generateContent({
+          model: 'gemini-2.5-flash-image-preview',
+          contents: prompt,
+        });
+
+        if (response.candidates?.[0]?.content?.parts) {
+          for (const part of response.candidates[0].content.parts) {
+            if (part.inlineData?.data) {
+              const buffer = Buffer.from(part.inlineData.data, 'base64');
+              buffers.push(buffer);
+            }
+          }
+        }
       }
 
-      const buffers = await Promise.all(promises);
+      if (buffers.length === 0) {
+        throw new Error('No images were generated in the response');
+      }
+
       return buffers;
     } catch (error) {
       if (error instanceof Error) {
@@ -90,48 +98,6 @@ export class GeminiProvider {
       }
       throw new Error('Image generation failed with unknown error');
     }
-  }
-
-  /**
-   * Generate a single image using Gemini
-   *
-   * @param prompt Text description
-   * @param _options Generation options (reserved for future use)
-   * @returns Image buffer
-   */
-  private async generateSingleImage(
-    prompt: string,
-    _options: Omit<ImageGenerationOptions, 'count'>
-  ): Promise<Buffer> {
-    // Build the content request with image generation
-    const config: any = {
-      model: 'gemini-2.0-flash',
-      contents: `Generate an image: ${prompt}`,
-      config: {
-        responseModalities: ['image']
-      }
-    };
-
-    // Note: Aspect ratio and dimensions are handled by the prompt
-    // The Gemini API will generate based on the description
-
-    const result = await this.client.models.generateContent(config);
-
-    // Extract image from response (result IS the response)
-    if (result && result.candidates && result.candidates.length > 0) {
-      const candidate = result.candidates[0];
-
-      if (candidate && candidate.content && candidate.content.parts) {
-        for (const part of candidate.content.parts) {
-          if (part.inlineData && part.inlineData.data) {
-            const base64Data = part.inlineData.data;
-            return Buffer.from(base64Data, 'base64');
-          }
-        }
-      }
-    }
-
-    throw new Error('No image was generated in the response');
   }
 
   /**
@@ -148,13 +114,11 @@ export class GeminiProvider {
     _options: ImageEditOptions = {}
   ): Promise<Buffer> {
     try {
-      // Convert buffer to base64 for API
       const base64Image = imageBuffer.toString('base64');
       const mimeType = this.detectMimeType(imageBuffer);
 
-      // Use Gemini with image input to generate edited version
       const result = await this.client.models.generateContent({
-        model: 'gemini-2.0-flash',
+        model: 'gemini-2.5-flash-image-preview',
         contents: [
           {
             parts: [
@@ -165,26 +129,17 @@ export class GeminiProvider {
                 }
               },
               {
-                text: `Edit this image: ${prompt}. Generate the edited version.`
+                text: prompt
               }
             ]
           }
         ],
-        config: {
-          responseModalities: ['image']
-        }
       });
 
-      // Extract edited image from response (result IS the response)
-      if (result && result.candidates && result.candidates.length > 0) {
-        const candidate = result.candidates[0];
-
-        if (candidate && candidate.content && candidate.content.parts) {
-          for (const part of candidate.content.parts) {
-            if (part.inlineData && part.inlineData.data) {
-              const base64Data = part.inlineData.data;
-              return Buffer.from(base64Data, 'base64');
-            }
+      if (result.candidates?.[0]?.content?.parts) {
+        for (const part of result.candidates[0].content.parts) {
+          if (part.inlineData?.data) {
+            return Buffer.from(part.inlineData.data, 'base64');
           }
         }
       }
@@ -214,9 +169,8 @@ export class GeminiProvider {
       const base64Image = imageBuffer.toString('base64');
       const mimeType = this.detectMimeType(imageBuffer);
 
-      // Use Gemini for image analysis
       const result = await this.client.models.generateContent({
-        model: 'gemini-2.0-flash',
+        model: 'gemini-2.5-flash-image-preview',
         contents: [
           {
             parts: [
@@ -296,9 +250,8 @@ export class GeminiProvider {
         text: question
       });
 
-      // Use Gemini for multi-image analysis
       const result = await this.client.models.generateContent({
-        model: 'gemini-2.0-flash',
+        model: 'gemini-2.5-flash-image-preview',
         contents: [
           {
             parts
