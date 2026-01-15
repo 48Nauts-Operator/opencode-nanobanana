@@ -510,3 +510,21 @@ Project: opencode-visual-toolkit
   - All quality checks pass (typecheck, lint) - ready for integration
 ---
 
+## 2026-01-15 15:30 - PLATFORM-003
+- Implemented macOS platform specifications module
+- Files changed:
+  - src/platforms/macos.ts (new) - Complete macOS platform specifications
+  - prd.json - Marked PLATFORM-003 as passes: true
+- **Learnings for future iterations:**
+  - macOS uses .icns icon files with standardized folder structure (AppIcon.iconset/)
+  - Icon sizes: 16, 32, 128, 256, 512 at both 1x and 2x scale (10 total sizes)
+  - Filename convention: icon_{size}x{size}.png or icon_{size}x{size}@2x.png
+  - macOS icons need conversion: Use iconutil -c icns AppIcon.iconset to create .icns file
+  - MacOSIconSize interface similar to iOS IconSize but simpler (no idiom field)
+  - generateMacIconset() returns folder structure info with conversion instructions
+  - getIconFilename() helper follows macOS naming conventions (lowercase, underscores)
+  - Pattern follows ios.ts and android.ts: define sizes array + helper functions
+  - macOS doesn't require JSON metadata like iOS Contents.json - iconutil handles it
+  - All quality checks pass (typecheck, lint) - ready for integration
+---
+
