@@ -297,7 +297,7 @@
         "Handles rough/hand-drawn sketches",
         "Returns generated component code"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "DOCS-001",

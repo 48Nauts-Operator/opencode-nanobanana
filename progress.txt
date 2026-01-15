@@ -344,3 +344,27 @@ Project: opencode-visual-toolkit
   - Tool definition pattern: no 'name' property, export const with ToolDefinition type, async execute
   - All quality checks pass (typecheck, lint) - ready for integration
 ---
+## 2026-01-15 23:55 - DESIGN-002
+- Implemented sketch_to_code tool for hand-drawn sketch conversion
+- Files changed:
+  - src/tools/design/sketch-to-code.ts (new) - Complete sketch to code tool
+  - prd.json - Marked DESIGN-002 as passes: true
+- **Learnings for future iterations:**
+  - Sketch-to-code differs from mockup-to-code by handling rough/imprecise hand-drawn designs
+  - Key prompt engineering: Explicitly tell AI this is a sketch, not a polished mockup
+  - Interpretation guidelines critical: "boxes = containers, scribbles = text, circles = buttons/icons"
+  - Instruct AI to interpret intent and apply sensible defaults for ambiguous elements
+  - Apply standard UI patterns where sketch is unclear (header, nav, card patterns)
+  - Default to modern neutral color palette (gray-50 to gray-900, blue for primary)
+  - Tool reuses same framework-specific prompt structure as mockup-to-code
+  - Prompt additions for sketch interpretation:
+    - Convert hand-drawn elements to proper UI components
+    - Translate rough spacing to proper layout spacing
+    - Assume standard UI patterns for ambiguous elements
+  - Default component names differ: SketchComponent (React/Vue), SketchView (SwiftUI), sketch-component (HTML)
+  - User-facing message clarifies code was generated from sketch/wireframe (not polished mockup)
+  - Error handling pattern remains consistent: API key, file not found, general errors
+  - Tool follows established pattern: load → prompt engineering → analyze → return code
+  - This completes the design-to-code tool suite: mockup-to-code (polished) + sketch-to-code (rough)
+  - All quality checks pass (typecheck, lint) - ready for integration
+---
