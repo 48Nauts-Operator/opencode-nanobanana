@@ -131,7 +131,7 @@
         "FFmpeg handles audio mixing",
         "Final video has properly mixed audio track"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "STORY-004",
