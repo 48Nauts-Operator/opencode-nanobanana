@@ -5,13 +5,13 @@
  * and stitching them together with transitions using FFmpeg.
  */
 
-import { GeminiProvider } from '../../providers/gemini.js';
+import { GeminiProvider, type ReferenceImage } from '../../providers/gemini.js';
 import {
   checkFfmpegInstalled,
   concatenateVideos,
   type ConcatenateOptions,
 } from '../../utils/ffmpeg.js';
-import { writeFile, unlink } from 'fs/promises';
+import { writeFile, unlink, readFile } from 'fs/promises';
 import { join } from 'path';
 import { tmpdir } from 'os';
 
@@ -20,6 +20,10 @@ export interface StoryboardVideoOptions {
   scenes: string[];
   /** Style to apply to all scenes (e.g., 'cinematic', 'commercial') */
   style?: string;
+  /** Character description to prepend to each scene for consistency */
+  characterDescription?: string;
+  /** Array of reference image paths for character/scene consistency (max 3) */
+  referenceImages?: string[];
   /** Aspect ratio for all scenes (default: '16:9') */
   aspectRatio?: '16:9' | '9:16' | '1:1';
   /** Transition type between scenes (default: 'crossfade') */
@@ -55,6 +59,7 @@ export interface StoryboardVideoResult {
  * @returns Result object with video path and timing information
  *
  * @example
+ * Basic usage:
  * ```typescript
  * const result = await generateStoryboardVideo({
  *   apiKey: 'your-api-key',
@@ -66,6 +71,23 @@ export interface StoryboardVideoResult {
  *   style: 'cinematic',
  *   transition: 'crossfade',
  *   outputPath: './mountain-journey.mp4'
+ * });
+ * ```
+ *
+ * @example
+ * With character consistency:
+ * ```typescript
+ * const result = await generateStoryboardVideo({
+ *   apiKey: 'your-api-key',
+ *   characterDescription: 'A young woman with long brown hair wearing a red jacket',
+ *   referenceImages: ['./character-ref.jpg'],
+ *   scenes: [
+ *     'Walking through a forest',
+ *     'Discovering a hidden waterfall',
+ *     'Setting up camp at sunset'
+ *   ],
+ *   style: 'cinematic',
+ *   transition: 'crossfade'
  * });
  * ```
  */
@@ -94,13 +116,40 @@ export async function generateStoryboardVideo(
   const {
     scenes,
     style,
+    characterDescription,
+    referenceImages,
     aspectRatio = '16:9',
     transition = 'crossfade',
     transitionDuration = 0.5,
     outputPath = join(tmpdir(), `storyboard-${Date.now()}.mp4`),
   } = options;
 
+  // Load reference images if provided
+  let loadedReferences: ReferenceImage[] | undefined;
+  if (referenceImages && referenceImages.length > 0) {
+    if (referenceImages.length > 3) {
+      throw new Error('Maximum of 3 reference images allowed');
+    }
+
+    console.log(`📸 Loading ${referenceImages.length} reference image(s)...`);
+    loadedReferences = await Promise.all(
+      referenceImages.map(async (imagePath, index) => {
+        const buffer = await readFile(imagePath);
+        return {
+          buffer,
+          description: `Reference image ${index + 1} for character/scene consistency`,
+        };
+      })
+    );
+  }
+
   console.log(`🎬 Generating storyboard with ${scenes.length} scenes...`);
+  if (characterDescription) {
+    console.log(`👤 Using character description: "${characterDescription}"`);
+  }
+  if (loadedReferences) {
+    console.log(`🖼️  Using ${loadedReferences.length} reference image(s) for consistency`);
+  }
 
   // Generate all scenes in parallel
   const scenePromises = scenes.map(async (sceneDescription, index) => {
@@ -108,19 +157,44 @@ export async function generateStoryboardVideo(
     console.log(`📹 Generating scene ${index + 1}/${scenes.length}...`);
 
     try {
+      // Build prompt with character description, style, and scene
+      let prompt = sceneDescription;
+
+      // Prepend character description if provided
+      if (characterDescription) {
+        prompt = `${characterDescription}. ${prompt}`;
+      }
+
       // Add style prefix if provided
-      const prompt = style
-        ? `${style} style: ${sceneDescription}`
-        : sceneDescription;
+      if (style) {
+        prompt = `${style} style: ${prompt}`;
+      }
 
       // Generate video for this scene
-      const result = await provider.generateVideo(prompt, {
-        aspectRatio,
-        resolution: '720p',
-        duration: 8,
-        generateAudio: true,
-        numberOfVideos: 1,
-      });
+      let result;
+      if (loadedReferences && loadedReferences.length > 0) {
+        // Use reference images for consistency
+        result = await provider.generateVideoWithReferences(
+          prompt,
+          loadedReferences,
+          {
+            aspectRatio,
+            resolution: '720p',
+            duration: 8,
+            generateAudio: true,
+            numberOfVideos: 1,
+          }
+        );
+      } else {
+        // Generate without references
+        result = await provider.generateVideo(prompt, {
+          aspectRatio,
+          resolution: '720p',
+          duration: 8,
+          generateAudio: true,
+          numberOfVideos: 1,
+        });
+      }
 
       // Save to temporary file
       const tempPath = join(tmpdir(), `scene-${index}-${Date.now()}.mp4`);

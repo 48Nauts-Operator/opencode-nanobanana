@@ -1,0 +1,18 @@
+{
+  "stories": {
+    "VEO3-001": {
+      "actual": 10,
+      "estimate": 20
+    },
+    "FFMPEG-001": {
+      "actual": 5,
+      "estimate": 20
+    }
+  },
+  "averages": {
+    "simple": 20,
+    "medium": 30,
+    "complex": 45,
+    "heavy": 60
+  }
+}
