@@ -98,6 +98,12 @@
       "type": "story_complete",
       "message": "Completed: DOCS-004 in 5m",
       "story": "DOCS-004"
+    },
+    {
+      "timestamp": "2026-01-15T13:28:31+01:00",
+      "type": "story_complete",
+      "message": "Completed: VIDEO-002 in 5m",
+      "story": "VIDEO-002"
     }
   ],
   "stories_completed": [
@@ -330,6 +336,32 @@
           "src/providers/gemini.ts",
           "src/tools/video/generate-video.ts",
           "src/utils/file-handler.ts"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-01-15T13:28:31+01:00",
+      "story": "VIDEO-002",
+      "duration": 5,
+      "estimate": 60,
+      "git": {
+        "start_commit": "6122b8c",
+        "end_commit": "6245730",
+        "files_changed": 11,
+        "lines_added": 510,
+        "lines_removed": 16,
+        "files": [
+          ".ralph-events.json",
+          ".ralph-monitor-state.json",
+          ".ralph-timing.json",
+          "logs/notifications.jsonl",
+          "prd.json",
+          "progress.txt",
+          "ralph-report.html",
+          "src/platforms/macos.ts",
+          "src/platforms/watchos.ts",
+          "src/providers/gemini.ts",
+          "src/tools/video/image-to-video.ts"
         ]
       }
     }

@@ -39,6 +39,10 @@
     "DOCS-004": {
       "actual": 5,
       "estimate": 20
+    },
+    "VIDEO-002": {
+      "actual": 5,
+      "estimate": 60
     }
   },
   "averages": {
