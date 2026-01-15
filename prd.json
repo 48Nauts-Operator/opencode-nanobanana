@@ -272,7 +272,7 @@
         "Parameters: imagePath (required), extractColors (optional), extractSpacing (optional)",
         "Extracts design specs: colors, fonts, spacing, component structure"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "DESIGN-001",

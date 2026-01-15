@@ -15,6 +15,10 @@
     "APP-005": {
       "actual": 5,
       "estimate": 30
+    },
+    "ANALYZE-002": {
+      "actual": 5,
+      "estimate": 45
     }
   },
   "averages": {

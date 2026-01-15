@@ -298,3 +298,21 @@ Project: opencode-visual-toolkit
   - This completes the second of three analyze tools (screenshot, compare, mockup pending)
   - All quality checks pass (typecheck, lint) - ready for integration
 ---
+## 2026-01-15 23:30 - ANALYZE-003
+- Implemented analyze_mockup tool for design specification extraction
+- Files changed:
+  - src/tools/analyze/mockup.ts (new) - Complete mockup analysis tool
+  - prd.json - Marked ANALYZE-003 as passes: true
+- **Learnings for future iterations:**
+  - Design mockup analysis extracts four key categories: Component Structure, Typography, Color Palette, Spacing & Layout
+  - Conditional prompt building: Helper function buildDesignAnalysisPrompt() constructs prompt based on extractColors/extractSpacing flags
+  - Always include core features (components, typography) while making colors/spacing optional via boolean parameters
+  - Prompt structure guides Gemini to return actionable, developer-friendly values (hex codes, px/rem measurements, font families)
+  - Design system context is crucial: prompt asks for overall style, patterns, and responsive considerations
+  - Tool follows analyze pattern: load image → analyze with comprehensive prompt → return formatted specs
+  - extractColors parameter (default: true) enables/disables color palette extraction
+  - extractSpacing parameter (default: true) enables/disables spacing and layout measurements
+  - Tool is perfect for design-to-code workflows - extracts specs developers need to implement designs
+  - This completes the analyze tool suite: screenshot (UI debugging), compare (regression), mockup (design specs)
+  - All quality checks pass (typecheck, lint) - ready for integration
+---
