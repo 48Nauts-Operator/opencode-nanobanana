@@ -113,7 +113,7 @@
         "Saves result with '_edited' suffix",
         "Returns new file path"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "CORE-003",

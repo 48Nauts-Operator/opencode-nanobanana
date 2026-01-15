@@ -87,3 +87,17 @@ Project: opencode-visual-toolkit
   - Return string from execute() to display message to user
   - Error handling should return user-friendly strings, not throw
 ---
+## 2026-01-15 14:00 - CORE-002
+- Implemented edit_image tool for natural language image editing
+- Files changed:
+  - src/tools/core/edit-image.ts (new) - Edit image tool implementation
+  - prd.json - Marked CORE-002 as passes: true
+- **Learnings for future iterations:**
+  - GeminiProvider.editImage() was already implemented in SETUP-002 phase
+  - Tool follows same pattern as generate_image: tool() helper, args schema, error handling
+  - Uses loadImage() to read source file, editImage() for Gemini processing, saveImage() for output
+  - Output filename uses '_edited' suffix to distinguish from source
+  - Parse source path to extract base filename before appending suffix
+  - Error handling covers three cases: missing API key, file load failures, Gemini errors
+  - All tool execution returns strings (user messages), never throws
+---
