@@ -112,3 +112,18 @@ Started: Thu Jan 15 22:01:15 CET 2026
   - Use tmpdir() for default output paths with timestamp to avoid collisions
   - The extend video API is simpler than generate - just video buffer + prompt + options
 ---
+## 2026-01-15 23:45 - TEST-001
+- Implemented comprehensive integration tests for storyboard video generation
+- Files changed:
+  - tests/video/storyboard.test.ts (new) - 20 integration tests covering all functionality
+  - prd.json (modified) - Marked TEST-001 as complete
+- **Learnings for future iterations:**
+  - Bun test runner doesn't support vi.mocked() helper - use type casting (ffmpeg.func as any).mockX() instead
+  - Don't use vi.clearAllTimers() - not available in this test environment
+  - Integration tests should verify complete workflows: API calls → file operations → stitching → cleanup
+  - Test error paths are important: partial failures, total failures, and edge cases
+  - Mocked operations complete instantly, so totalTime may be 0 - use toBeGreaterThanOrEqual(0) instead of toBeGreaterThan(0)
+  - Organize tests by feature area with describe blocks for better readability
+  - Test both happy path and error scenarios for robust coverage
+  - All 20 tests passing: multi-scene generation, FFmpeg stitching, transitions, character consistency, error handling, progress reporting
+---
