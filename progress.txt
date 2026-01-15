@@ -216,3 +216,26 @@ Project: opencode-visual-toolkit
   - Crop mode "fit" uses Sharp's contain (letterbox), "fill" uses cover (crop), "smart" uses extract then fill
   - This tool pattern (AI-assisted image processing) is reusable for other advanced image tools
 ---
+## 2026-01-15 20:00 - APP-004
+- Implemented generate_device_mockup tool for placing screenshots in realistic device frames
+- Files changed:
+  - src/tools/app-assets/device-mockup.ts (new) - Complete device mockup generation tool
+  - prd.json - Marked APP-004 as passes: true
+- **Learnings for future iterations:**
+  - Device mockup uses Gemini's editImage() method to composite screenshots into AI-generated device frames
+  - Defined comprehensive device specifications (DEVICE_SPECS) for iPhone 15/16 series and iPads
+  - Each device spec includes: displaySize, aspectRatio, and family for proper prompt generation
+  - Supported devices: iphone-16-pro-max, iphone-16-pro, iphone-16-plus, iphone-16, iphone-15-pro-max, iphone-15-pro, iphone-15-plus, iphone-15, ipad-pro-12.9, ipad-pro-11, ipad-air, ipad-mini
+  - Color validation is soft - accepts any color string for flexibility (common: silver, black, gold, titanium, blue, pink, etc.)
+  - Orientation options: portrait or landscape
+  - buildMockupPrompt() helper creates detailed prompts describing device characteristics:
+    - For iPhone Pro models: Dynamic Island, titanium frame, rounded corners, volume/power buttons
+    - For standard iPhone models: Notch, aluminum frame, rounded corners
+    - For iPads: Thin aluminum bezel, minimal bezels, flat edges (Pro models)
+  - Prompt includes lighting, shadows, screen glare, and composition requirements for professional marketing quality
+  - customOutputPath parameter allows user-specified save location, otherwise defaults to mockups/{device}-mockup.png
+  - Helper function pattern: Extract buildMockupPrompt() as standalone function, not tool method
+  - Tool error handling pattern remains consistent: try-catch with user-friendly error messages
+  - This AI-powered compositing approach is different from traditional image overlays - Gemini generates the entire mockup scene
+  - Output suitable for App Store marketing materials and promotional content
+---

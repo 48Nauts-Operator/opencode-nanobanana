@@ -220,7 +220,7 @@
         "Supports color variants (silver, black, gold, titanium)",
         "Uses Gemini to generate realistic device frame with screenshot"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "APP-005",
