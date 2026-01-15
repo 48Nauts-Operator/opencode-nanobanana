@@ -277,3 +277,24 @@ Project: opencode-visual-toolkit
   - This is the first of three analyze tools - sets pattern for ANALYZE-002 (compare) and ANALYZE-003 (mockup)
   - All quality checks pass (typecheck, lint) - tool ready for integration
 ---
+## 2026-01-15 23:00 - ANALYZE-002
+- Implemented compare_screenshots tool for visual regression detection
+- Files changed:
+  - src/tools/analyze/compare.ts (new) - Complete screenshot comparison tool
+  - src/providers/gemini.ts (modified) - Added analyzeMultipleImages() method
+  - prd.json - Marked ANALYZE-002 as passes: true
+- **Learnings for future iterations:**
+  - Multi-image comparison requires GeminiProvider.analyzeMultipleImages() method
+  - analyzeMultipleImages() sends multiple images in a single Gemini API request
+  - Build parts array by adding all images first (as inlineData), then the prompt text last
+  - Gemini can compare multiple images and identify visual differences in one analysis
+  - Optional highlightDifferences parameter generates a visual diff image via editImage()
+  - Diff generation uses Gemini to create side-by-side comparison with red/pink highlights
+  - Fallback error handling: If diff generation fails, still return comparison analysis
+  - Use getOutputDir() to get default output directory for saving diff images
+  - saveImage() requires non-optional outputDir parameter (string, not undefined)
+  - Tool pattern: load both images → analyze with multi-image → optionally generate diff → save
+  - Multi-image analysis is useful for any comparison task (before/after, A/B testing, regression detection)
+  - This completes the second of three analyze tools (screenshot, compare, mockup pending)
+  - All quality checks pass (typecheck, lint) - ready for integration
+---

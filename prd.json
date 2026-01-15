@@ -260,7 +260,7 @@
         "Returns description of visual differences",
         "Optionally generates diff highlight image"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "ANALYZE-003",
