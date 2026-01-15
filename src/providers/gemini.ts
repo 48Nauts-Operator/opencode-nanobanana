@@ -26,6 +26,13 @@ export interface ImageEditOptions {
   mask?: Buffer;
 }
 
+export interface VideoGenerationOptions {
+  /** Video duration in seconds (default: 5) */
+  duration?: number;
+  /** Aspect ratio for generated video (e.g., "16:9", "9:16", "1:1") */
+  aspectRatio?: string;
+}
+
 export class GeminiProvider {
   private client: GoogleGenAI;
   private apiKey: string;
@@ -324,6 +331,54 @@ export class GeminiProvider {
         throw new Error(`Multi-image analysis failed: ${error.message}`);
       }
       throw new Error('Multi-image analysis failed with unknown error');
+    }
+  }
+
+  /**
+   * Generate video from text prompt using Veo
+   *
+   * @param prompt Text description of the video to generate
+   * @param options Video generation options (duration, aspect ratio)
+   * @returns Video buffer
+   */
+  async generateVideo(
+    prompt: string,
+    options: VideoGenerationOptions = {}
+  ): Promise<Buffer> {
+    try {
+      const { duration = 5, aspectRatio = '16:9' } = options;
+
+      // Build the content request with video generation
+      const config: any = {
+        model: 'veo-2.0',
+        contents: `Generate a ${duration}-second video with aspect ratio ${aspectRatio}: ${prompt}`,
+        config: {
+          responseModalities: ['video']
+        }
+      };
+
+      const result = await this.client.models.generateContent(config);
+
+      // Extract video from response
+      if (result && result.candidates && result.candidates.length > 0) {
+        const candidate = result.candidates[0];
+
+        if (candidate && candidate.content && candidate.content.parts) {
+          for (const part of candidate.content.parts) {
+            if (part.inlineData && part.inlineData.data) {
+              const base64Data = part.inlineData.data;
+              return Buffer.from(base64Data, 'base64');
+            }
+          }
+        }
+      }
+
+      throw new Error('No video was generated in the response');
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Video generation failed: ${error.message}`);
+      }
+      throw new Error('Video generation failed with unknown error');
     }
   }
 

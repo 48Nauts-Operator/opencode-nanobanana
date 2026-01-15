@@ -1,8 +1,8 @@
 /**
  * File Handler Utility
  *
- * Handles file operations for images and assets:
- * - Saving generated images
+ * Handles file operations for images, videos, and assets:
+ * - Saving generated images and videos
  * - Loading images from disk
  * - Directory management
  * - Filename sanitization
@@ -36,6 +36,38 @@ export async function saveImage(
 
   // Handle duplicate filenames
   const filepath = await getUniqueFilepath(outputDir, filename);
+
+  // Write file
+  await fs.writeFile(filepath, buffer);
+
+  return filepath;
+}
+
+/**
+ * Save video buffer to disk
+ *
+ * @param buffer Video data
+ * @param outputDir Directory to save to (optional)
+ * @param prompt Prompt used to generate the video
+ * @returns Path to saved file
+ */
+export async function saveVideo(
+  buffer: Buffer,
+  outputDir: string | undefined,
+  prompt: string
+): Promise<string> {
+  // Use provided directory or default
+  const dir = outputDir || getOutputDir();
+
+  // Ensure output directory exists
+  await ensureDirectory(dir);
+
+  // Generate filename from prompt
+  const baseFilename = generateFilename(prompt);
+  const filename = `${baseFilename}.mp4`;
+
+  // Handle duplicate filenames
+  const filepath = await getUniqueFilepath(dir, filename);
 
   // Write file
   await fs.writeFile(filepath, buffer);
