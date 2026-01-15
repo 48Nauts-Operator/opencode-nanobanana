@@ -169,3 +169,23 @@ Project: opencode-visual-toolkit
   - For batch operations (multiple icon sizes), use Promise.all or sequential loops as appropriate
   - This pattern will be reused for screenshots (APP-002), launch images (APP-005), and other asset tools
 ---
+## 2026-01-15 18:00 - APP-002
+- Implemented generate_app_screenshots tool for App Store screenshot generation
+- Files changed:
+  - src/tools/app-assets/screenshots.ts (new) - Complete screenshot generation tool
+  - prd.json - Marked APP-002 as passes: true
+- **Learnings for future iterations:**
+  - Screenshot generation supports two distinct modes: 'image' (resize existing) and 'code' (Gemini generation)
+  - For 'image' mode: Load source image, resize to each device dimension using Sharp with 'cover' fit
+  - For 'code' mode: Generate device-specific screenshots via Gemini with dimension-aware prompts
+  - IOS_SCREENSHOT_SIZES from ios.ts provides all device dimensions (iPhone + iPad)
+  - Filter screenshots by platform: check device.includes('iPhone') for iOS, device.includes('iPad') for iPads
+  - Filter by device names: match against the 'name' property (e.g., '6.9-inch', 'iPad-12.9')
+  - Output structure: screenshots/{device-name}/screenshot-{device-name}.png for organization
+  - Use 'cover' fit mode to fill screen without letterboxing - better for App Store previews
+  - Gemini aspect ratio mapping: portrait screenshots use '9:16', landscape use '16:9'
+  - Tool pattern: filterByPlatform() and filterByDevices() utility functions for size selection
+  - Device frames (addDeviceFrame param) prepared for future enhancement but not yet implemented
+  - Always ensure device-specific directories exist before saving screenshots
+  - This pattern extends the platform module approach used in APP-001 (app icons)
+---

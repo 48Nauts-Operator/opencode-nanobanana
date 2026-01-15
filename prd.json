@@ -190,7 +190,7 @@
         "Outputs to screenshots/{device-name}/ folders",
         "Supports iPhone and iPad sizes"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "APP-003",
