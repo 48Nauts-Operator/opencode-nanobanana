@@ -467,3 +467,24 @@ Project: opencode-visual-toolkit
   - This completes the documentation tools suite: architecture diagrams, sequence diagrams, README banners, social previews
   - All quality checks pass (typecheck, lint) - ready for integration
 ---
+## 2026-01-15 14:00 - VIDEO-001
+- Implemented generate_video tool for video generation using Google Veo
+- Files changed:
+  - src/tools/video/generate-video.ts (new) - Complete video generation tool
+  - src/providers/gemini.ts (modified) - Added generateVideo() method and VideoGenerationOptions interface
+  - src/utils/file-handler.ts (modified) - Added saveVideo() function
+  - prd.json - Marked VIDEO-001 as passes: true
+- **Learnings for future iterations:**
+  - Video generation uses Veo 2.0 model via Gemini API, similar pattern to image generation
+  - Added VideoGenerationOptions interface with duration (seconds) and aspectRatio parameters
+  - generateVideo() method follows same response parsing pattern as generateSingleImage()
+  - Uses responseModalities: ['video'] in config to request video output
+  - Video responses return inlineData with base64-encoded video data
+  - saveVideo() function parallels saveImage() but outputs .mp4 files instead of .png
+  - Default video parameters: duration=5 seconds, aspectRatio='16:9'
+  - Supported aspect ratios: 16:9, 9:16, 1:1, 4:3, 3:4
+  - Tool follows established pattern: generate → save → return user message with path
+  - Error handling covers API key missing and generation failures
+  - All quality checks pass (typecheck, lint) - ready for integration
+  - This is the first of two video tools (generate-video, image-to-video pending)
+---

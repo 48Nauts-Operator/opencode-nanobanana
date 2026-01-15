@@ -358,7 +358,7 @@
         "Uses Veo model for generation",
         "Returns video file path"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "VIDEO-002",
