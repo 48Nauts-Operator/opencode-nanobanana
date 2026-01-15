@@ -210,7 +210,7 @@
         "Update tool descriptions to mention audio support",
         "Update README video tools section"
       ],
-      "passes": false
+      "passes": true
     }
   ]
 }
