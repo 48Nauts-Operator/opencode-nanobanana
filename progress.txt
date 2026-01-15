@@ -443,3 +443,27 @@ Project: opencode-visual-toolkit
   - This completes the third of four docs tools (architecture, sequence, banner, social preview pending)
   - All quality checks pass (typecheck, lint) - ready for integration
 ---
+## 2026-01-15 13:30 - DOCS-004
+- Implemented generate_social_preview tool for Open Graph image generation
+- Files changed:
+  - src/tools/docs/social-preview.ts (new) - Complete social preview generation tool
+  - prd.json - Marked DOCS-004 as passes: true
+- **Learnings for future iterations:**
+  - Open Graph images use 1200x630 pixels (1.91:1 aspect ratio) - standard for social media
+  - Used 16:9 Gemini aspect ratio as closest approximation to 1.91:1
+  - Three style options: gradient (modern colorful), minimal (clean simple), bold (high-contrast)
+  - Tool follows same pattern as readme-banner.ts with style-specific prompt engineering
+  - Always add TypeScript null check for array access: `const buffer = imageBuffers[0]; if (!buffer) return error;`
+  - This prevents "Type 'undefined' is not assignable to type 'Buffer'" errors
+  - Tool returns HTML meta tags for Open Graph integration (og:image, og:title, og:description, twitter:card)
+  - Social previews appear when project is shared on Facebook, Twitter, LinkedIn, Slack, Discord
+  - Style-specific prompts guide Gemini for appropriate visual design:
+    - gradient: Modern gradients (purple-blue, teal-cyan, orange-pink), bold white text, geometric shapes
+    - minimal: Clean white/gray background, bold black text, whitespace focus, single accent color
+    - bold: High-contrast (dark bg with bright accent), extra-bold text, dramatic effects, attention-grabbing
+  - Prompt emphasizes landscape orientation, large readable text, centered composition, thumbnail-friendly
+  - Output filename uses sanitized project name with '-social-preview' suffix
+  - User message includes both file path and ready-to-use HTML meta tags for immediate integration
+  - This completes the documentation tools suite: architecture diagrams, sequence diagrams, README banners, social previews
+  - All quality checks pass (typecheck, lint) - ready for integration
+---
