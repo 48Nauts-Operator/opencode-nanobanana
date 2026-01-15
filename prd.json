@@ -98,7 +98,7 @@
         "Returns file path(s) in response message",
         "Handles errors with user-friendly messages"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "CORE-002",

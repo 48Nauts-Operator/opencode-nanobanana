@@ -5,8 +5,12 @@ Project: opencode-visual-toolkit
 
 ## Codebase Patterns
 - Use `tool()` helper from @opencode-ai/plugin for all tool definitions
+- Import from subpath: `import { tool } from '@opencode-ai/plugin/tool'` (not from root)
+- Tool args use `tool.schema.*` (which is zod) with `as const` for type inference
+- Add explicit `ToolDefinition` type annotation to tools to prevent TS errors
+- Zod version must match plugin's (4.1.8)
+- Tool execute() returns string (user message), not throws for errors
 - Use Sharp for all image resize/crop/optimize operations
-- Use Zod schemas via `tool.schema.*` for parameter validation
 - Save all generated assets to `./generated-assets/` by default
 - iOS icons go to `AppIcon.appiconset/` with `Contents.json`
 - Android icons go to `mipmap-{density}/` with `ic_launcher.xml`
@@ -66,3 +70,20 @@ Project: opencode-visual-toolkit
   - resizeToSizes() uses Promise.all for concurrent batch processing
 ---
 
+## 2026-01-15 12:25 - CORE-001
+- Implemented generate_image tool - first OpenCode tool in the project
+- Files changed:
+  - src/tools/core/generate-image.ts (new) - Generate image tool implementation
+  - package.json - Added @opencode-ai/plugin dependency, upgraded zod to 4.1.8
+  - prd.json - Marked CORE-001 as passes: true
+- **Learnings for future iterations:**
+  - @opencode-ai/plugin must be imported from subpath '/tool' due to missing `.js` extensions in dist/index.js
+  - Use `import { tool } from '@opencode-ai/plugin/tool'` instead of from root
+  - Tool args must use `tool.schema` (which is zod) and be marked with `as const` for proper TypeScript inference
+  - Zod version must match plugin's version (4.1.8) to avoid module resolution conflicts
+  - Add explicit `ToolDefinition` type annotation to prevent TypeScript errors about inferred types
+  - Tool parameters automatically get Zod validation from the args schema
+  - execute() function parameters are auto-typed from the schema (args, _context)
+  - Return string from execute() to display message to user
+  - Error handling should return user-friendly strings, not throw
+---
