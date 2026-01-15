@@ -7,6 +7,8 @@ Started: Thu Jan 15 22:01:15 CET 2026
 - GeminiProvider handles all API polling automatically - return VideoGenerationResult with buffer
 - Tests use vitest with mocked GenAI SDK - use `importOriginal` for accessing real types
 - Use fake timers for testing async operations with delays
+- FFmpeg operations require exec() for complex shell features - ensure all paths are validated and quoted
+- Mock child_process.exec using callback pattern in tests
 ---
 
 ## 2026-01-15 22:07 - VEO3-001, VEO3-002, VEO3-003
@@ -23,4 +25,34 @@ Started: Thu Jan 15 22:01:15 CET 2026
   - Use fake timers (`vi.useFakeTimers()`) for tests with polling to avoid timeouts
   - TypeScript strict mode catches many API mismatches early - always run typecheck
   - The GeminiProvider wraps Google GenAI SDK and handles all polling automatically
+---
+## 2026-01-15 22:11 - FFMPEG-001
+- Implemented FFmpeg utility module for video processing
+- Files changed:
+  - src/utils/ffmpeg.ts (new) - FFmpeg utility functions
+  - tests/utils/ffmpeg.test.ts (new) - Comprehensive test suite with 27 tests
+- **Learnings for future iterations:**
+  - Use promisify pattern from 'util' to convert exec callback to async/await
+  - Always check file existence with existsSync before FFmpeg operations
+  - FFmpeg concatenation has 3 approaches: cut (simple concat file), crossfade (xfade filter), fade (fade in/out filter)
+  - Mock child_process.exec in tests - use callback pattern: callback(error, {stdout, stderr})
+  - TypeScript strict mode catches array access issues (videoPaths[0] can be undefined)
+  - Handle single video edge case by copying file instead of concatenating
+  - Add volume parameter to addAudioTrack for mixing audio levels (0.0-1.0)
+  - FFmpeg filter_complex is powerful but complex - keep fallback to simple approaches
+---
+## 2026-01-15 22:15 - STORY-001
+- Implemented storyboard video generation tool with parallel scene generation
+- Files changed:
+  - src/tools/video/storyboard-video.ts (new) - Complete storyboard video tool implementation
+  - src/index.ts (modified) - Export storyboard tool and ffmpeg utilities
+- **Learnings for future iterations:**
+  - Use Promise.all() for parallel scene generation to maximize throughput
+  - Store temporary scene files in tmpdir() and clean up after stitching
+  - Graceful error handling: partial success is acceptable, filter failed scenes
+  - Always remove unused imports to pass TypeScript strict checks
+  - GeminiProvider.generateVideo() returns buffer directly, write to temp file for FFmpeg
+  - Tool returns detailed result object with timing per scene and success/failure counts
+  - Console.log progress messages help users track long-running operations
+  - The style option is prepended to each scene prompt for consistent styling
 ---
