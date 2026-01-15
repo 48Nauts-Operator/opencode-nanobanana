@@ -601,3 +601,27 @@ Project: opencode-visual-toolkit
   - All quality checks pass (typecheck, lint) - ready for publication
 ---
 
+## 2026-01-15 13:45 - TEST-001
+- Implemented comprehensive unit test suite with Vitest
+- Files changed:
+  - vitest.config.ts (new) - Vitest configuration with coverage support
+  - tests/setup.ts (new) - Test setup file with mocked environment variables
+  - tests/utils/file-handler.test.ts (new) - 19 tests for file operations
+  - tests/utils/image-processing.test.ts (new) - 19 tests for image processing
+  - tests/platforms/platforms.test.ts (new) - 11 tests for all platform modules
+  - tests/providers/gemini.test.ts (new) - 8 tests for GeminiProvider
+  - prd.json - Marked TEST-001 as passes: true
+- **Learnings for future iterations:**
+  - Vitest configuration requires globals: true for describe/it/expect without imports
+  - Use vi.mock() for external dependencies (@google/genai, sharp, fs modules)
+  - Create setup.ts to mock environment variables and reduce test noise
+  - Test file structure mirrors src/ structure for easy navigation
+  - Mock Gemini API responses with base64-encoded data in inlineData.data
+  - Sharp mocks need mockReturnThis() for chained methods (resize().png().toBuffer())
+  - Platform module tests focus on exported constants and helper functions
+  - GeminiProvider tests verify constructor, API calls, and error handling
+  - Test error messages must match actual implementation (not assumptions)
+  - Simplified platform tests (combined all platforms into one file) for better maintainability
+  - All 57 tests passing across 4 test files
+  - Typecheck and lint passing - ready for integration testing (TEST-002)
+---
