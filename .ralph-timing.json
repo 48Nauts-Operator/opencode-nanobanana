@@ -47,6 +47,10 @@
     "PLATFORM-005": {
       "actual": 5,
       "estimate": 45
+    },
+    "INTEGRATION-001": {
+      "actual": 5,
+      "estimate": 60
     }
   },
   "averages": {

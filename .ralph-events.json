@@ -110,6 +110,12 @@
       "type": "story_complete",
       "message": "Completed: PLATFORM-005 in 5m",
       "story": "PLATFORM-005"
+    },
+    {
+      "timestamp": "2026-01-15T13:38:33+01:00",
+      "type": "story_complete",
+      "message": "Completed: INTEGRATION-001 in 5m",
+      "story": "INTEGRATION-001"
     }
   ],
   "stories_completed": [
@@ -391,6 +397,28 @@
           "progress.txt",
           "ralph-report.html",
           "src/platforms/web.ts"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-01-15T13:38:33+01:00",
+      "story": "INTEGRATION-001",
+      "duration": 5,
+      "estimate": 60,
+      "git": {
+        "start_commit": "c2e2cbf",
+        "end_commit": "5984364",
+        "files_changed": 7,
+        "lines_added": 193,
+        "lines_removed": 24,
+        "files": [
+          ".ralph-events.json",
+          ".ralph-monitor-state.json",
+          ".ralph-timing.json",
+          "prd.json",
+          "progress.txt",
+          "ralph-report.html",
+          "src/index.ts"
         ]
       }
     }
