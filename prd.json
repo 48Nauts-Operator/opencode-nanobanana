@@ -116,7 +116,7 @@
         "Character appears consistent across all scenes",
         "Add example in tool description showing character consistency usage"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "STORY-003",
