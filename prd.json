@@ -420,7 +420,7 @@
         "Logs startup message",
         "Handles initialization errors"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "TEST-001",
