@@ -73,7 +73,7 @@ export class GeminiProvider {
 
       for (let i = 0; i < count; i++) {
         const response = await this.client.models.generateContent({
-          model: 'gemini-2.5-flash-image-preview',
+          model: 'gemini-2.5-flash-image',
           contents: prompt,
         });
 
@@ -118,7 +118,7 @@ export class GeminiProvider {
       const mimeType = this.detectMimeType(imageBuffer);
 
       const result = await this.client.models.generateContent({
-        model: 'gemini-2.5-flash-image-preview',
+        model: 'gemini-2.5-flash-image',
         contents: [
           {
             parts: [
@@ -170,7 +170,7 @@ export class GeminiProvider {
       const mimeType = this.detectMimeType(imageBuffer);
 
       const result = await this.client.models.generateContent({
-        model: 'gemini-2.5-flash-image-preview',
+        model: 'gemini-2.5-flash-image',
         contents: [
           {
             parts: [
@@ -251,7 +251,7 @@ export class GeminiProvider {
       });
 
       const result = await this.client.models.generateContent({
-        model: 'gemini-2.5-flash-image-preview',
+        model: 'gemini-2.5-flash-image',
         contents: [
           {
             parts
@@ -288,42 +288,47 @@ export class GeminiProvider {
   }
 
   /**
-   * Generate video from text prompt using Veo
+   * Generate video from text prompt using Veo 2.0
+   * Note: This is a long-running async operation that polls for completion
+   * Videos are generated WITHOUT sound - Veo produces silent video only
    *
    * @param prompt Text description of the video to generate
    * @param options Video generation options (duration, aspect ratio)
-   * @returns Video buffer
+   * @returns Video buffer (MP4, no audio)
    */
   async generateVideo(
     prompt: string,
     options: VideoGenerationOptions = {}
   ): Promise<Buffer> {
     try {
-      const { duration = 5, aspectRatio = '16:9' } = options;
+      const { aspectRatio = '16:9' } = options;
 
-      // Build the content request with video generation
-      const config: any = {
-        model: 'veo-2.0',
-        contents: `Generate a ${duration}-second video with aspect ratio ${aspectRatio}: ${prompt}`,
+      let operation = await this.client.models.generateVideos({
+        model: 'veo-2.0-generate-001',
+        prompt: prompt,
         config: {
-          responseModalities: ['video']
+          numberOfVideos: 1,
+          aspectRatio: aspectRatio as '16:9' | '9:16' | '1:1',
         }
-      };
+      });
 
-      const result = await this.client.models.generateContent(config);
+      while (!operation.done) {
+        await new Promise(resolve => setTimeout(resolve, 10000));
+        operation = await this.client.operations.getVideosOperation({ operation });
+      }
 
-      // Extract video from response
-      if (result && result.candidates && result.candidates.length > 0) {
-        const candidate = result.candidates[0];
-
-        if (candidate && candidate.content && candidate.content.parts) {
-          for (const part of candidate.content.parts) {
-            if (part.inlineData && part.inlineData.data) {
-              const base64Data = part.inlineData.data;
-              return Buffer.from(base64Data, 'base64');
-            }
-          }
+      const generatedVideos = operation.response?.generatedVideos;
+      if (generatedVideos && generatedVideos.length > 0) {
+        const generatedVideo = generatedVideos[0];
+        const videoUri = generatedVideo?.video?.uri;
+        if (!videoUri) {
+          throw new Error('Video URI not found in response');
         }
+        const videoUrl = `${videoUri}&key=${this.apiKey}`;
+        
+        const resp = await fetch(videoUrl);
+        const arrayBuffer = await resp.arrayBuffer();
+        return Buffer.from(arrayBuffer);
       }
 
       throw new Error('No video was generated in the response');
@@ -336,12 +341,13 @@ export class GeminiProvider {
   }
 
   /**
-   * Animate a static image into a video
+   * Animate a static image into a video using Veo 2.0
+   * Note: Videos are generated WITHOUT sound - Veo produces silent video only
    *
    * @param imageBuffer Image buffer to animate
    * @param motion Motion description (optional, e.g., "zoom in", "pan right")
-   * @param options Video generation options (duration, aspect ratio)
-   * @returns Video buffer
+   * @param options Video generation options (aspect ratio)
+   * @returns Video buffer (MP4, no audio)
    */
   async animateImage(
     imageBuffer: Buffer,
@@ -349,51 +355,42 @@ export class GeminiProvider {
     options: VideoGenerationOptions = {}
   ): Promise<Buffer> {
     try {
-      const { duration = 5, aspectRatio = '16:9' } = options;
+      const { aspectRatio = '16:9' } = options;
+      const motionPrompt = motion || 'add subtle natural movement and animation';
 
-      // Detect MIME type for the image
       const mimeType = this.detectMimeType(imageBuffer);
       const base64Image = imageBuffer.toString('base64');
 
-      // Build the content request with image + motion prompt
-      const motionPrompt = motion || 'add subtle natural movement and animation';
-
-      const config: any = {
-        model: 'veo-2.0',
-        contents: [
-          {
-            parts: [
-              {
-                inlineData: {
-                  data: base64Image,
-                  mimeType: mimeType,
-                }
-              },
-              {
-                text: `Animate this image with the following motion for ${duration} seconds at ${aspectRatio} aspect ratio: ${motionPrompt}`
-              }
-            ]
-          }
-        ],
+      let operation = await this.client.models.generateVideos({
+        model: 'veo-2.0-generate-001',
+        prompt: motionPrompt,
+        image: {
+          imageBytes: base64Image,
+          mimeType: mimeType,
+        },
         config: {
-          responseModalities: ['video']
+          numberOfVideos: 1,
+          aspectRatio: aspectRatio as '16:9' | '9:16' | '1:1',
         }
-      };
+      });
 
-      const result = await this.client.models.generateContent(config);
+      while (!operation.done) {
+        await new Promise(resolve => setTimeout(resolve, 10000));
+        operation = await this.client.operations.getVideosOperation({ operation });
+      }
 
-      // Extract video from response
-      if (result && result.candidates && result.candidates.length > 0) {
-        const candidate = result.candidates[0];
-
-        if (candidate && candidate.content && candidate.content.parts) {
-          for (const part of candidate.content.parts) {
-            if (part.inlineData && part.inlineData.data) {
-              const base64Data = part.inlineData.data;
-              return Buffer.from(base64Data, 'base64');
-            }
-          }
+      const generatedVideos = operation.response?.generatedVideos;
+      if (generatedVideos && generatedVideos.length > 0) {
+        const generatedVideo = generatedVideos[0];
+        const videoUri = generatedVideo?.video?.uri;
+        if (!videoUri) {
+          throw new Error('Video URI not found in response');
         }
+        const videoUrl = `${videoUri}&key=${this.apiKey}`;
+        
+        const resp = await fetch(videoUrl);
+        const arrayBuffer = await resp.arrayBuffer();
+        return Buffer.from(arrayBuffer);
       }
 
       throw new Error('No video was generated in the response');

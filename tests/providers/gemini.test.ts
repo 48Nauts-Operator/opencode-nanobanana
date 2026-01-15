@@ -6,6 +6,10 @@ vi.mock('@google/genai', () => ({
   GoogleGenAI: vi.fn().mockImplementation(() => ({
     models: {
       generateContent: vi.fn(),
+      generateVideos: vi.fn(),
+    },
+    operations: {
+      getVideosOperation: vi.fn(),
     },
   })),
 }));
@@ -127,30 +131,40 @@ describe('GeminiProvider', () => {
   });
 
   describe('generateVideo', () => {
-    it('should generate videos', async () => {
+    it('should generate videos using Veo API with polling', async () => {
+      vi.useFakeTimers();
+      
       const provider = new GeminiProvider();
-      const mockGenerateContent = (provider as any).client.models.generateContent;
+      const mockGenerateVideos = (provider as any).client.models.generateVideos;
+      const mockGetVideosOperation = (provider as any).client.operations.getVideosOperation;
 
-      mockGenerateContent.mockResolvedValue({
-        candidates: [
-          {
-            content: {
-              parts: [
-                {
-                  inlineData: {
-                    data: Buffer.from('video').toString('base64'),
-                    mimeType: 'video/mp4',
-                  },
-                },
-              ],
+      mockGenerateVideos.mockResolvedValue({
+        name: 'operations/test-op',
+        done: true,
+        response: {
+          generatedVideos: [
+            {
+              video: {
+                uri: 'https://example.com/video.mp4',
+              },
             },
-          },
-        ],
+          ],
+        },
+      });
+
+      global.fetch = vi.fn().mockResolvedValue({
+        arrayBuffer: () => Promise.resolve(new ArrayBuffer(8)),
       });
 
       const result = await provider.generateVideo('Test video');
 
       expect(result).toBeInstanceOf(Buffer);
+      expect(mockGenerateVideos).toHaveBeenCalledWith(expect.objectContaining({
+        model: 'veo-2.0-generate-001',
+        prompt: 'Test video',
+      }));
+      
+      vi.useRealTimers();
     });
   });
 });

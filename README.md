@@ -7,7 +7,7 @@ A comprehensive OpenCode plugin providing visual capabilities powered by Google 
 - **Design-to-Code** - Convert mockups and sketches to code
 - **App Assets** - Complete pipelines for iOS, Android, macOS, watchOS, and Web
 - **Documentation Visuals** - Architecture diagrams, banners, social previews
-- **Video Generation** - Text-to-video and image animation with Veo 2.0
+- **Video Generation** - Text-to-video and image animation with Veo 2.0 (silent video)
 
 ## Table of Contents
 
@@ -434,19 +434,27 @@ opencode "generate social preview for 'My App' - The best productivity tool"
 
 ### Video Tools
 
+> **⚠️ Important:** Videos are generated **without sound**. Veo 2.0 produces silent video only. If you need audio, you'll need to add it separately using video editing software.
+
+> **Note:** Video generation is a long-running async operation that typically takes 30-90 seconds to complete.
+
 #### `generate_video`
 
 Generate videos from text prompts using Veo 2.0.
 
 **Parameters:**
 - `prompt` (string, required) - Video description
-- `duration` (number, optional) - Duration in seconds (default: 5)
-- `aspectRatio` (string, optional) - Aspect ratio: `'16:9'`, `'9:16'`, `'1:1'`, `'4:3'`, `'3:4'` (default: `'16:9'`)
+- `aspectRatio` (string, optional) - Aspect ratio: `'16:9'`, `'9:16'`, `'1:1'` (default: `'16:9'`)
 
 **Example:**
 ```bash
-opencode "generate a 10-second video of a drone flying over a city at sunset"
+opencode "generate a video of a drone flying over a city at sunset"
 ```
+
+**Output:**
+- MP4 video file (no audio)
+- Typically 5-8 seconds duration
+- Generation time: 30-90 seconds
 
 #### `image_to_video`
 
@@ -455,13 +463,16 @@ Animate static images into videos.
 **Parameters:**
 - `imagePath` (string, required) - Path to image
 - `motion` (string, optional) - Motion description (default: 'add subtle natural movement and animation')
-- `duration` (number, optional) - Duration in seconds (default: 5)
 - `aspectRatio` (string, optional) - Aspect ratio (default: `'16:9'`)
 
 **Example:**
 ```bash
 opencode "animate ./landscape.jpg with slow camera pan"
 ```
+
+**Output:**
+- MP4 video file (no audio)
+- Maintains original image content with added motion
 
 ---
 
@@ -565,7 +576,7 @@ opencode "create iPad Pro 12.9 mockup of ./resized/ios/iPad-12.9/design.png"
 
 ```bash
 # Clone repository
-git clone https://github.com/nautcoder/opencode-visual-toolkit.git
+git clone https://github.com/48Nauts-Operator/opencode-nanobanana.git
 cd opencode-visual-toolkit
 
 # Install dependencies
@@ -701,10 +712,10 @@ MIT License - see [LICENSE](LICENSE) file for details
 
 ## Support
 
-- Documentation: [GitHub Wiki](https://github.com/nautcoder/opencode-visual-toolkit/wiki)
-- Issues: [GitHub Issues](https://github.com/nautcoder/opencode-visual-toolkit/issues)
-- Discussions: [GitHub Discussions](https://github.com/nautcoder/opencode-visual-toolkit/discussions)
+- Documentation: [GitHub Wiki](https://github.com/48Nauts-Operator/opencode-nanobanana/wiki)
+- Issues: [GitHub Issues](https://github.com/48Nauts-Operator/opencode-nanobanana/issues)
+- Discussions: [GitHub Discussions](https://github.com/48Nauts-Operator/opencode-nanobanana/discussions)
 
 ---
 
-Made with ❤️ by [NautCoder](https://github.com/nautcoder)
+Made with ❤️ by [48Nauts-Operator](https://github.com/48Nauts-Operator)
