@@ -67,7 +67,7 @@
         "getOutputDir() returns from env or default './generated-assets'",
         "Handles duplicate filenames with incrementing suffix"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "SETUP-004",
