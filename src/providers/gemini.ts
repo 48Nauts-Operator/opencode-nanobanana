@@ -383,6 +383,76 @@ export class GeminiProvider {
   }
 
   /**
+   * Animate a static image into a video
+   *
+   * @param imageBuffer Image buffer to animate
+   * @param motion Motion description (optional, e.g., "zoom in", "pan right")
+   * @param options Video generation options (duration, aspect ratio)
+   * @returns Video buffer
+   */
+  async animateImage(
+    imageBuffer: Buffer,
+    motion?: string,
+    options: VideoGenerationOptions = {}
+  ): Promise<Buffer> {
+    try {
+      const { duration = 5, aspectRatio = '16:9' } = options;
+
+      // Detect MIME type for the image
+      const mimeType = this.detectMimeType(imageBuffer);
+      const base64Image = imageBuffer.toString('base64');
+
+      // Build the content request with image + motion prompt
+      const motionPrompt = motion || 'add subtle natural movement and animation';
+
+      const config: any = {
+        model: 'veo-2.0',
+        contents: [
+          {
+            parts: [
+              {
+                inlineData: {
+                  data: base64Image,
+                  mimeType: mimeType,
+                }
+              },
+              {
+                text: `Animate this image with the following motion for ${duration} seconds at ${aspectRatio} aspect ratio: ${motionPrompt}`
+              }
+            ]
+          }
+        ],
+        config: {
+          responseModalities: ['video']
+        }
+      };
+
+      const result = await this.client.models.generateContent(config);
+
+      // Extract video from response
+      if (result && result.candidates && result.candidates.length > 0) {
+        const candidate = result.candidates[0];
+
+        if (candidate && candidate.content && candidate.content.parts) {
+          for (const part of candidate.content.parts) {
+            if (part.inlineData && part.inlineData.data) {
+              const base64Data = part.inlineData.data;
+              return Buffer.from(base64Data, 'base64');
+            }
+          }
+        }
+      }
+
+      throw new Error('No video was generated in the response');
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Image animation failed: ${error.message}`);
+      }
+      throw new Error('Image animation failed with unknown error');
+    }
+  }
+
+  /**
    * Detect MIME type from buffer header
    *
    * @param buffer Image buffer
