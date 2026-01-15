@@ -143,7 +143,7 @@
         "Includes watchOS sizes (optional export)",
         "Includes CarPlay sizes (optional export)"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "PLATFORM-002",

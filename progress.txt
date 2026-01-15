@@ -115,3 +115,20 @@ Project: opencode-visual-toolkit
   - Tool pattern remains consistent: load → process with Gemini → save with suffix
   - All quality checks pass (typecheck, lint) - tests not yet implemented (TEST-001/TEST-002 pending)
 ---
+## 2026-01-15 15:00 - PLATFORM-001
+- Implemented iOS platform specifications module with complete icon and screenshot sizes
+- Files changed:
+  - src/platforms/ios.ts (new) - iOS platform specifications
+  - prd.json - Marked PLATFORM-001 as passes: true
+- **Learnings for future iterations:**
+  - iOS requires 18+ icon sizes covering iPhone, iPad, App Store, notifications, settings, spotlight
+  - Icon sizes defined by: size (points), scale (1x/2x/3x), pixels (actual), idiom (device type), filename
+  - IOS_ICON_SIZES: 18 core sizes for iPhone/iPad (20pt-1024pt at various scales)
+  - WATCHOS_ICON_SIZES: 11 sizes for Apple Watch (24pt-1024pt for different watch sizes)
+  - CARPLAY_ICON_SIZES: 2 sizes for CarPlay (60pt at 2x/3x)
+  - Screenshot sizes based on native resolutions: 6.9", 6.7", 6.3", 6.1", 5.5" iPhones + iPads
+  - generateContentsJson() creates Xcode Contents.json with images array and metadata
+  - getIconFilename() generates standardized filenames based on platform conventions
+  - Pattern: Icon-{Platform}-{size}x{size}@{scale}x.png (e.g., Icon-App-60x60@2x.png)
+  - This module will be used by APP-001 (Generate App Icon Tool) to resize master icon
+---
