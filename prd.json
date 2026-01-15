@@ -83,7 +83,7 @@
         "getMetadata(buffer) returns image dimensions and format",
         "resizeToSizes(buffer, sizes[]) batch resizes to multiple dimensions"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "CORE-001",
