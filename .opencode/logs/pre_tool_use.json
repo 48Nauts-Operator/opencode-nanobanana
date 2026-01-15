@@ -6269,5 +6269,68 @@
       "description": "Check claude status and completed stories"
     },
     "timestamp": "2026-01-15T11:17:29.164Z"
+  },
+  {
+    "tool": "bash",
+    "args": {
+      "command": "export CI=true DEBIAN_FRONTEND=noninteractive GIT_TERMINAL_PROMPT=0 GCM_INTERACTIVE=never HOMEBREW_NO_AUTO_UPDATE=1 GIT_EDITOR=: EDITOR=: VISUAL='' GIT_SEQUENCE_EDITOR=: GIT_MERGE_AUTOEDIT=no GIT_PAGER=cat PAGER=cat npm_config_yes=true PIP_NO_INPUT=1 YARN_ENABLE_IMMUTABLE_INSTALLS=false; cd /Volumes/DevHub_ext/factory/toolbox/ralph-ultra && git status && git log --oneline -3",
+      "description": "Check git status in ralph-ultra",
+      "workdir": "/Volumes/DevHub_ext/factory/toolbox/ralph-ultra"
+    },
+    "timestamp": "2026-01-15T11:28:49.158Z"
+  },
+  {
+    "tool": "read",
+    "args": {
+      "filePath": "/Volumes/DevHub_ext/factory/toolbox/ralph-ultra/README.md",
+      "offset": 35,
+      "limit": 50
+    },
+    "timestamp": "2026-01-15T11:28:54.849Z"
+  },
+  {
+    "tool": "read",
+    "args": {
+      "filePath": "/Volumes/DevHub_ext/factory/toolbox/ralph-ultra/README.md",
+      "offset": 190,
+      "limit": 60
+    },
+    "timestamp": "2026-01-15T11:29:00.766Z"
+  },
+  {
+    "tool": "edit",
+    "args": {
+      "filePath": "/Volumes/DevHub_ext/factory/toolbox/ralph-ultra/README.md",
+      "oldString": "### OpenCode `run` command hangs or fails\n\nThis is a known issue. Use Claude CLI instead:\n```bash\nnpm install -g @anthropic-ai/claude-code\n```",
+      "newString": "### OpenCode `run` command hangs or fails\n\n**Known Issue (as of Jan 2026)**: OpenCode's `opencode run` command has bugs that prevent headless/automated execution:\n\n- **[#8502](https://github.com/anomalyco/opencode/issues/8502)**: \"Session not found\" error - occurs when `OPENCODE_SERVER_PASSWORD` env var is set\n- **[#8203](https://github.com/anomalyco/opencode/issues/8203)**: Command hangs forever on API errors instead of exiting\n\n**Workaround**: Use Claude CLI instead (recommended):\n```bash\nnpm install -g @anthropic-ai/claude-code\n```\n\nRalph Ultra will automatically prefer Claude CLI when available."
+    },
+    "timestamp": "2026-01-15T11:29:08.693Z"
+  },
+  {
+    "tool": "read",
+    "args": {
+      "filePath": "/Volumes/DevHub_ext/factory/toolbox/ralph-ultra/README.md",
+      "offset": 255,
+      "limit": 30
+    },
+    "timestamp": "2026-01-15T11:29:14.116Z"
+  },
+  {
+    "tool": "edit",
+    "args": {
+      "filePath": "/Volumes/DevHub_ext/factory/toolbox/ralph-ultra/README.md",
+      "oldString": "## License\n\nMIT\n\n## Credits\n\n- Enhanced by the 48Nauts team\n\n---\n\nThis project was inspired by https://github.com/snarktank/ralph",
+      "newString": "## Known Issues\n\n### OpenCode CLI (January 2026)\n\nThe `opencode run` command currently has issues that prevent reliable headless execution:\n\n| Issue | Description | Status |\n|-------|-------------|--------|\n| [#8502](https://github.com/anomalyco/opencode/issues/8502) | \"Session not found\" when auth env vars set | Open |\n| [#8203](https://github.com/anomalyco/opencode/issues/8203) | Hangs forever on API errors | Open |\n| [#8383](https://github.com/anomalyco/opencode/issues/8383) | Stuck without error messages | Open |\n\n**Recommendation**: Use Claude CLI (`npm install -g @anthropic-ai/claude-code`) until these are resolved. Ralph Ultra automatically prefers Claude CLI when available.\n\n## License\n\nMIT\n\n## Credits\n\n- Enhanced by the 48Nauts team\n\n---\n\nThis project was inspired by https://github.com/snarktank/ralph"
+    },
+    "timestamp": "2026-01-15T11:29:22.089Z"
+  },
+  {
+    "tool": "bash",
+    "args": {
+      "command": "export CI=true DEBIAN_FRONTEND=noninteractive GIT_TERMINAL_PROMPT=0 GCM_INTERACTIVE=never HOMEBREW_NO_AUTO_UPDATE=1 GIT_EDITOR=: EDITOR=: VISUAL='' GIT_SEQUENCE_EDITOR=: GIT_MERGE_AUTOEDIT=no GIT_PAGER=cat PAGER=cat npm_config_yes=true PIP_NO_INPUT=1 YARN_ENABLE_IMMUTABLE_INSTALLS=false; export CI=true DEBIAN_FRONTEND=noninteractive GIT_TERMINAL_PROMPT=0 GCM_INTERACTIVE=never HOMEBREW_NO_AUTO_UPDATE=1 GIT_EDITOR=: EDITOR=: VISUAL='' GIT_SEQUENCE_EDITOR=: GIT_MERGE_AUTOEDIT=no GIT_PAGER=cat PAGER=cat npm_config_yes=true PIP_NO_INPUT=1 YARN_ENABLE_IMMUTABLE_INSTALLS=false; cd /Volumes/DevHub_ext/factory/toolbox/ralph-ultra && git add README.md && git commit -m \"docs: Add Known Issues section documenting OpenCode CLI bugs\n\n- Added dedicated Known Issues section with table of OpenCode bugs\n- Expanded troubleshooting with specific issue links (#8502, #8203, #8383)\n- Clarified that Claude CLI is recommended until OpenCode fixes are released\"",
+      "description": "Commit README updates",
+      "workdir": "/Volumes/DevHub_ext/factory/toolbox/ralph-ultra"
+    },
+    "timestamp": "2026-01-15T11:29:29.843Z"
   }
 ]
