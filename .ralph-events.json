@@ -86,6 +86,18 @@
       "type": "story_complete",
       "message": "Completed: DOCS-002 in 5m",
       "story": "DOCS-002"
+    },
+    {
+      "timestamp": "2026-01-15T13:18:29+01:00",
+      "type": "story_complete",
+      "message": "Completed: DOCS-003 in 5m",
+      "story": "DOCS-003"
+    },
+    {
+      "timestamp": "2026-01-15T13:23:30+01:00",
+      "type": "story_complete",
+      "message": "Completed: DOCS-004 in 5m",
+      "story": "DOCS-004"
     }
   ],
   "stories_completed": [
@@ -274,6 +286,50 @@
           "progress.txt",
           "ralph-report.html",
           "src/tools/docs/sequence-diagram.ts"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-01-15T13:18:29+01:00",
+      "story": "DOCS-003",
+      "duration": 5,
+      "estimate": 20,
+      "git": {
+        "start_commit": "57efdc4",
+        "end_commit": "5e8cfff",
+        "files_changed": 9,
+        "lines_added": 381,
+        "lines_removed": 14,
+        "files": [
+          ".ralph-events.json",
+          ".ralph-monitor-state.json",
+          ".ralph-timing.json",
+          "logs/notifications.jsonl",
+          "prd.json",
+          "progress.txt",
+          "ralph-report.html",
+          "src/tools/docs/readme-banner.ts",
+          "src/tools/docs/social-preview.ts"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-01-15T13:23:30+01:00",
+      "story": "DOCS-004",
+      "duration": 5,
+      "estimate": 20,
+      "git": {
+        "start_commit": "5e8cfff",
+        "end_commit": "6122b8c",
+        "files_changed": 5,
+        "lines_added": 180,
+        "lines_removed": 4,
+        "files": [
+          "prd.json",
+          "progress.txt",
+          "src/providers/gemini.ts",
+          "src/tools/video/generate-video.ts",
+          "src/utils/file-handler.ts"
         ]
       }
     }

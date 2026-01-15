@@ -31,6 +31,14 @@
     "DOCS-002": {
       "actual": 5,
       "estimate": 20
+    },
+    "DOCS-003": {
+      "actual": 5,
+      "estimate": 20
+    },
+    "DOCS-004": {
+      "actual": 5,
+      "estimate": 20
     }
   },
   "averages": {
