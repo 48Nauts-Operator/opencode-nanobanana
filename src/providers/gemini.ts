@@ -257,6 +257,77 @@ export class GeminiProvider {
   }
 
   /**
+   * Analyze multiple images together with AI vision
+   *
+   * @param imageBuffers Array of images to analyze together
+   * @param question Question or analysis prompt
+   * @returns Analysis result as text
+   */
+  async analyzeMultipleImages(
+    imageBuffers: Buffer[],
+    question: string = 'Compare and describe these images in detail'
+  ): Promise<string> {
+    try {
+      // Convert all buffers to base64 and build parts array
+      const parts: any[] = [];
+
+      // Add all images first
+      for (const imageBuffer of imageBuffers) {
+        const base64Image = imageBuffer.toString('base64');
+        const mimeType = this.detectMimeType(imageBuffer);
+
+        parts.push({
+          inlineData: {
+            data: base64Image,
+            mimeType
+          }
+        });
+      }
+
+      // Add the question/prompt last
+      parts.push({
+        text: question
+      });
+
+      // Use Gemini for multi-image analysis
+      const result = await this.client.models.generateContent({
+        model: 'gemini-2.0-flash',
+        contents: [
+          {
+            parts
+          }
+        ]
+      });
+
+      // Extract text from response
+      if (result && result.candidates && result.candidates.length > 0) {
+        const candidate = result.candidates[0];
+
+        if (candidate && candidate.content && candidate.content.parts) {
+          const texts: string[] = [];
+
+          for (const part of candidate.content.parts) {
+            if (part.text) {
+              texts.push(part.text);
+            }
+          }
+
+          if (texts.length > 0) {
+            return texts.join('\n');
+          }
+        }
+      }
+
+      throw new Error('No analysis result returned');
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Multi-image analysis failed: ${error.message}`);
+      }
+      throw new Error('Multi-image analysis failed with unknown error');
+    }
+  }
+
+  /**
    * Detect MIME type from buffer header
    *
    * @param buffer Image buffer
