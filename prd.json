@@ -394,7 +394,7 @@
         "src/platforms/watchos.ts exports WATCHOS_ICON_SIZES",
         "Includes notification, home screen, short look sizes for all watch sizes"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "PLATFORM-005",
