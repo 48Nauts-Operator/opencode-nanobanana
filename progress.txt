@@ -1,3 +1,26 @@
 # Ralph Ultra Progress Log
 Started: Thu Jan 15 22:01:15 CET 2026
+
+## Codebase Patterns
+- Use Veo 3.1 API with correct field names: `durationSeconds`, `imageBytes`, `videoBytes`
+- Always import enums from @google/genai (e.g., VideoGenerationReferenceType)
+- GeminiProvider handles all API polling automatically - return VideoGenerationResult with buffer
+- Tests use vitest with mocked GenAI SDK - use `importOriginal` for accessing real types
+- Use fake timers for testing async operations with delays
+---
+
+## 2026-01-15 22:07 - VEO3-001, VEO3-002, VEO3-003
+- Implemented GeminiProvider with full Veo 3.1 support
+- Files changed:
+  - src/providers/gemini.ts (new) - Complete provider implementation
+  - src/utils/file-handler.ts (new) - Placeholder utility
+  - src/utils/image-processing.ts (new) - Placeholder utility
+  - tests/providers/gemini.test.ts (new) - Comprehensive test suite
+- **Learnings for future iterations:**
+  - Veo 3.1 API uses `durationSeconds` not `duration`, `imageBytes` not `data`, `videoBytes` for video input
+  - Reference images use `VideoGenerationReferenceType.ASSET` enum for character/scene consistency
+  - Import actual types from @google/genai using `importOriginal` in mocks to access enums
+  - Use fake timers (`vi.useFakeTimers()`) for tests with polling to avoid timeouts
+  - TypeScript strict mode catches many API mismatches early - always run typecheck
+  - The GeminiProvider wraps Google GenAI SDK and handles all polling automatically
 ---

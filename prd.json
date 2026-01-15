@@ -33,7 +33,7 @@
         "Update tests for new Veo 3.1 parameters",
         "Verify audio is included in generated videos"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "VEO3-002",
@@ -48,7 +48,7 @@
         "Handles API polling for long-running operation",
         "Add unit test for extendVideo method"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "VEO3-003",
@@ -62,7 +62,7 @@
         "Returns video buffer with content matching references",
         "Add unit test for reference image feature"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "FFMPEG-001",
