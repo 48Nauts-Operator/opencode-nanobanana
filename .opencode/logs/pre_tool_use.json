@@ -6529,5 +6529,39 @@
       "description": "Check installed vs repo scripts"
     },
     "timestamp": "2026-01-15T11:50:17.556Z"
+  },
+  {
+    "tool": "grep",
+    "args": {
+      "pattern": "git checkout|git branch|worktree",
+      "path": "/Users/jarvis/.config/opencode/scripts/ralph-ultra/ralph.sh"
+    },
+    "timestamp": "2026-01-15T11:53:24.690Z"
+  },
+  {
+    "tool": "todowrite",
+    "args": {
+      "todos": [
+        {
+          "id": "1",
+          "content": "Design git branch/worktree check for Ralph startup",
+          "status": "in_progress",
+          "priority": "high"
+        },
+        {
+          "id": "2",
+          "content": "Implement the check in ralph.sh",
+          "status": "pending",
+          "priority": "high"
+        },
+        {
+          "id": "3",
+          "content": "Test and commit",
+          "status": "pending",
+          "priority": "medium"
+        }
+      ]
+    },
+    "timestamp": "2026-01-15T11:54:47.987Z"
   }
 ]

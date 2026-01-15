@@ -56,6 +56,12 @@
       "type": "story_complete",
       "message": "Completed: APP-004 in 5m",
       "story": "APP-004"
+    },
+    {
+      "timestamp": "2026-01-15T12:53:22+01:00",
+      "type": "story_complete",
+      "message": "Completed: APP-005 in 5m",
+      "story": "APP-005"
     }
   ],
   "stories_completed": [
@@ -121,6 +127,33 @@
           "prd.json",
           "progress.txt",
           "src/tools/app-assets/device-mockup.ts"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-01-15T12:53:22+01:00",
+      "story": "APP-005",
+      "duration": 5,
+      "estimate": 30,
+      "git": {
+        "start_commit": "30a5444",
+        "end_commit": "7cb3abf",
+        "files_changed": 12,
+        "lines_added": 779,
+        "lines_removed": 22,
+        "files": [
+          ".opencode/logs/daily_stats.json",
+          ".opencode/logs/post_tool_use.json",
+          ".opencode/logs/pre_tool_use.json",
+          ".ralph-events.json",
+          ".ralph-monitor-state.json",
+          ".ralph-timing.json",
+          "logs/notifications.jsonl",
+          "prd.json",
+          "progress.txt",
+          "ralph-report.html",
+          "src/tools/analyze/screenshot.ts",
+          "src/tools/app-assets/launch-images.ts"
         ]
       }
     }
