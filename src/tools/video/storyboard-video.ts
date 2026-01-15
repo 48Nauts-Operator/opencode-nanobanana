@@ -166,7 +166,12 @@ export async function generateStoryboardVideo(
     );
   }
 
-  console.log(`🎬 Generating storyboard with ${scenes.length} scenes...`);
+  console.log(`\n🎬 Starting storyboard generation with ${scenes.length} scene(s)`);
+  console.log(`⚙️  Configuration:`);
+  console.log(`   - Aspect ratio: ${aspectRatio}`);
+  console.log(`   - Transition: ${transition} (${transitionDuration}s)`);
+  console.log(`   - Audio: ${generateAudio ? 'enabled' : 'disabled'}${backgroundMusic ? ' + background music' : ''}`);
+
   if (characterDescription) {
     console.log(`👤 Using character description: "${characterDescription}"`);
   }
@@ -174,10 +179,12 @@ export async function generateStoryboardVideo(
     console.log(`🖼️  Using ${loadedReferences.length} reference image(s) for consistency`);
   }
 
+  console.log(`\n📹 Generating scenes...`);
+
   // Generate all scenes in parallel
   const scenePromises = scenes.map(async (sceneDescription, index) => {
     const sceneStartTime = Date.now();
-    console.log(`📹 Generating scene ${index + 1}/${scenes.length}...`);
+    console.log(`   [${index + 1}/${scenes.length}] Starting: "${sceneDescription.slice(0, 50)}${sceneDescription.length > 50 ? '...' : ''}"`);
 
     try {
       // Build prompt with character description, style, and scene
@@ -224,7 +231,7 @@ export async function generateStoryboardVideo(
       await writeFile(tempPath, result.buffer);
 
       const sceneTime = Date.now() - sceneStartTime;
-      console.log(`✅ Scene ${index + 1} completed in ${(sceneTime / 1000).toFixed(1)}s`);
+      console.log(`   ✅ [${index + 1}/${scenes.length}] Completed in ${(sceneTime / 1000).toFixed(1)}s`);
 
       return {
         index,
@@ -234,7 +241,7 @@ export async function generateStoryboardVideo(
       };
     } catch (error) {
       const sceneTime = Date.now() - sceneStartTime;
-      console.error(`❌ Scene ${index + 1} failed:`, error);
+      console.error(`   ❌ [${index + 1}/${scenes.length}] Failed after ${(sceneTime / 1000).toFixed(1)}s:`, error);
 
       return {
         index,
@@ -270,7 +277,9 @@ export async function generateStoryboardVideo(
   const videoPaths = successfulScenes.map((s) => s.path);
 
   // Stitch videos together
-  console.log(`🎞️  Stitching ${videoPaths.length} scenes with ${transition} transition...`);
+  console.log(`\n🎞️  Stitching ${videoPaths.length} scene(s) together...`);
+  console.log(`   - Transition: ${transition}`);
+  console.log(`   - Duration: ${transitionDuration}s`);
 
   const concatenateOptions: ConcatenateOptions = {
     transition,
@@ -287,8 +296,10 @@ export async function generateStoryboardVideo(
 
     // Add background music if provided
     if (backgroundMusic) {
-      console.log(`🎵 Mixing background music at ${(musicVolume * 100).toFixed(0)}% volume...`);
+      console.log(`\n🎵 Adding background music...`);
+      console.log(`   - Volume: ${(musicVolume * 100).toFixed(0)}%`);
       await addAudioTrack(stitchedVideoPath, backgroundMusic, outputPath, musicVolume);
+      console.log(`   ✅ Audio mixing complete`);
       // Clean up temporary stitched video
       await unlink(stitchedVideoPath).catch(() => {});
     }
@@ -304,8 +315,19 @@ export async function generateStoryboardVideo(
   }
 
   const totalTime = Date.now() - startTime;
-  console.log(`✨ Storyboard complete! Total time: ${(totalTime / 1000).toFixed(1)}s`);
-  console.log(`📁 Video saved to: ${outputPath}`);
+
+  // Calculate average scene generation time
+  const avgSceneTime = successfulScenes.length > 0
+    ? successfulScenes.reduce((sum, s) => sum + s.time, 0) / successfulScenes.length
+    : 0;
+
+  console.log(`\n✨ Storyboard generation complete!`);
+  console.log(`📊 Summary:`);
+  console.log(`   - Total time: ${(totalTime / 1000).toFixed(1)}s`);
+  console.log(`   - Scenes generated: ${successfulScenes.length}/${sceneResults.length}`);
+  console.log(`   - Average scene time: ${(avgSceneTime / 1000).toFixed(1)}s`);
+  console.log(`   - Success rate: ${((successfulScenes.length / sceneResults.length) * 100).toFixed(0)}%`);
+  console.log(`📁 Output: ${outputPath}\n`);
 
   return {
     videoPath: outputPath,
