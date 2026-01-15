@@ -6452,5 +6452,65 @@
       "newString": "get_ai_pid() {\n  local pid=\"\"\n  \n  # Try claude first (preferred CLI) - process shows as just \"claude\"\n  pid=$(pgrep -x \"claude\" 2>/dev/null | head -1)\n  [ -n \"$pid\" ] && echo \"$pid\" && return\n  \n  # Try opencode (both run and prompt variants)\n  pid=$(pgrep -f \"opencode run\" 2>/dev/null | head -1)\n  [ -n \"$pid\" ] && echo \"$pid\" && return\n  \n  pid=$(pgrep -f \"opencode --prompt\" 2>/dev/null | head -1)\n  [ -n \"$pid\" ] && echo \"$pid\" && return\n  \n  # Try amp\n  pid=$(pgrep -f \"amp.*dangerously\" 2>/dev/null | head -1)\n  [ -n \"$pid\" ] && echo \"$pid\" && return\n  \n  echo \"\"\n}"
     },
     "timestamp": "2026-01-15T11:32:48.926Z"
+  },
+  {
+    "tool": "bash",
+    "args": {
+      "command": "cp /Users/jarvis/.config/opencode/scripts/ralph-ultra/ralph-monitor.sh /Volumes/DevHub_ext/factory/toolbox/ralph-ultra/scripts/",
+      "description": "Copy fix to repo"
+    },
+    "timestamp": "2026-01-15T11:32:56.240Z"
+  },
+  {
+    "tool": "bash",
+    "args": {
+      "command": "pgrep -x \"claude\" 2>/dev/null && echo \"Claude detected correctly!\"",
+      "description": "Test the fix"
+    },
+    "timestamp": "2026-01-15T11:33:01.532Z"
+  },
+  {
+    "tool": "bash",
+    "args": {
+      "command": "tmux kill-session -t ralph 2>/dev/null; pkill -f ralph-monitor 2>/dev/null; sleep 2 && echo \"Killed old session\"",
+      "description": "Kill old Ralph session"
+    },
+    "timestamp": "2026-01-15T11:33:07.786Z"
+  },
+  {
+    "tool": "bash",
+    "args": {
+      "command": "cd /Volumes/DevHub_ext/factory/toolbox/opencode-nanobanana && ~/.config/opencode/scripts/ralph-ultra/ralph.sh --skip-budget . 2>&1 | head -30",
+      "description": "Restart Ralph with fixed monitor",
+      "timeout": 30000
+    },
+    "timestamp": "2026-01-15T11:33:15.762Z"
+  },
+  {
+    "tool": "bash",
+    "args": {
+      "command": "sleep 5 && cat /Volumes/DevHub_ext/factory/toolbox/opencode-nanobanana/logs/ralph-monitor.log | tail -15",
+      "description": "Check monitor log for correct detection",
+      "timeout": 10000
+    },
+    "timestamp": "2026-01-15T11:33:26.497Z"
+  },
+  {
+    "tool": "bash",
+    "args": {
+      "command": "export CI=true DEBIAN_FRONTEND=noninteractive GIT_TERMINAL_PROMPT=0 GCM_INTERACTIVE=never HOMEBREW_NO_AUTO_UPDATE=1 GIT_EDITOR=: EDITOR=: VISUAL='' GIT_SEQUENCE_EDITOR=: GIT_MERGE_AUTOEDIT=no GIT_PAGER=cat PAGER=cat npm_config_yes=true PIP_NO_INPUT=1 YARN_ENABLE_IMMUTABLE_INSTALLS=false; export CI=true DEBIAN_FRONTEND=noninteractive GIT_TERMINAL_PROMPT=0 GCM_INTERACTIVE=never HOMEBREW_NO_AUTO_UPDATE=1 GIT_EDITOR=: EDITOR=: VISUAL='' GIT_SEQUENCE_EDITOR=: GIT_MERGE_AUTOEDIT=no GIT_PAGER=cat PAGER=cat npm_config_yes=true PIP_NO_INPUT=1 YARN_ENABLE_IMMUTABLE_INSTALLS=false; cd /Volumes/DevHub_ext/factory/toolbox/ralph-ultra && git add scripts/ralph-monitor.sh && git commit -m \"fix: Detect Claude CLI process correctly in monitor\n\n- Claude process shows as just 'claude' in ps output, not full command\n- Changed from pgrep -f 'claude.*dangerously' to pgrep -x 'claude'\n- Reordered detection: claude first (preferred), then opencode, then amp\n- Fixes false 'Failed to start Ralph' errors when using Claude CLI\"",
+      "description": "Commit the fix",
+      "workdir": "/Volumes/DevHub_ext/factory/toolbox/ralph-ultra"
+    },
+    "timestamp": "2026-01-15T11:33:43.011Z"
+  },
+  {
+    "tool": "bash",
+    "args": {
+      "command": "export CI=true DEBIAN_FRONTEND=noninteractive GIT_TERMINAL_PROMPT=0 GCM_INTERACTIVE=never HOMEBREW_NO_AUTO_UPDATE=1 GIT_EDITOR=: EDITOR=: VISUAL='' GIT_SEQUENCE_EDITOR=: GIT_MERGE_AUTOEDIT=no GIT_PAGER=cat PAGER=cat npm_config_yes=true PIP_NO_INPUT=1 YARN_ENABLE_IMMUTABLE_INSTALLS=false; export CI=true DEBIAN_FRONTEND=noninteractive GIT_TERMINAL_PROMPT=0 GCM_INTERACTIVE=never HOMEBREW_NO_AUTO_UPDATE=1 GIT_EDITOR=: EDITOR=: VISUAL='' GIT_SEQUENCE_EDITOR=: GIT_MERGE_AUTOEDIT=no GIT_PAGER=cat PAGER=cat npm_config_yes=true PIP_NO_INPUT=1 YARN_ENABLE_IMMUTABLE_INSTALLS=false; export CI=true DEBIAN_FRONTEND=noninteractive GIT_TERMINAL_PROMPT=0 GCM_INTERACTIVE=never HOMEBREW_NO_AUTO_UPDATE=1 GIT_EDITOR=: EDITOR=: VISUAL='' GIT_SEQUENCE_EDITOR=: GIT_MERGE_AUTOEDIT=no GIT_PAGER=cat PAGER=cat npm_config_yes=true PIP_NO_INPUT=1 YARN_ENABLE_IMMUTABLE_INSTALLS=false; cd /Volumes/DevHub_ext/factory/toolbox/ralph-ultra && git push origin main",
+      "description": "Push fix to GitHub",
+      "workdir": "/Volumes/DevHub_ext/factory/toolbox/ralph-ultra"
+    },
+    "timestamp": "2026-01-15T11:33:50.061Z"
   }
 ]

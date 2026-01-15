@@ -463,5 +463,13 @@
     "estimatedTokens": 1038,
     "estimatedCost": 0.009342,
     "timestamp": "2026-01-15T11:31:24.163Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 115,
+    "toolCount": 15,
+    "estimatedTokens": 3858,
+    "estimatedCost": 0.034721999999999996,
+    "timestamp": "2026-01-15T11:34:11.901Z"
   }
 ]
