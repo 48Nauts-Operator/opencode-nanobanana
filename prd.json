@@ -158,7 +158,7 @@
         "getDensityPath(density) returns 'mipmap-{density}' path",
         "Supports both foreground and background layers"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "APP-001",

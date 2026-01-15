@@ -132,3 +132,21 @@ Project: opencode-visual-toolkit
   - Pattern: Icon-{Platform}-{size}x{size}@{scale}x.png (e.g., Icon-App-60x60@2x.png)
   - This module will be used by APP-001 (Generate App Icon Tool) to resize master icon
 ---
+## 2026-01-15 16:00 - PLATFORM-002
+- Implemented Android platform specifications module with complete density buckets and helpers
+- Files changed:
+  - src/platforms/android.ts (new) - Android platform specifications
+  - prd.json - Marked PLATFORM-002 as passes: true
+- **Learnings for future iterations:**
+  - Android uses density buckets: mdpi (1x), hdpi (1.5x), xhdpi (2x), xxhdpi (3x), xxxhdpi (4x)
+  - Launcher icons: 48dp base size scaled by density (48px @ mdpi up to 192px @ xxxhdpi)
+  - All icons go to mipmap-{density}/ directories (e.g., mipmap-hdpi, mipmap-xxxhdpi)
+  - Standard launcher icon filename: ic_launcher.png
+  - Adaptive icons (API 26+) require foreground and background layers in XML
+  - XML goes to res/mipmap-anydpi-v26/ic_launcher.xml with drawable references
+  - Android 13+ supports monochrome layer for themed icons (optional third layer)
+  - Screenshot sizes based on aspect ratios: 16:9, 18:9, 19:9, 20:9 for phones, tablets at 7"/10"
+  - Adaptive icon specs: 108dp full size, 72dp visible, 66dp safe zone for important content
+  - Helper functions: getDensityPath(), getIconSizeForDensity(), dpToPixels() for conversions
+  - This module will be used by APP-001 (Generate App Icon Tool) for Android icon generation
+---
