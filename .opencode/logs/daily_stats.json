@@ -1,0 +1,20 @@
+{
+  "2026-01-14": {
+    "date": "2026-01-14",
+    "sessions": 1,
+    "toolCalls": 52,
+    "blockedCommands": 0,
+    "errors": 1,
+    "estimatedTokens": 105189,
+    "estimatedCost": 0.9467009999999998
+  },
+  "2026-01-15": {
+    "date": "2026-01-15",
+    "sessions": 4,
+    "toolCalls": 567,
+    "blockedCommands": 2,
+    "errors": 22,
+    "estimatedTokens": 288352,
+    "estimatedCost": 2.595167999999994
+  }
+}

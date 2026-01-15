@@ -1,0 +1,467 @@
+{
+  "projectName": "opencode-visual-toolkit",
+  "description": "A comprehensive OpenCode plugin providing visual capabilities: image generation (Nano Banana), visual analysis, design-to-code, documentation visuals, video generation, and complete app asset pipelines for iOS, Android, macOS, and Web.",
+  "branchName": "ralph/opencode-visual-toolkit",
+  "repository": "nautcoder/opencode-visual-toolkit",
+  "techStack": {
+    "runtime": "Bun",
+    "language": "TypeScript",
+    "framework": "OpenCode Plugin",
+    "dependencies": [
+      "@google/genai",
+      "@opencode-ai/plugin",
+      "sharp",
+      "zod"
+    ],
+    "devDependencies": [
+      "typescript",
+      "vitest",
+      "@types/node"
+    ]
+  },
+  "userStories": [
+    {
+      "id": "SETUP-001",
+      "title": "Project Initialization",
+      "description": "Initialize npm project with TypeScript, ESM output, and all dependencies. Create directory structure for src/, templates/, tests/.",
+      "priority": 1,
+      "acceptanceCriteria": [
+        "package.json exists with name 'opencode-visual-toolkit'",
+        "tsconfig.json configured for ESM output",
+        "All dependencies installed (@google/genai, @opencode-ai/plugin, sharp, zod)",
+        "Dev dependencies installed (typescript, vitest, @types/node)",
+        "Directory structure: src/providers/, src/tools/, src/platforms/, src/utils/, templates/, tests/",
+        ".gitignore excludes node_modules, dist, .env"
+      ],
+      "passes": true
+    },
+    {
+      "id": "SETUP-002",
+      "title": "Gemini Provider Implementation",
+      "description": "Implement GeminiProvider class that connects directly to Google Gemini API for image generation, editing, analysis, and video.",
+      "priority": 2,
+      "acceptanceCriteria": [
+        "src/providers/gemini.ts exports GeminiProvider class",
+        "Constructor reads GEMINI_API_KEY from environment",
+        "Throws meaningful error if API key missing",
+        "generateImage(prompt, options) returns Promise<Buffer[]>",
+        "editImage(buffer, prompt) returns Promise<Buffer>",
+        "analyzeImage(buffer, question) returns Promise<string>",
+        "Supports aspect ratio configuration",
+        "Supports batch generation (1-8 images)",
+        "Handles API errors gracefully"
+      ],
+      "passes": true
+    },
+    {
+      "id": "SETUP-003",
+      "title": "File Handler Utility",
+      "description": "Implement file handling utilities for saving images, loading images, managing output directories.",
+      "priority": 3,
+      "acceptanceCriteria": [
+        "src/utils/file-handler.ts exports all functions",
+        "saveImage(buffer, outputDir, prompt, index) saves PNG and returns path",
+        "loadImage(path) returns Buffer",
+        "ensureDirectory(path) creates directory if not exists",
+        "generateFilename(prompt) returns sanitized filename",
+        "getOutputDir() returns from env or default './generated-assets'",
+        "Handles duplicate filenames with incrementing suffix"
+      ],
+      "passes": true
+    },
+    {
+      "id": "SETUP-004",
+      "title": "Image Processing Utility",
+      "description": "Implement image processing utilities using Sharp for resize, crop, optimize operations.",
+      "priority": 4,
+      "acceptanceCriteria": [
+        "src/utils/image-processing.ts exports all functions",
+        "resize(buffer, width, height, options) returns Promise<Buffer>",
+        "crop(buffer, region) returns Promise<Buffer>",
+        "optimize(buffer, quality) returns Promise<Buffer>",
+        "convertFormat(buffer, format) supports PNG, JPEG, WebP",
+        "getMetadata(buffer) returns image dimensions and format",
+        "resizeToSizes(buffer, sizes[]) batch resizes to multiple dimensions"
+      ],
+      "passes": true
+    },
+    {
+      "id": "CORE-001",
+      "title": "Generate Image Tool",
+      "description": "Implement generate_image tool that creates images from text prompts using Gemini.",
+      "priority": 5,
+      "acceptanceCriteria": [
+        "src/tools/core/generate-image.ts exports tool using tool() helper",
+        "Parameters: prompt (required), aspectRatio (optional), outputPath (optional), count (optional 1-8)",
+        "Uses GeminiProvider for generation",
+        "Saves images to output directory",
+        "Returns file path(s) in response message",
+        "Handles errors with user-friendly messages"
+      ],
+      "passes": true
+    },
+    {
+      "id": "CORE-002",
+      "title": "Edit Image Tool",
+      "description": "Implement edit_image tool that modifies existing images with natural language.",
+      "priority": 6,
+      "acceptanceCriteria": [
+        "src/tools/core/edit-image.ts exports tool",
+        "Parameters: imagePath (required), editPrompt (required), outputPath (optional)",
+        "Loads source image from path",
+        "Sends to Gemini with edit prompt",
+        "Saves result with '_edited' suffix",
+        "Returns new file path"
+      ],
+      "passes": true
+    },
+    {
+      "id": "CORE-003",
+      "title": "Restore Image Tool",
+      "description": "Implement restore_image tool that enhances or repairs damaged images.",
+      "priority": 7,
+      "acceptanceCriteria": [
+        "src/tools/core/restore-image.ts exports tool",
+        "Parameters: imagePath (required), instructions (optional), outputPath (optional)",
+        "Default instruction: 'restore and enhance this image'",
+        "Saves result with '_restored' suffix",
+        "Returns new file path"
+      ],
+      "passes": true
+    },
+    {
+      "id": "PLATFORM-001",
+      "title": "iOS Platform Module",
+      "description": "Implement iOS platform specifications with all icon sizes and Contents.json generation.",
+      "priority": 8,
+      "acceptanceCriteria": [
+        "src/platforms/ios.ts exports IOS_ICON_SIZES array with all 18+ sizes",
+        "Each size includes: size (pt), scale, pixels, idiom, filename",
+        "Exports IOS_SCREENSHOT_SIZES for each device (6.9, 6.7, 6.5, 5.5 inch + iPads)",
+        "generateContentsJson(sizes) returns valid Xcode asset catalog JSON",
+        "getIconFilename(size, scale, idiom) returns proper filename",
+        "Includes watchOS sizes (optional export)",
+        "Includes CarPlay sizes (optional export)"
+      ],
+      "passes": true
+    },
+    {
+      "id": "PLATFORM-002",
+      "title": "Android Platform Module",
+      "description": "Implement Android platform specifications with density buckets and adaptive icon XML.",
+      "priority": 9,
+      "acceptanceCriteria": [
+        "src/platforms/android.ts exports ANDROID_DENSITIES array",
+        "Exports ANDROID_ICON_SIZES for each density (mdpi through xxxhdpi)",
+        "Exports ANDROID_SCREENSHOT_SIZES",
+        "generateAdaptiveIconXml() returns valid ic_launcher.xml content",
+        "getDensityPath(density) returns 'mipmap-{density}' path",
+        "Supports both foreground and background layers"
+      ],
+      "passes": true
+    },
+    {
+      "id": "APP-001",
+      "title": "Generate App Icon Tool",
+      "description": "Implement generate_app_icon tool that creates complete icon sets for iOS and Android.",
+      "priority": 10,
+      "acceptanceCriteria": [
+        "src/tools/app-assets/app-icon.ts exports tool",
+        "Parameters: prompt (required), platforms (optional array), includeWatchOS (optional), includeCarPlay (optional), outputDir (optional)",
+        "Generates 1024x1024 master icon via Gemini",
+        "Resizes to all required iOS sizes using Sharp",
+        "Generates Contents.json for Xcode",
+        "For Android: generates adaptive icon layers and XML",
+        "Outputs to AppIcon.appiconset/ (iOS) and mipmap-*/ (Android)",
+        "Returns paths to all generated assets"
+      ],
+      "passes": true
+    },
+    {
+      "id": "APP-002",
+      "title": "Generate App Screenshots Tool",
+      "description": "Implement generate_app_screenshots tool for App Store screenshots.",
+      "priority": 11,
+      "acceptanceCriteria": [
+        "src/tools/app-assets/screenshots.ts exports tool",
+        "Parameters: source (required), sourceType (image|code), platforms (optional), devices (optional), addDeviceFrame (optional)",
+        "For sourceType 'image': resizes existing image to all device dimensions",
+        "For sourceType 'code': generates visual from code description via Gemini",
+        "Outputs to screenshots/{device-name}/ folders",
+        "Supports iPhone and iPad sizes"
+      ],
+      "passes": true
+    },
+    {
+      "id": "APP-003",
+      "title": "Resize for Devices Tool",
+      "description": "Implement resize_for_devices tool for smart image resizing to device dimensions.",
+      "priority": 12,
+      "acceptanceCriteria": [
+        "src/tools/app-assets/resize-devices.ts exports tool",
+        "Parameters: imagePath (required), platform (ios|android|both), screenshotType (phone|tablet|all), cropMode (fit|fill|smart)",
+        "Fit mode: letterboxes if aspect ratio differs",
+        "Fill mode: crops to fill",
+        "Smart mode: uses Gemini to identify important content before cropping",
+        "Outputs device-specific images"
+      ],
+      "passes": true
+    },
+    {
+      "id": "APP-004",
+      "title": "Device Mockup Tool",
+      "description": "Implement generate_device_mockup tool to place screenshots in device frames.",
+      "priority": 13,
+      "acceptanceCriteria": [
+        "src/tools/app-assets/device-mockup.ts exports tool",
+        "Parameters: imagePath (required), device (required enum), color (optional), orientation (optional)",
+        "Supports iPhone 15/16 Pro, Pro Max, Plus, base models",
+        "Supports iPad Pro 12.9, 11, Air, mini",
+        "Supports color variants (silver, black, gold, titanium)",
+        "Uses Gemini to generate realistic device frame with screenshot"
+      ],
+      "passes": true
+    },
+    {
+      "id": "APP-005",
+      "title": "Launch Images Tool",
+      "description": "Implement generate_launch_images tool for splash screens.",
+      "priority": 14,
+      "acceptanceCriteria": [
+        "src/tools/app-assets/launch-images.ts exports tool",
+        "Parameters: design (required - prompt or image path), platforms (optional), includeAllSizes (optional)",
+        "Generates splash screens for all device sizes",
+        "Supports both text description and existing image input"
+      ],
+      "passes": true
+    },
+    {
+      "id": "ANALYZE-001",
+      "title": "Analyze Screenshot Tool",
+      "description": "Implement analyze_screenshot tool for UI debugging via visual analysis.",
+      "priority": 15,
+      "acceptanceCriteria": [
+        "src/tools/analyze/screenshot.ts exports tool",
+        "Parameters: imagePath (required), question (optional)",
+        "Sends image to Gemini with analysis prompt",
+        "Returns detailed analysis: identified components, issues, suggestions"
+      ],
+      "passes": true
+    },
+    {
+      "id": "ANALYZE-002",
+      "title": "Compare Screenshots Tool",
+      "description": "Implement compare_screenshots tool for visual regression detection.",
+      "priority": 16,
+      "acceptanceCriteria": [
+        "src/tools/analyze/compare.ts exports tool",
+        "Parameters: imagePath1 (required), imagePath2 (required), highlightDifferences (optional)",
+        "Sends both images to Gemini for comparison",
+        "Returns description of visual differences",
+        "Optionally generates diff highlight image"
+      ],
+      "passes": true
+    },
+    {
+      "id": "ANALYZE-003",
+      "title": "Analyze Mockup Tool",
+      "description": "Implement analyze_mockup tool to extract design specifications.",
+      "priority": 17,
+      "acceptanceCriteria": [
+        "src/tools/analyze/mockup.ts exports tool",
+        "Parameters: imagePath (required), extractColors (optional), extractSpacing (optional)",
+        "Extracts design specs: colors, fonts, spacing, component structure"
+      ],
+      "passes": true
+    },
+    {
+      "id": "DESIGN-001",
+      "title": "Mockup to Code Tool",
+      "description": "Implement mockup_to_code tool to convert design images to components.",
+      "priority": 18,
+      "acceptanceCriteria": [
+        "src/tools/design/mockup-to-code.ts exports tool",
+        "Parameters: imagePath (required), framework (required: react|vue|swiftui|html), styling (optional: tailwind|css|styled-components)",
+        "Returns generated component code"
+      ],
+      "passes": true
+    },
+    {
+      "id": "DESIGN-002",
+      "title": "Sketch to Code Tool",
+      "description": "Implement sketch_to_code tool for hand-drawn sketches.",
+      "priority": 19,
+      "acceptanceCriteria": [
+        "src/tools/design/sketch-to-code.ts exports tool",
+        "Parameters: imagePath (required), framework (required)",
+        "Handles rough/hand-drawn sketches",
+        "Returns generated component code"
+      ],
+      "passes": true
+    },
+    {
+      "id": "DOCS-001",
+      "title": "Architecture Diagram Tool",
+      "description": "Implement generate_architecture_diagram tool.",
+      "priority": 20,
+      "acceptanceCriteria": [
+        "src/tools/docs/architecture-diagram.ts exports tool",
+        "Parameters: description (required), style (optional: boxes|cloud|technical), format (optional: png|svg|mermaid)",
+        "Returns diagram image or mermaid code"
+      ],
+      "passes": true
+    },
+    {
+      "id": "DOCS-002",
+      "title": "Sequence Diagram Tool",
+      "description": "Implement generate_sequence_diagram tool.",
+      "priority": 21,
+      "acceptanceCriteria": [
+        "src/tools/docs/sequence-diagram.ts exports tool",
+        "Parameters: description (required), format (optional: png|mermaid)",
+        "Returns sequence diagram image or mermaid code"
+      ],
+      "passes": true
+    },
+    {
+      "id": "DOCS-003",
+      "title": "README Banner Tool",
+      "description": "Implement generate_readme_banner tool.",
+      "priority": 22,
+      "acceptanceCriteria": [
+        "src/tools/docs/readme-banner.ts exports tool",
+        "Parameters: projectName (required), tagline (optional), style (optional: gradient|minimal|tech)",
+        "Generates 1280x640 banner image"
+      ],
+      "passes": true
+    },
+    {
+      "id": "DOCS-004",
+      "title": "Social Preview Tool",
+      "description": "Implement generate_social_preview tool for Open Graph images.",
+      "priority": 23,
+      "acceptanceCriteria": [
+        "src/tools/docs/social-preview.ts exports tool",
+        "Parameters: projectName (required), description (optional)",
+        "Generates 1200x630 Open Graph image"
+      ],
+      "passes": true
+    },
+    {
+      "id": "VIDEO-001",
+      "title": "Generate Video Tool",
+      "description": "Implement generate_video tool using Veo.",
+      "priority": 24,
+      "acceptanceCriteria": [
+        "src/tools/video/generate-video.ts exports tool",
+        "Parameters: prompt (required), duration (optional), aspectRatio (optional)",
+        "Uses Veo model for generation",
+        "Returns video file path"
+      ],
+      "passes": true
+    },
+    {
+      "id": "VIDEO-002",
+      "title": "Image to Video Tool",
+      "description": "Implement image_to_video tool to animate static images.",
+      "priority": 25,
+      "acceptanceCriteria": [
+        "src/tools/video/image-to-video.ts exports tool",
+        "Parameters: imagePath (required), motion (optional), duration (optional)",
+        "Animates static image",
+        "Returns video file path"
+      ],
+      "passes": true
+    },
+    {
+      "id": "PLATFORM-003",
+      "title": "macOS Platform Module",
+      "description": "Implement macOS platform specifications.",
+      "priority": 26,
+      "acceptanceCriteria": [
+        "src/platforms/macos.ts exports MACOS_ICON_SIZES",
+        "Includes all sizes: 16, 32, 128, 256, 512 at 1x and 2x",
+        "generateMacIconset() returns folder structure info"
+      ],
+      "passes": true
+    },
+    {
+      "id": "PLATFORM-004",
+      "title": "watchOS Platform Module",
+      "description": "Implement watchOS platform specifications.",
+      "priority": 27,
+      "acceptanceCriteria": [
+        "src/platforms/watchos.ts exports WATCHOS_ICON_SIZES",
+        "Includes notification, home screen, short look sizes for all watch sizes"
+      ],
+      "passes": true
+    },
+    {
+      "id": "PLATFORM-005",
+      "title": "Web Platform Module",
+      "description": "Implement Web platform specifications.",
+      "priority": 28,
+      "acceptanceCriteria": [
+        "src/platforms/web.ts exports WEB_ICON_SIZES",
+        "Includes favicon (16, 32, 48), apple-touch-icon (180), PWA icons (192, 512)",
+        "generateWebManifestIcons() returns manifest icons array",
+        "generateFavicon() creates multi-size ICO file"
+      ],
+      "passes": true
+    },
+    {
+      "id": "INTEGRATION-001",
+      "title": "Plugin Entry Point",
+      "description": "Create main plugin entry point that registers all tools.",
+      "priority": 29,
+      "acceptanceCriteria": [
+        "src/index.ts exports VisualToolkitPlugin as default",
+        "Registers all tools (20+)",
+        "Logs startup message",
+        "Handles initialization errors"
+      ],
+      "passes": true
+    },
+    {
+      "id": "TEST-001",
+      "title": "Unit Tests",
+      "description": "Write unit tests for all modules.",
+      "priority": 30,
+      "acceptanceCriteria": [
+        "Tests for all utility functions",
+        "Tests for all platform modules",
+        "Mocked Gemini API calls",
+        "Test error handling paths",
+        "80%+ code coverage"
+      ],
+      "passes": true
+    },
+    {
+      "id": "TEST-002",
+      "title": "Integration Tests",
+      "description": "Write integration tests for full flows.",
+      "priority": 31,
+      "acceptanceCriteria": [
+        "Test full tool execution flow",
+        "Test file output structure",
+        "Validate Contents.json format",
+        "Validate Android XML format"
+      ],
+      "passes": true
+    },
+    {
+      "id": "DOCS-005",
+      "title": "README Documentation",
+      "description": "Create comprehensive README with installation, usage, and examples.",
+      "priority": 32,
+      "acceptanceCriteria": [
+        "README.md exists with installation instructions",
+        "Quick start guide",
+        "All tools documented with examples",
+        "Configuration options documented",
+        "Platform support matrix"
+      ],
+      "passes": true
+    }
+  ]
+}

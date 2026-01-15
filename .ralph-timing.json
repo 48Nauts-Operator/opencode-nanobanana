@@ -1,0 +1,66 @@
+{
+  "stories": {
+    "PLATFORM-002": {
+      "actual": 5,
+      "estimate": 45
+    },
+    "APP-002": {
+      "actual": 5,
+      "estimate": 30
+    },
+    "APP-004": {
+      "actual": 5,
+      "estimate": 30
+    },
+    "APP-005": {
+      "actual": 5,
+      "estimate": 30
+    },
+    "ANALYZE-002": {
+      "actual": 5,
+      "estimate": 45
+    },
+    "DESIGN-001": {
+      "actual": 5,
+      "estimate": 45
+    },
+    "DESIGN-002": {
+      "actual": 5,
+      "estimate": 45
+    },
+    "DOCS-002": {
+      "actual": 5,
+      "estimate": 20
+    },
+    "DOCS-003": {
+      "actual": 5,
+      "estimate": 20
+    },
+    "DOCS-004": {
+      "actual": 5,
+      "estimate": 20
+    },
+    "VIDEO-002": {
+      "actual": 5,
+      "estimate": 60
+    },
+    "PLATFORM-005": {
+      "actual": 5,
+      "estimate": 45
+    },
+    "INTEGRATION-001": {
+      "actual": 5,
+      "estimate": 60
+    },
+    "TEST-001": {
+      "actual": 10,
+      "estimate": 20
+    }
+  },
+  "averages": {
+    "simple": 20,
+    "medium": 30,
+    "complex": 45,
+    "heavy": 60
+  }
+}

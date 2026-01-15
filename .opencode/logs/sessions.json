@@ -1,0 +1,499 @@
+[
+  {
+    "type": "session.created",
+    "directory": "/Volumes/DevHub_ext/factory/toolbox/opencode-nanobanana",
+    "timestamp": "2026-01-14T22:19:40.706Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 24,
+    "toolCount": 5,
+    "estimatedTokens": 8468,
+    "estimatedCost": 0.07621199999999999,
+    "timestamp": "2026-01-14T22:20:24.016Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 36,
+    "toolCount": 9,
+    "estimatedTokens": 26598,
+    "estimatedCost": 0.23938199999999998,
+    "timestamp": "2026-01-14T22:23:08.333Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 0,
+    "toolCount": 0,
+    "estimatedTokens": 0,
+    "estimatedCost": 0,
+    "timestamp": "2026-01-14T22:28:24.655Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 25,
+    "toolCount": 7,
+    "estimatedTokens": 19057,
+    "estimatedCost": 0.17151299999999997,
+    "timestamp": "2026-01-14T22:32:05.024Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 0,
+    "toolCount": 0,
+    "estimatedTokens": 0,
+    "estimatedCost": 0,
+    "timestamp": "2026-01-14T22:33:40.815Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 22,
+    "toolCount": 1,
+    "estimatedTokens": 9525,
+    "estimatedCost": 0.085725,
+    "timestamp": "2026-01-14T22:35:34.692Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 0,
+    "toolCount": 0,
+    "estimatedTokens": 0,
+    "estimatedCost": 0,
+    "timestamp": "2026-01-14T22:41:10.599Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 0,
+    "toolCount": 0,
+    "estimatedTokens": 0,
+    "estimatedCost": 0,
+    "timestamp": "2026-01-14T22:45:06.830Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 0,
+    "toolCount": 0,
+    "estimatedTokens": 0,
+    "estimatedCost": 0,
+    "timestamp": "2026-01-14T22:48:01.543Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 409,
+    "toolCount": 14,
+    "estimatedTokens": 23875,
+    "estimatedCost": 0.21487499999999998,
+    "timestamp": "2026-01-14T22:58:09.057Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 104,
+    "toolCount": 6,
+    "estimatedTokens": 8294,
+    "estimatedCost": 0.074646,
+    "timestamp": "2026-01-14T23:01:55.631Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 54,
+    "toolCount": 7,
+    "estimatedTokens": 8991,
+    "estimatedCost": 0.08091899999999999,
+    "timestamp": "2026-01-14T23:09:49.163Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 11,
+    "toolCount": 1,
+    "estimatedTokens": 129,
+    "estimatedCost": 0.001161,
+    "timestamp": "2026-01-14T23:12:17.581Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 7,
+    "toolCount": 1,
+    "estimatedTokens": 157,
+    "estimatedCost": 0.001413,
+    "timestamp": "2026-01-14T23:13:36.127Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 0,
+    "toolCount": 0,
+    "estimatedTokens": 0,
+    "estimatedCost": 0,
+    "timestamp": "2026-01-14T23:14:17.997Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 16,
+    "toolCount": 1,
+    "estimatedTokens": 2468,
+    "estimatedCost": 0.022212,
+    "timestamp": "2026-01-15T06:59:39.349Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 18,
+    "toolCount": 1,
+    "estimatedTokens": 8960,
+    "estimatedCost": 0.08064,
+    "timestamp": "2026-01-15T07:07:18.788Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 0,
+    "toolCount": 0,
+    "estimatedTokens": 0,
+    "estimatedCost": 0,
+    "timestamp": "2026-01-15T07:16:26.891Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 15,
+    "toolCount": 1,
+    "estimatedTokens": 2628,
+    "estimatedCost": 0.023652,
+    "timestamp": "2026-01-15T07:19:29.137Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 28,
+    "toolCount": 3,
+    "estimatedTokens": 1267,
+    "estimatedCost": 0.011402999999999998,
+    "timestamp": "2026-01-15T07:21:00.272Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 120,
+    "toolCount": 12,
+    "estimatedTokens": 8043,
+    "estimatedCost": 0.07238699999999999,
+    "timestamp": "2026-01-15T07:25:52.532Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 7,
+    "toolCount": 1,
+    "estimatedTokens": 58,
+    "estimatedCost": 0.000522,
+    "timestamp": "2026-01-15T07:31:05.552Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 0,
+    "toolCount": 0,
+    "estimatedTokens": 0,
+    "estimatedCost": 0,
+    "timestamp": "2026-01-15T07:36:03.402Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 350,
+    "toolCount": 34,
+    "estimatedTokens": 30313,
+    "estimatedCost": 0.272817,
+    "timestamp": "2026-01-15T07:43:22.105Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 0,
+    "toolCount": 0,
+    "estimatedTokens": 0,
+    "estimatedCost": 0,
+    "timestamp": "2026-01-15T07:46:39.300Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 0,
+    "toolCount": 0,
+    "estimatedTokens": 0,
+    "estimatedCost": 0,
+    "timestamp": "2026-01-15T07:47:09.556Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 751,
+    "toolCount": 60,
+    "estimatedTokens": 37130,
+    "estimatedCost": 0.33417,
+    "timestamp": "2026-01-15T08:05:14.825Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 21,
+    "toolCount": 3,
+    "estimatedTokens": 1157,
+    "estimatedCost": 0.010412999999999999,
+    "timestamp": "2026-01-15T08:10:09.836Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 62,
+    "toolCount": 10,
+    "estimatedTokens": 11151,
+    "estimatedCost": 0.10035899999999999,
+    "timestamp": "2026-01-15T08:12:48.882Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 14,
+    "toolCount": 1,
+    "estimatedTokens": 149,
+    "estimatedCost": 0.0013409999999999997,
+    "timestamp": "2026-01-15T08:15:03.685Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 233,
+    "toolCount": 18,
+    "estimatedTokens": 10637,
+    "estimatedCost": 0.095733,
+    "timestamp": "2026-01-15T08:21:05.885Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 224,
+    "toolCount": 19,
+    "estimatedTokens": 9053,
+    "estimatedCost": 0.08147700000000001,
+    "timestamp": "2026-01-15T09:15:58.833Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 0,
+    "toolCount": 0,
+    "estimatedTokens": 0,
+    "estimatedCost": 0,
+    "timestamp": "2026-01-15T09:20:40.172Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 264,
+    "toolCount": 29,
+    "estimatedTokens": 12130,
+    "estimatedCost": 0.10917,
+    "timestamp": "2026-01-15T09:27:59.580Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 16,
+    "toolCount": 3,
+    "estimatedTokens": 1041,
+    "estimatedCost": 0.009368999999999999,
+    "timestamp": "2026-01-15T09:30:09.300Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 62,
+    "toolCount": 1,
+    "estimatedTokens": 211,
+    "estimatedCost": 0.0018989999999999999,
+    "timestamp": "2026-01-15T09:34:41.771Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 61,
+    "toolCount": 5,
+    "estimatedTokens": 5968,
+    "estimatedCost": 0.053711999999999996,
+    "timestamp": "2026-01-15T09:38:24.357Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 45,
+    "toolCount": 6,
+    "estimatedTokens": 4455,
+    "estimatedCost": 0.040095,
+    "timestamp": "2026-01-15T09:39:29.175Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 5,
+    "toolCount": 1,
+    "estimatedTokens": 571,
+    "estimatedCost": 0.0051389999999999995,
+    "timestamp": "2026-01-15T09:39:53.576Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 259,
+    "toolCount": 35,
+    "estimatedTokens": 15697,
+    "estimatedCost": 0.14127299999999998,
+    "timestamp": "2026-01-15T09:44:51.529Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 66,
+    "toolCount": 9,
+    "estimatedTokens": 3877,
+    "estimatedCost": 0.03489299999999999,
+    "timestamp": "2026-01-15T09:49:46.763Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 232,
+    "toolCount": 18,
+    "estimatedTokens": 17292,
+    "estimatedCost": 0.15562800000000002,
+    "timestamp": "2026-01-15T09:55:01.846Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 48,
+    "toolCount": 4,
+    "estimatedTokens": 3877,
+    "estimatedCost": 0.03489299999999999,
+    "timestamp": "2026-01-15T09:58:09.114Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 13,
+    "toolCount": 2,
+    "estimatedTokens": 481,
+    "estimatedCost": 0.0043289999999999995,
+    "timestamp": "2026-01-15T10:00:59.899Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 53,
+    "toolCount": 8,
+    "estimatedTokens": 1733,
+    "estimatedCost": 0.015597,
+    "timestamp": "2026-01-15T10:02:35.787Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 38,
+    "toolCount": 6,
+    "estimatedTokens": 1359,
+    "estimatedCost": 0.012230999999999999,
+    "timestamp": "2026-01-15T10:08:31.757Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 93,
+    "toolCount": 12,
+    "estimatedTokens": 4084,
+    "estimatedCost": 0.036756,
+    "timestamp": "2026-01-15T10:12:03.992Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 11,
+    "toolCount": 2,
+    "estimatedTokens": 381,
+    "estimatedCost": 0.0034289999999999998,
+    "timestamp": "2026-01-15T10:12:34.942Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 92,
+    "toolCount": 16,
+    "estimatedTokens": 10392,
+    "estimatedCost": 0.09352799999999999,
+    "timestamp": "2026-01-15T10:14:59.870Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 807,
+    "toolCount": 125,
+    "estimatedTokens": 34047,
+    "estimatedCost": 0.30642299999999995,
+    "timestamp": "2026-01-15T10:28:41.498Z"
+  },
+  {
+    "type": "session.created",
+    "directory": "/Volumes/DevHub_ext/factory/toolbox/opencode-nanobanana",
+    "timestamp": "2026-01-15T10:34:28.721Z"
+  },
+  {
+    "type": "session.created",
+    "directory": "/Volumes/DevHub_ext/factory/toolbox/opencode-nanobanana",
+    "timestamp": "2026-01-15T10:36:10.335Z"
+  },
+  {
+    "type": "session.created",
+    "directory": "/Volumes/DevHub_ext/factory/toolbox/opencode-nanobanana",
+    "timestamp": "2026-01-15T10:38:16.750Z"
+  },
+  {
+    "type": "session.created",
+    "directory": "/Volumes/DevHub_ext/factory/toolbox/opencode-nanobanana",
+    "timestamp": "2026-01-15T10:40:01.249Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 593,
+    "toolCount": 32,
+    "estimatedTokens": 15598,
+    "estimatedCost": 0.140382,
+    "timestamp": "2026-01-15T10:42:00.832Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 274,
+    "toolCount": 35,
+    "estimatedTokens": 17116,
+    "estimatedCost": 0.154044,
+    "timestamp": "2026-01-15T11:04:53.103Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 442,
+    "toolCount": 22,
+    "estimatedTokens": 7054,
+    "estimatedCost": 0.063486,
+    "timestamp": "2026-01-15T11:17:52.676Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 58,
+    "toolCount": 8,
+    "estimatedTokens": 2517,
+    "estimatedCost": 0.022652999999999996,
+    "timestamp": "2026-01-15T11:29:57.475Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 44,
+    "toolCount": 5,
+    "estimatedTokens": 1038,
+    "estimatedCost": 0.009342,
+    "timestamp": "2026-01-15T11:31:24.163Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 115,
+    "toolCount": 15,
+    "estimatedTokens": 3858,
+    "estimatedCost": 0.034721999999999996,
+    "timestamp": "2026-01-15T11:34:11.901Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 16,
+    "toolCount": 2,
+    "estimatedTokens": 359,
+    "estimatedCost": 0.0032309999999999995,
+    "timestamp": "2026-01-15T11:50:35.795Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 9,
+    "toolCount": 1,
+    "estimatedTokens": 33,
+    "estimatedCost": 0.000297,
+    "timestamp": "2026-01-15T11:53:42.357Z"
+  },
+  {
+    "type": "task.complete",
+    "duration": 14,
+    "toolCount": 1,
+    "estimatedTokens": 169,
+    "estimatedCost": 0.001521,
+    "timestamp": "2026-01-15T11:55:09.978Z"
+  }
+]

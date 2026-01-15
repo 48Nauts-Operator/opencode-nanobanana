@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ralph Report - opencode-nanobanana</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 { 
+      font-size: 2.5rem; 
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtitle { color: #94a3b8; margin-bottom: 2rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      backdrop-filter: blur(10px);
+    }
+    .card-title { font-size: 0.875rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    .card-value { font-size: 2rem; font-weight: 700; }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      background: #3b82f622;
+      color: #3b82f6;
+      border: 1px solid #3b82f644;
+    }
+    .section { margin-bottom: 2rem; }
+    .section-title { font-size: 1.25rem; margin-bottom: 1rem; color: #f1f5f9; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    th { color: #94a3b8; font-weight: 500; font-size: 0.875rem; text-transform: uppercase; }
+    tr:hover { background: rgba(255,255,255,0.03); }
+    .event-type {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .event-complete { background: #22c55e22; color: #22c55e; }
+    .event-restart { background: #f59e0b22; color: #f59e0b; }
+    .event-error { background: #ef444422; color: #ef4444; }
+    .event-start { background: #3b82f622; color: #3b82f6; }
+    .event-info { background: #6b728022; color: #94a3b8; }
+    .progress-bar {
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #22c55e, #3b82f6);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+    .duration-comparison {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .faster { color: #22c55e; }
+    .slower { color: #f59e0b; }
+    .timestamp { color: #64748b; font-size: 0.875rem; }
+    .empty-state { text-align: center; padding: 3rem; color: #64748b; }
+    footer { margin-top: 3rem; text-align: center; color: #64748b; font-size: 0.875rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Ralph Report</h1>
+      <p class="subtitle">opencode-nanobanana on macos</p>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">Status</div>
+        <div class="status-badge">
+          <span>⟳</span>
+          <span>running</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Stories Completed</div>
+        <div class="card-value">14 / 32</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Total Time</div>
+        <div class="card-value">1h 15m</div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 14%"></div>
+        </div>
+        <div style="font-size: 0.875rem; color: #64748b; margin-top: 0.25rem;">vs 8h 35m estimated</div>
+      </div>
+      <div class="card">
+        <div class="card-title">ETA</div>
+        <div class="card-value" style="color: #60a5fa">10m</div>
+        <div style="font-size: 0.875rem; color: #64748b; margin-top: 0.25rem;">~2026-01-15 13:58 (high)</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">Files Changed</div>
+        <div class="card-value">121</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Lines Added</div>
+        <div class="card-value" style="color: #22c55e">+6392</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Lines Removed</div>
+        <div class="card-value" style="color: #ef4444">-217</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Restarts</div>
+        <div class="card-value" style="color: #22c55e">0</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">Total Cost</div>
+        <div class="card-value" style="color: #a78bfa">$0.00</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Input Tokens</div>
+        <div class="card-value">0</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Output Tokens</div>
+        <div class="card-value">0</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Total Tokens</div>
+        <div class="card-value">0</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Stories Completed</h2>
+      <div class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>Story</th>
+              <th>Duration</th>
+              <th>Estimate</th>
+              <th>Diff</th>
+              <th>Files</th>
+              <th>Lines</th>
+              <th>Completed</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>PLATFORM-002</strong></td>
+              <td>5m</td>
+              <td>45m</td>
+              <td class="faster">-40m</td>
+              <td>13</td>
+              <td><span class="faster">+539</span>/<span class="slower">-50</span></td>
+              <td class="timestamp">2026-01-15T12:38:19+01:00</td>
+            </tr>
+            <tr>
+              <td><strong>APP-002</strong></td>
+              <td>5m</td>
+              <td>30m</td>
+              <td class="faster">-25m</td>
+              <td>4</td>
+              <td><span class="faster">+606</span>/<span class="slower">-1</span></td>
+              <td class="timestamp">2026-01-15T12:43:20+01:00</td>
+            </tr>
+            <tr>
+              <td><strong>APP-004</strong></td>
+              <td>5m</td>
+              <td>30m</td>
+              <td class="faster">-25m</td>
+              <td>3</td>
+              <td><span class="faster">+247</span>/<span class="slower">-2</span></td>
+              <td class="timestamp">2026-01-15T12:48:21+01:00</td>
+            </tr>
+            <tr>
+              <td><strong>APP-005</strong></td>
+              <td>5m</td>
+              <td>30m</td>
+              <td class="faster">-25m</td>
+              <td>12</td>
+              <td><span class="faster">+779</span>/<span class="slower">-22</span></td>
+              <td class="timestamp">2026-01-15T12:53:22+01:00</td>
+            </tr>
+            <tr>
+              <td><strong>ANALYZE-002</strong></td>
+              <td>5m</td>
+              <td>45m</td>
+              <td class="faster">-40m</td>
+              <td>14</td>
+              <td><span class="faster">+478</span>/<span class="slower">-28</span></td>
+              <td class="timestamp">2026-01-15T12:58:24+01:00</td>
+            </tr>
+            <tr>
+              <td><strong>DESIGN-001</strong></td>
+              <td>5m</td>
+              <td>45m</td>
+              <td class="faster">-40m</td>
+              <td>6</td>
+              <td><span class="faster">+462</span>/<span class="slower">-4</span></td>
+              <td class="timestamp">2026-01-15T13:03:26+01:00</td>
+            </tr>
+            <tr>
+              <td><strong>DESIGN-002</strong></td>
+              <td>5m</td>
+              <td>45m</td>
+              <td class="faster">-40m</td>
+              <td>9</td>
+              <td><span class="faster">+638</span>/<span class="slower">-13</span></td>
+              <td class="timestamp">2026-01-15T13:08:27+01:00</td>
+            </tr>
+            <tr>
+              <td><strong>DOCS-002</strong></td>
+              <td>5m</td>
+              <td>20m</td>
+              <td class="faster">-15m</td>
+              <td>7</td>
+              <td><span class="faster">+266</span>/<span class="slower">-13</span></td>
+              <td class="timestamp">2026-01-15T13:13:28+01:00</td>
+            </tr>
+            <tr>
+              <td><strong>DOCS-003</strong></td>
+              <td>5m</td>
+              <td>20m</td>
+              <td class="faster">-15m</td>
+              <td>9</td>
+              <td><span class="faster">+381</span>/<span class="slower">-14</span></td>
+              <td class="timestamp">2026-01-15T13:18:29+01:00</td>
+            </tr>
+            <tr>
+              <td><strong>DOCS-004</strong></td>
+              <td>5m</td>
+              <td>20m</td>
+              <td class="faster">-15m</td>
+              <td>5</td>
+              <td><span class="faster">+180</span>/<span class="slower">-4</span></td>
+              <td class="timestamp">2026-01-15T13:23:30+01:00</td>
+            </tr>
+            <tr>
+              <td><strong>VIDEO-002</strong></td>
+              <td>5m</td>
+              <td>60m</td>
+              <td class="faster">-55m</td>
+              <td>11</td>
+              <td><span class="faster">+510</span>/<span class="slower">-16</span></td>
+              <td class="timestamp">2026-01-15T13:28:31+01:00</td>
+            </tr>
+            <tr>
+              <td><strong>PLATFORM-005</strong></td>
+              <td>5m</td>
+              <td>45m</td>
+              <td class="faster">-40m</td>
+              <td>8</td>
+              <td><span class="faster">+242</span>/<span class="slower">-14</span></td>
+              <td class="timestamp">2026-01-15T13:33:32+01:00</td>
+            </tr>
+            <tr>
+              <td><strong>INTEGRATION-001</strong></td>
+              <td>5m</td>
+              <td>60m</td>
+              <td class="faster">-55m</td>
+              <td>7</td>
+              <td><span class="faster">+193</span>/<span class="slower">-24</span></td>
+              <td class="timestamp">2026-01-15T13:38:33+01:00</td>
+            </tr>
+            <tr>
+              <td><strong>TEST-001</strong></td>
+              <td>10m</td>
+              <td>20m</td>
+              <td class="faster">-10m</td>
+              <td>13</td>
+              <td><span class="faster">+871</span>/<span class="slower">-12</span></td>
+              <td class="timestamp">2026-01-15T13:48:34+01:00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Restarts</h2>
+      <div class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>Reason</th>
+              <th>Story</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="3" class="empty-state">No restarts - clean run!</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Event Timeline</h2>
+      <div class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Message</th>
+              <th>Story</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="event-type event-start">started</span></td>
+              <td>Monitor started for opencode-nanobanana</td>
+              <td></td>
+              <td class="timestamp">2026-01-15T11:09:51+01:00</td>
+            </tr>
+            <tr>
+              <td><span class="event-type event-start">started</span></td>
+              <td>Monitor started for opencode-nanobanana</td>
+              <td></td>
+              <td class="timestamp">2026-01-15T11:12:34+01:00</td>
+            </tr>
+            <tr>
+              <td><span class="event-type event-start">started</span></td>
+              <td>Monitor started for opencode-nanobanana</td>
+              <td></td>
+              <td class="timestamp">2026-01-15T12:10:16+01:00</td>
+            </tr>
+            <tr>
+              <td><span class="event-type event-start">started</span></td>
+              <td>Monitor started for opencode-nanobanana</td>
+              <td></td>
+              <td class="timestamp">2026-01-15T12:30:55+01:00</td>
+            </tr>
+            <tr>
+              <td><span class="event-type event-start">started</span></td>
+              <td>Monitor started for opencode-nanobanana</td>
+              <td></td>
+              <td class="timestamp">2026-01-15T12:33:15+01:00</td>
+            </tr>
+            <tr>
+              <td><span class="event-type event-start">start</span></td>
+              <td>Ralph started</td>
+              <td>PLATFORM-002</td>
+              <td class="timestamp">2026-01-15T12:33:19+01:00</td>
+            </tr>
+            <tr>
+              <td><span class="event-type event-complete">story_complete</span></td>
+              <td>Completed: PLATFORM-002 in 5m</td>
+              <td>PLATFORM-002</td>
+              <td class="timestamp">2026-01-15T12:38:19+01:00</td>
+            </tr>
+            <tr>
+              <td><span class="event-type event-complete">story_complete</span></td>
+              <td>Completed: APP-002 in 5m</td>
+              <td>APP-002</td>
+              <td class="timestamp">2026-01-15T12:43:20+01:00</td>
+            </tr>
+            <tr>
+              <td><span class="event-type event-complete">story_complete</span></td>
+              <td>Completed: APP-004 in 5m</td>
+              <td>APP-004</td>
+              <td class="timestamp">2026-01-15T12:48:21+01:00</td>
+            </tr>
+            <tr>
+              <td><span class="event-type event-complete">story_complete</span></td>
+              <td>Completed: APP-005 in 5m</td>
+              <td>APP-005</td>
+              <td class="timestamp">2026-01-15T12:53:22+01:00</td>
+            </tr>
+            <tr>
+              <td><span class="event-type event-complete">story_complete</span></td>
+              <td>Completed: ANALYZE-002 in 5m</td>
+              <td>ANALYZE-002</td>
+              <td class="timestamp">2026-01-15T12:58:24+01:00</td>
+            </tr>
+            <tr>
+              <td><span class="event-type event-complete">story_complete</span></td>
+              <td>Completed: DESIGN-001 in 5m</td>
+              <td>DESIGN-001</td>
+              <td class="timestamp">2026-01-15T13:03:26+01:00</td>
+            </tr>
+            <tr>
+              <td><span class="event-type event-complete">story_complete</span></td>
+              <td>Completed: DESIGN-002 in 5m</td>
+              <td>DESIGN-002</td>
+              <td class="timestamp">2026-01-15T13:08:27+01:00</td>
+            </tr>
+            <tr>
+              <td><span class="event-type event-complete">story_complete</span></td>
+              <td>Completed: DOCS-002 in 5m</td>
+              <td>DOCS-002</td>
+              <td class="timestamp">2026-01-15T13:13:28+01:00</td>
+            </tr>
+            <tr>
+              <td><span class="event-type event-complete">story_complete</span></td>
+              <td>Completed: DOCS-003 in 5m</td>
+              <td>DOCS-003</td>
+              <td class="timestamp">2026-01-15T13:18:29+01:00</td>
+            </tr>
+            <tr>
+              <td><span class="event-type event-complete">story_complete</span></td>
+              <td>Completed: DOCS-004 in 5m</td>
+              <td>DOCS-004</td>
+              <td class="timestamp">2026-01-15T13:23:30+01:00</td>
+            </tr>
+            <tr>
+              <td><span class="event-type event-complete">story_complete</span></td>
+              <td>Completed: VIDEO-002 in 5m</td>
+              <td>VIDEO-002</td>
+              <td class="timestamp">2026-01-15T13:28:31+01:00</td>
+            </tr>
+            <tr>
+              <td><span class="event-type event-complete">story_complete</span></td>
+              <td>Completed: PLATFORM-005 in 5m</td>
+              <td>PLATFORM-005</td>
+              <td class="timestamp">2026-01-15T13:33:32+01:00</td>
+            </tr>
+            <tr>
+              <td><span class="event-type event-complete">story_complete</span></td>
+              <td>Completed: INTEGRATION-001 in 5m</td>
+              <td>INTEGRATION-001</td>
+              <td class="timestamp">2026-01-15T13:38:33+01:00</td>
+            </tr>
+            <tr>
+              <td><span class="event-type event-complete">story_complete</span></td>
+              <td>Completed: TEST-001 in 10m</td>
+              <td>TEST-001</td>
+              <td class="timestamp">2026-01-15T13:48:34+01:00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <footer>
+      <p>Generated by Ralph Monitor on 2026-01-15 13:48:35</p>
+      <p>Started: 2026-01-15T12:33:15+01:00 | Ended: running</p>
+    </footer>
+  </div>
+</body>
+</html>
