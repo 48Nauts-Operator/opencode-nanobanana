@@ -97,3 +97,18 @@ Started: Thu Jan 15 22:01:15 CET 2026
   - Use emojis consistently for visual categorization: 🎬 for storyboard ops, 📹 for scenes, 🎞️ for stitching, ✨ for completion
   - Always show output path at the end so users know where to find their result
 ---
+## 2026-01-15 22:42 - EXTEND-001
+- Implemented extend_video tool for extending existing videos with new content
+- Files changed:
+  - src/tools/video/extend-video.ts (new) - Complete extend video tool implementation
+  - src/index.ts (modified) - Added extend-video export
+- **Learnings for future iterations:**
+  - Tools follow consistent pattern: options interface, result interface, main function
+  - GeminiProvider.extendVideo() wraps Veo 3.1 video extension API with automatic polling
+  - Read input video with readFile from 'fs/promises', pass buffer to provider
+  - Progress logging pattern from STORY-004 is valuable for all long-running operations
+  - Tool exports must be added to src/index.ts for public API access
+  - TypeScript strict mode validates all option types and return types
+  - Use tmpdir() for default output paths with timestamp to avoid collisions
+  - The extend video API is simpler than generate - just video buffer + prompt + options
+---
