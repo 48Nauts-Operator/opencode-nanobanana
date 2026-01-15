@@ -461,7 +461,7 @@
         "Configuration options documented",
         "Platform support matrix"
       ],
-      "passes": false
+      "passes": true
     }
   ]
 }
