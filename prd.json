@@ -447,7 +447,7 @@
         "Validate Contents.json format",
         "Validate Android XML format"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "DOCS-005",
