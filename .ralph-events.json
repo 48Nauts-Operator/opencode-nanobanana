@@ -1,0 +1,29 @@
+{
+  "started": "2026-01-15T12:10:16+01:00",
+  "project": "opencode-nanobanana",
+  "platform": "macos",
+  "events": [
+    {
+      "timestamp": "2026-01-15T11:09:51+01:00",
+      "type": "started",
+      "message": "Monitor started for opencode-nanobanana",
+      "story": ""
+    },
+    {
+      "timestamp": "2026-01-15T11:12:34+01:00",
+      "type": "started",
+      "message": "Monitor started for opencode-nanobanana",
+      "story": ""
+    },
+    {
+      "timestamp": "2026-01-15T12:10:16+01:00",
+      "type": "started",
+      "message": "Monitor started for opencode-nanobanana",
+      "story": ""
+    }
+  ],
+  "stories_completed": [],
+  "restarts": [],
+  "total_restarts": 0,
+  "final_status": "running"
+}

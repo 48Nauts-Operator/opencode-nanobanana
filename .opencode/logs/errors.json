@@ -1,0 +1,116 @@
+[
+  {
+    "tool": "webfetch",
+    "output": "#!/usr/bin/env node\n\n/**\n * @license\n * Copyright 2025 Google LLC\n * SPDX-License-Identifier: Apache-2.0\n */\n\nimport { Server } from '@modelcontextprotocol/sdk/server/index.js';\nimport { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';\nimport {\n  CallToolRequestSchema,\n  ListToolsRequestSchema,\n} from '@modelcontextprotocol/sdk/types.js';\nimport { ImageGenerator } from './imageGenerator.js';\nimport {\n  ImageGenerationRequest,\n  IconPromptArgs,\n  PatternPromptArgs,\n  DiagramPromptArgs,\n} from './types.js';\n\nclass NanoBananaServer {\n  private server: Server;\n  private imageGenerator!: ImageGenerator;\n  private initializationError: Error | null = null;\n\n  constructor() {\n    this.server = new Server(\n      {\n        name: 'nanobanana-server',\n        version: '1.0.0',\n      },\n      {\n        capabilities: {\n          tools: {},\n        },\n      },\n    );\n\n    this.setupToolHandlers();\n    this.setupErrorHandling();\n\n    try {\n      const authConfig = ImageGenerato... [truncated]",
+    "indicator": "error:",
+    "timestamp": "2026-01-14T22:22:21.884Z"
+  },
+  {
+    "tool": "read",
+    "output": "<file>\n00001| #!/bin/bash\n00002| # Ralph Monitor - Cross-platform health monitor and auto-restart\n00003| # Works on: macOS and Linux (Ubuntu)\n00004| # Usage: ./ralph-monitor.sh [project_dir] [check_interval_minutes]\n00005| #\n00006| # Examples:\n00007| #   ./ralph-monitor.sh                    # Use current directory, 5 min interval\n00008| #   ./ralph-monitor.sh /path/to/project   # Specific project, 5 min interval\n00009| #   ./ralph-monitor.sh . 10               # Current directory, 10 min interval\n00010| \n00011| set -e\n00012| \n00013| # =============================================================================\n00014| # CONFIGURATION\n00015| # =============================================================================\n00016| \n00017| PROJECT_DIR=\"${1:-.}\"\n00018| CHECK_INTERVAL=\"${2:-5}\"\n00019| \n00020| # Resolve to absolute path\n00021| PROJECT_DIR=\"$(cd \"$PROJECT_DIR\" 2>/dev/null && pwd)\" || {\n00022|   echo \"ERROR: Cannot access directory: $1\"\n00023|   exit 1\n00024| }\n00025| \n00026| SC... [truncated]",
+    "indicator": "error:",
+    "timestamp": "2026-01-15T07:23:40.532Z"
+  },
+  {
+    "tool": "read",
+    "output": "<file>\n01051|   log \"INFO\" \"Backed up progress to $backup_dir\"\n01052| }\n01053| \n01054| restart_ralph() {\n01055|   local reason=\"$1\"\n01056|   \n01057|   log \"WARN\" \"Restarting Ralph: $reason\"\n01058|   backup_progress\n01059|   \n01060|   # Kill existing session\n01061|   tmux kill-session -t ralph 2>/dev/null || true\n01062|   sleep 2\n01063|   \n01064|   # Start new session\n01065|   tmux new-session -d -s ralph -c \"$PROJECT_DIR\" \"$RALPH_SCRIPT $RALPH_ITERATIONS\"\n01066|   sleep 3\n01067|   \n01068|   # Verify restart\n01069|   if check_stage1_session; then\n01070|     log \"OK\" \"Ralph restarted successfully\"\n01071|     notify \"Ralph restarted - $reason\"\n01072|     return 0\n01073|   else\n01074|     log \"ERROR\" \"Failed to restart Ralph\"\n01075|     notify \"ERROR: Ralph failed to restart!\"\n01076|     return 1\n01077|   fi\n01078| }\n01079| \n01080| start_ralph() {\n01081|   if check_stage1_session; then\n01082|     log \"INFO\" \"Ralph already running\"\n01083|     return 0\n01084|   fi\n01085|   \n01086|   log \"INF... [truncated]",
+    "indicator": "error:",
+    "timestamp": "2026-01-15T07:38:50.433Z"
+  },
+  {
+    "tool": "bash",
+    "output": "ERROR: Cannot access directory: --report\n",
+    "indicator": "error:",
+    "timestamp": "2026-01-15T07:41:48.426Z"
+  },
+  {
+    "tool": "read",
+    "output": "<file>\n00015| # =============================================================================\n00016| \n00017| PROJECT_DIR=\"${1:-.}\"\n00018| CHECK_INTERVAL=\"${2:-5}\"\n00019| \n00020| # NTFY Push Notifications (optional)\n00021| # Set these to enable push notifications to your ntfy server\n00022| # Leave empty to disable ntfy notifications\n00023| NTFY_SERVER=\"${NTFY_SERVER:-}\"\n00024| NTFY_TOPIC=\"${NTFY_TOPIC:-}\"\n00025| NTFY_ENABLED=\"${NTFY_ENABLED:-false}\"\n00026| \n00027| # Resolve to absolute path\n00028| PROJECT_DIR=\"$(cd \"$PROJECT_DIR\" 2>/dev/null && pwd)\" || {\n00029|   echo \"ERROR: Cannot access directory: $1\"\n00030|   exit 1\n00031| }\n00032| \n00033| SCRIPT_DIR=\"$(cd \"$(dirname \"${BASH_SOURCE[0]}\")\" && pwd)\"\n00034| LOG_FILE=\"$PROJECT_DIR/ralph-monitor.log\"\n00035| TIMING_FILE=\"$PROJECT_DIR/ralph-timing.json\"\n00036| STATE_FILE=\"$PROJECT_DIR/.ralph-monitor-state.json\"\n00037| EVENTS_FILE=\"$PROJECT_DIR/.ralph-events.json\"\n00038| REPORT_FILE=\"$PROJECT_DIR/ralph-report.html\"\n00039| RALPH_SCRIPT=\"$PR... [truncated]",
+    "indicator": "error:",
+    "timestamp": "2026-01-15T07:41:54.634Z"
+  },
+  {
+    "tool": "read",
+    "output": "<file>\n01761|     notify \"ERROR: Ralph failed to restart!\"\n01762|     return 1\n01763|   fi\n01764| }\n01765| \n01766| start_ralph() {\n01767|   if check_stage1_session; then\n01768|     log \"INFO\" \"Ralph already running\"\n01769|     return 0\n01770|   fi\n01771|   \n01772|   log \"INFO\" \"Starting Ralph...\"\n01773|   tmux new-session -d -s ralph -c \"$PROJECT_DIR\" \"$RALPH_SCRIPT --agent-only $PROJECT_DIR $RALPH_ITERATIONS\"\n01774|   sleep 3\n01775|   \n01776|   if check_stage1_session; then\n01777|     log \"OK\" \"Ralph started successfully\"\n01778|     notify \"Ralph started\"\n01779|     return 0\n01780|   else\n01781|     log \"ERROR\" \"Failed to start Ralph\"\n01782|     return 1\n01783|   fi\n01784| }\n01785| \n01786| # =============================================================================\n01787| # STUCK DETECTION\n01788| # =============================================================================\n01789| \n01790| check_story_stuck() {\n01791|   local story=\"$1\"\n01792|   local start_time=\"$2\"\n01793|   local... [truncated]",
+    "indicator": "error:",
+    "timestamp": "2026-01-15T10:17:45.581Z"
+  },
+  {
+    "tool": "bash",
+    "output": "\u001b[91m\u001b[1mError: \u001b[0mSession not found\n",
+    "indicator": "error:",
+    "timestamp": "2026-01-15T10:19:16.755Z"
+  },
+  {
+    "tool": "bash",
+    "output": "\u001b[91m\u001b[1mError: \u001b[0mSession not found\n",
+    "indicator": "error:",
+    "timestamp": "2026-01-15T10:19:33.157Z"
+  },
+  {
+    "tool": "bash",
+    "output": "\u001b[91m\u001b[1mError: \u001b[0mSession not found\n",
+    "indicator": "error:",
+    "timestamp": "2026-01-15T10:19:42.342Z"
+  },
+  {
+    "tool": "bash",
+    "output": "\u001b[91m\u001b[1mError: \u001b[0mSession not found\n",
+    "indicator": "error:",
+    "timestamp": "2026-01-15T10:21:11.985Z"
+  },
+  {
+    "tool": "bash",
+    "output": "\u001b[91m\u001b[1mError: \u001b[0mSession not found\n",
+    "indicator": "error:",
+    "timestamp": "2026-01-15T10:21:26.913Z"
+  },
+  {
+    "tool": "bash",
+    "output": "\u001b[91m\u001b[1mError: \u001b[0mSession not found\n",
+    "indicator": "error:",
+    "timestamp": "2026-01-15T10:21:32.880Z"
+  },
+  {
+    "tool": "bash",
+    "output": "fatal: not a git repository (or any parent up to mount point /Volumes)\nStopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).\n",
+    "indicator": "fatal:",
+    "timestamp": "2026-01-15T10:21:55.865Z"
+  },
+  {
+    "tool": "bash",
+    "output": "fatal: not a git repository (or any parent up to mount point /Volumes)\nStopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).\n",
+    "indicator": "fatal:",
+    "timestamp": "2026-01-15T10:21:56.524Z"
+  },
+  {
+    "tool": "interactive_bash",
+    "output": "Error: command kill-session: too many arguments (need at most 0)",
+    "indicator": "error:",
+    "timestamp": "2026-01-15T10:28:16.114Z"
+  },
+  {
+    "tool": "bash",
+    "output": "title:\topencode run fails with 'Session not found' (1.1.16)\nstate:\tOPEN\nauthor:\tjayhen\nlabels:\t\ncomments:\t3\nassignees:\trekram1-node\nprojects:\t\nmilestone:\t\nnumber:\t8502\n--\n## Description\n\nThe `opencode run` command fails immediately with \"Session not found\" error. This affects all variations of the command.\n\n## Environment\n- opencode version: 1.1.16\n- macOS (Apple Silicon)\n- Installed via Homebrew\n\n## Reproduction Steps\n\n```bash\n# Basic usage\nopencode run \"Hello\"\n# Output: Error: Session not found\n\n# With model\nopencode run \"Hello\" -m anthropic/claude-haiku-4-5-20251001\n# Output: Error: Session not found\n\n# With agent\nopencode run \"Hello\" --agent build-haiku\n# Output: Error: Session not found\n\n# From clean directory\ncd /tmp && opencode run \"Hello\"\n# Output: Error: Session not found\n\n# With explicit port\nopencode run \"Hello\" --port 14567\n# Output: Error: Session not found\n```\n\n## Debug Logs\n\nRunning with `--print-logs` shows:\n```\nINFO  ... service=file.watcher platform=darwin backend=fs-... [truncated]",
+    "indicator": "error:",
+    "timestamp": "2026-01-15T10:32:32.470Z"
+  },
+  {
+    "tool": "bash",
+    "output": "title:\topencode run hangs forever on API errors (breaks CLI/automation integrations)\nstate:\tOPEN\nauthor:\tEivMeyer\nlabels:\t\ncomments:\t2\nassignees:\trekram1-node\nprojects:\t\nmilestone:\t\nnumber:\t8203\n--\n## Bug Description\n\nWhen `opencode run` encounters an API error (e.g., 429 rate limit), it logs the error but **never exits** - it hangs indefinitely. This breaks any CLI tool or automation system that spawns opencode as a subprocess.\n\n## Reproduction\n\n```bash\n# With an expired/rate-limited account:\ntimeout 30 opencode run \"what is 1+1\"\n# Result: hangs for 30 seconds, exit code 124 (timeout)\n```\n\n## Expected Behavior\n\nopencode should **fail fast** with a non-zero exit code and clear error message:\n\n```\nError: API rate limited (429). Please check your subscription status.\nExit code: 1\n```\n\n## Actual Behavior\n\nopencode logs the error internally but continues running forever:\n\n```\nERROR service=llm error={\"statusCode\":429,...} \n# Then hangs indefinitely - no exit, no output to user\n```\n\n## Impa... [truncated]",
+    "indicator": "error:",
+    "timestamp": "2026-01-15T10:32:37.308Z"
+  },
+  {
+    "tool": "bash",
+    "output": "8502\tOPEN\topencode run fails with 'Session not found' (1.1.16)\t\t2026-01-14T20:24:15Z\n7773\tOPEN\tService crashes on missing session file (NotFoundError)\tweb\t2026-01-14T10:28:26Z\n7535\tOPEN\t[FEATURE]: Session logging as OpenAI messages\tdiscussion\t2026-01-09T23:10:29Z\n6486\tOPEN\tError \"reasoning part reasoning-0 not found\" from tool calls using GLM 4.5 Air\tbug, windows\t2026-01-09T08:55:12Z\n7965\tOPEN\tAutonaming of sessions does not work\tbug, windows\t2026-01-12T09:59:05Z\n6279\tOPEN\tFeature: Pass session identifier to MCP servers\t\t2025-12-29T14:00:06Z\n7080\tOPEN\tSkill tool returns `[object Promise]` instead of skill list\tbug\t2026-01-06T13:18:30Z\n7106\tOPEN\topencode import fails for valid /share link (HTTP 200) with “Failed to fetch share data: Not Found”\tbug, help-wanted, windows\t2026-01-06T23:09:08Z\n7061\tOPEN\topentui: fatal: Anchor does not exist\tbug, opentui\t2026-01-12T15:51:13Z\n7699\tOPEN\t[BUG] Switching between ChatGPT Codex to OpenAI API results in errors\tbug\t2026-01-11T19:25:20Z\n",
+    "indicator": "fatal:",
+    "timestamp": "2026-01-15T10:32:47.781Z"
+  },
+  {
+    "tool": "bash",
+    "output": "\n\u001b[0;36m╔══════════════════════════════════════╗\u001b[0m\n\u001b[0;36m║      Ralph Ultra - AI Agent Loop     ║\u001b[0m\n\u001b[0;36m╚══════════════════════════════════════╝\u001b[0m\n\n\u001b[0;34m[INFO]\u001b[0m Project: /Volumes/DevHub_ext/factory/toolbox/opencode-nanobanana\n\u001b[0;34m[INFO]\u001b[0m Max iterations: 93\n\u001b[0;34m[INFO]\u001b[0m Logs: /Volumes/DevHub_ext/factory/toolbox/opencode-nanobanana/logs\n\n\u001b[0;34m[INFO]\u001b[0m Using CLI: claude\n\u001b[0;34m[INFO]\u001b[0m Starting Ralph Ultra with health monitoring...\n\u001b[0;34m[INFO]\u001b[0m Monitor runs as separate background process\n\n\u001b[0;32m[OK]\u001b[0m Monitor started (PID: 266)\n\u001b[0;34m[INFO]\u001b[0m Monitor log: /Volumes/DevHub_ext/factory/toolbox/opencode-nanobanana/logs/ralph-monitor-runner.log\n\n\u001b[0;34m[INFO]\u001b[0m Attaching to Ralph session (Ctrl+B, D to detach)...\nopen terminal failed: not a terminal\n",
+    "indicator": "failed:",
+    "timestamp": "2026-01-15T11:10:21.277Z"
+  }
+]

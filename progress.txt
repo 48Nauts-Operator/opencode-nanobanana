@@ -1,0 +1,17 @@
+# Ralph Progress Log
+Started: 2026-01-15
+Project: opencode-visual-toolkit
+---
+
+## Codebase Patterns
+- Use `tool()` helper from @opencode-ai/plugin for all tool definitions
+- Use Sharp for all image resize/crop/optimize operations
+- Use Zod schemas via `tool.schema.*` for parameter validation
+- Save all generated assets to `./generated-assets/` by default
+- iOS icons go to `AppIcon.appiconset/` with `Contents.json`
+- Android icons go to `mipmap-{density}/` with `ic_launcher.xml`
+- Always generate 1024x1024 master first, then downscale (never upscale)
+- Direct Gemini API calls only - no intermediary services
+
+---
+
