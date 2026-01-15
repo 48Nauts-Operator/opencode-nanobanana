@@ -333,7 +333,7 @@
         "Parameters: projectName (required), tagline (optional), style (optional: gradient|minimal|tech)",
         "Generates 1280x640 banner image"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "DOCS-004",

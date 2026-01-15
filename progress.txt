@@ -417,3 +417,29 @@ Project: opencode-visual-toolkit
   - Tool pattern matches architecture-diagram.ts: format detection → API or template generation
   - All quality checks pass (typecheck, lint) - ready for integration
 ---
+## 2026-01-15 13:15 - DOCS-003
+- Implemented generate_readme_banner tool for professional GitHub README banners
+- Files changed:
+  - src/tools/docs/readme-banner.ts (new) - Complete README banner generation tool
+  - prd.json - Marked DOCS-003 as passes: true
+- **Learnings for future iterations:**
+  - README banners follow same Gemini generation pattern as other documentation tools
+  - Three style options: gradient (modern colorful), minimal (clean simple), tech (developer-focused)
+  - Standard GitHub banner size: 1280x640 (2:1 aspect ratio) - use 16:9 as closest Gemini option
+  - Tool args schema pattern: Define separately with `as const`, use in tool({args: ...})
+  - Export pattern: `export const toolName: ToolDefinition = tool({...})`
+  - TypeScript strict mode requires explicit type assertions for args when destructuring
+  - Pattern: `const param = args.param as Type;` for required fields
+  - Pattern: `const param = (args.param as Type | undefined) || defaultValue;` for optional fields
+  - buildBannerPrompt() helper constructs style-specific prompts (gradient, minimal, tech)
+  - Each style has distinct visual characteristics:
+    - gradient: Modern gradients (purple-blue, teal-cyan), bold white text, geometric shapes
+    - minimal: Clean white/gray background, sans-serif typography, whitespace focus
+    - tech: Dark background (blue/charcoal), monospace fonts, code elements, terminal aesthetics
+  - Prompt structure includes: base description + style-specific guide + requirements
+  - Requirements emphasize: wide aspect ratio, readability, centered composition, professional quality
+  - Output filename uses sanitized project name: `${projectName.toLowerCase().replace(/\s+/g, '-')}-banner`
+  - User message includes style, size, file path, and markdown snippet for README.md integration
+  - This completes the third of four docs tools (architecture, sequence, banner, social preview pending)
+  - All quality checks pass (typecheck, lint) - ready for integration
+---
