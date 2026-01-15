@@ -371,7 +371,7 @@
         "Animates static image",
         "Returns video file path"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "PLATFORM-003",

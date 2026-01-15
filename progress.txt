@@ -488,3 +488,25 @@ Project: opencode-visual-toolkit
   - All quality checks pass (typecheck, lint) - ready for integration
   - This is the first of two video tools (generate-video, image-to-video pending)
 ---
+## 2026-01-15 14:30 - VIDEO-002
+- Implemented image_to_video tool for animating static images into videos
+- Files changed:
+  - src/tools/video/image-to-video.ts (new) - Complete image-to-video tool
+  - src/providers/gemini.ts (modified) - Added animateImage() method
+  - prd.json - Marked VIDEO-002 as passes: true
+- **Learnings for future iterations:**
+  - Image-to-video animation uses Veo 2.0 model, same as generate_video tool
+  - animateImage() method follows same pattern as generateVideo() but includes image input
+  - Build parts array with image first (inlineData), then motion prompt (text)
+  - Motion parameter is optional - default to "add subtle natural movement and animation"
+  - Image buffer must be converted to base64 and include MIME type detection
+  - Use detectMimeType() helper to determine correct MIME type for image
+  - Veo accepts multiple aspect ratios: 16:9, 9:16, 1:1, 4:3, 3:4
+  - Default video parameters same as generate_video: duration=5s, aspectRatio='16:9'
+  - Tool pattern remains consistent: load image → animate with Gemini → save video → return message
+  - Error handling covers: API key missing, file not found, animation failures
+  - Response extraction follows same pattern as generateVideo() - check candidates and parts
+  - This completes the video generation suite: generate_video (text-to-video) + image_to_video (image animation)
+  - All quality checks pass (typecheck, lint) - ready for integration
+---
+
