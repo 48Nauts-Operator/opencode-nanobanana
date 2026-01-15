@@ -56,3 +56,17 @@ Started: Thu Jan 15 22:01:15 CET 2026
   - Console.log progress messages help users track long-running operations
   - The style option is prepended to each scene prompt for consistent styling
 ---
+## 2026-01-15 23:15 - STORY-002
+- Implemented character consistency feature for storyboard videos
+- Files changed:
+  - src/tools/video/storyboard-video.ts (modified) - Added characterDescription and referenceImages options
+- **Learnings for future iterations:**
+  - Character consistency uses two complementary approaches: text description prepended to prompts + reference images
+  - Reference images are loaded from file paths and converted to ReferenceImage objects with buffers
+  - GeminiProvider.generateVideoWithReferences() uses the same options as generateVideo()
+  - When both characterDescription and referenceImages are provided, they work together for maximum consistency
+  - The prompt building order is: characterDescription + style + scene description
+  - Import readFile from 'fs/promises' to load reference image buffers
+  - Reference images max limit is 3 (validated before loading)
+  - Console.log messages help users understand what consistency features are being used
+---
