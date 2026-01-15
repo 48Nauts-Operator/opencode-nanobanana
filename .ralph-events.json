@@ -74,6 +74,12 @@
       "type": "story_complete",
       "message": "Completed: DESIGN-001 in 5m",
       "story": "DESIGN-001"
+    },
+    {
+      "timestamp": "2026-01-15T13:08:27+01:00",
+      "type": "story_complete",
+      "message": "Completed: DESIGN-002 in 5m",
+      "story": "DESIGN-002"
     }
   ],
   "stories_completed": [
@@ -216,6 +222,30 @@
           "progress.txt",
           "ralph-report.html",
           "src/tools/design/mockup-to-code.ts"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-01-15T13:08:27+01:00",
+      "story": "DESIGN-002",
+      "duration": 5,
+      "estimate": 45,
+      "git": {
+        "start_commit": "11daf6c",
+        "end_commit": "dc1c165",
+        "files_changed": 9,
+        "lines_added": 638,
+        "lines_removed": 13,
+        "files": [
+          ".ralph-events.json",
+          ".ralph-monitor-state.json",
+          ".ralph-timing.json",
+          "logs/notifications.jsonl",
+          "prd.json",
+          "progress.txt",
+          "ralph-report.html",
+          "src/tools/design/sketch-to-code.ts",
+          "src/tools/docs/architecture-diagram.ts"
         ]
       }
     }

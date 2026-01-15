@@ -368,3 +368,26 @@ Project: opencode-visual-toolkit
   - This completes the design-to-code tool suite: mockup-to-code (polished) + sketch-to-code (rough)
   - All quality checks pass (typecheck, lint) - ready for integration
 ---
+## 2026-01-15 00:15 - DOCS-001
+- Implemented generate_architecture_diagram tool for documentation diagrams
+- Files changed:
+  - src/tools/docs/architecture-diagram.ts (new) - Complete architecture diagram tool
+  - prd.json - Marked DOCS-001 as passes: true
+- **Learnings for future iterations:**
+  - Architecture diagrams support three formats: PNG (visual via Gemini), SVG (planned), Mermaid (text-based)
+  - Three distinct visual styles: boxes (simple box diagrams), cloud (cloud architecture), technical (detailed)
+  - Mermaid format requires no API key - provides text-based diagram code for GitHub/docs
+  - For Gemini-generated diagrams, use 16:9 aspect ratio for better architecture visualization
+  - buildArchitecturePrompt() helper constructs style-specific prompts for each visual style
+  - Style-specific prompts guide Gemini to generate appropriate visual elements:
+    - boxes: Simple rectangles, clear labels, minimal colors, professional spacing
+    - cloud: Cloud-native elements, layer separation, service icons, modern gradients
+    - technical: Component boxes with tech stack, ports/interfaces, protocols, security zones
+  - generateMermaidDiagram() creates template Mermaid code with user's description embedded
+  - Always add TypeScript null checks when splitting strings: `const firstLine = description.split('\n')[0] || description;`
+  - SVG format currently generates PNG (true SVG would require post-processing or external tools)
+  - Tool pattern remains consistent: parse args → handle format-specific logic → generate → save → return message
+  - Mermaid diagrams are great for version control (text-based) and can be rendered on GitHub
+  - This is the first of four docs tools (architecture, sequence, banner, social preview)
+  - All quality checks pass (typecheck, lint) - ready for integration
+---
