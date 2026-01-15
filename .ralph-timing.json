@@ -19,6 +19,10 @@
     "ANALYZE-002": {
       "actual": 5,
       "estimate": 45
+    },
+    "DESIGN-001": {
+      "actual": 5,
+      "estimate": 45
     }
   },
   "averages": {

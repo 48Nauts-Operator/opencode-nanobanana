@@ -68,6 +68,12 @@
       "type": "story_complete",
       "message": "Completed: ANALYZE-002 in 5m",
       "story": "ANALYZE-002"
+    },
+    {
+      "timestamp": "2026-01-15T13:03:26+01:00",
+      "type": "story_complete",
+      "message": "Completed: DESIGN-001 in 5m",
+      "story": "DESIGN-001"
     }
   ],
   "stories_completed": [
@@ -189,6 +195,27 @@
           "src/providers/gemini.ts",
           "src/tools/analyze/compare.ts",
           "src/tools/analyze/mockup.ts"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-01-15T13:03:26+01:00",
+      "story": "DESIGN-001",
+      "duration": 5,
+      "estimate": 45,
+      "git": {
+        "start_commit": "9847b17",
+        "end_commit": "11daf6c",
+        "files_changed": 6,
+        "lines_added": 462,
+        "lines_removed": 4,
+        "files": [
+          ".ralph-monitor-state.json",
+          "logs/notifications.jsonl",
+          "prd.json",
+          "progress.txt",
+          "ralph-report.html",
+          "src/tools/design/mockup-to-code.ts"
         ]
       }
     }

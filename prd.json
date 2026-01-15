@@ -309,7 +309,7 @@
         "Parameters: description (required), style (optional: boxes|cloud|technical), format (optional: png|svg|mermaid)",
         "Returns diagram image or mermaid code"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "DOCS-002",
