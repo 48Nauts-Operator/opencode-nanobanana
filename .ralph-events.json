@@ -38,9 +38,93 @@
       "type": "start",
       "message": "Ralph started",
       "story": "PLATFORM-002"
+    },
+    {
+      "timestamp": "2026-01-15T12:38:19+01:00",
+      "type": "story_complete",
+      "message": "Completed: PLATFORM-002 in 5m",
+      "story": "PLATFORM-002"
+    },
+    {
+      "timestamp": "2026-01-15T12:43:20+01:00",
+      "type": "story_complete",
+      "message": "Completed: APP-002 in 5m",
+      "story": "APP-002"
+    },
+    {
+      "timestamp": "2026-01-15T12:48:21+01:00",
+      "type": "story_complete",
+      "message": "Completed: APP-004 in 5m",
+      "story": "APP-004"
     }
   ],
-  "stories_completed": [],
+  "stories_completed": [
+    {
+      "timestamp": "2026-01-15T12:38:19+01:00",
+      "story": "PLATFORM-002",
+      "duration": 5,
+      "estimate": 45,
+      "git": {
+        "start_commit": "8edebca",
+        "end_commit": "2c964f3",
+        "files_changed": 13,
+        "lines_added": 539,
+        "lines_removed": 50,
+        "files": [
+          ".opencode/logs/daily_stats.json",
+          ".opencode/logs/errors.json",
+          ".opencode/logs/post_tool_use.json",
+          ".opencode/logs/pre_tool_use.json",
+          ".opencode/logs/sessions.json",
+          ".ralph-events.json",
+          ".ralph-monitor-state.json",
+          ".ralph-monitor.pid",
+          "logs/notifications.jsonl",
+          "prd.json",
+          "progress.txt",
+          "src/platforms/android.ts",
+          "src/tools/app-assets/app-icon.ts"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-01-15T12:43:20+01:00",
+      "story": "APP-002",
+      "duration": 5,
+      "estimate": 30,
+      "git": {
+        "start_commit": "2c964f3",
+        "end_commit": "a32cf73",
+        "files_changed": 4,
+        "lines_added": 606,
+        "lines_removed": 1,
+        "files": [
+          "prd.json",
+          "progress.txt",
+          "src/tools/app-assets/resize-devices.ts",
+          "src/tools/app-assets/screenshots.ts"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-01-15T12:48:21+01:00",
+      "story": "APP-004",
+      "duration": 5,
+      "estimate": 30,
+      "git": {
+        "start_commit": "a32cf73",
+        "end_commit": "30a5444",
+        "files_changed": 3,
+        "lines_added": 247,
+        "lines_removed": 2,
+        "files": [
+          "prd.json",
+          "progress.txt",
+          "src/tools/app-assets/device-mockup.ts"
+        ]
+      }
+    }
+  ],
   "restarts": [],
   "total_restarts": 0,
   "final_status": "running"
