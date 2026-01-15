@@ -51,6 +51,10 @@
     "INTEGRATION-001": {
       "actual": 5,
       "estimate": 60
+    },
+    "TEST-001": {
+      "actual": 10,
+      "estimate": 20
     }
   },
   "averages": {

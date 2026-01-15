@@ -116,6 +116,12 @@
       "type": "story_complete",
       "message": "Completed: INTEGRATION-001 in 5m",
       "story": "INTEGRATION-001"
+    },
+    {
+      "timestamp": "2026-01-15T13:48:34+01:00",
+      "type": "story_complete",
+      "message": "Completed: TEST-001 in 10m",
+      "story": "TEST-001"
     }
   ],
   "stories_completed": [
@@ -419,6 +425,34 @@
           "progress.txt",
           "ralph-report.html",
           "src/index.ts"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-01-15T13:48:34+01:00",
+      "story": "TEST-001",
+      "duration": 10,
+      "estimate": 20,
+      "git": {
+        "start_commit": "5984364",
+        "end_commit": "c725fe7",
+        "files_changed": 13,
+        "lines_added": 871,
+        "lines_removed": 12,
+        "files": [
+          ".ralph-events.json",
+          ".ralph-monitor-state.json",
+          ".ralph-timing.json",
+          "logs/notifications.jsonl",
+          "prd.json",
+          "progress.txt",
+          "ralph-report.html",
+          "tests/platforms/platforms.test.ts",
+          "tests/providers/gemini.test.ts",
+          "tests/setup.ts",
+          "tests/utils/file-handler.test.ts",
+          "tests/utils/image-processing.test.ts",
+          "vitest.config.ts"
         ]
       }
     }
