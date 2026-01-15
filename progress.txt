@@ -83,3 +83,17 @@ Started: Thu Jan 15 22:01:15 CET 2026
   - generateAudio option is passed directly to Veo API calls to control native audio generation
   - All acceptance criteria met: generateAudio option, backgroundMusic option, musicVolume control, proper mixing
 ---
+## 2026-01-15 22:30 - STORY-004
+- Enhanced progress reporting for storyboard video generation
+- Files changed:
+  - src/tools/video/storyboard-video.ts (modified) - Enhanced progress logging throughout
+- **Learnings for future iterations:**
+  - Progress reporting should be comprehensive and structured: initial config summary → per-scene progress → stitching phase → completion summary
+  - Use consistent formatting with indentation for hierarchical progress messages: top-level operations without indent, sub-operations with 3-space indent
+  - Show configuration upfront so users understand what's happening before long operations begin
+  - Include timing metrics in summary: total time, average per-scene time, success rate
+  - Progress format "[X/Y]" is clearer than "X/Y" when mixed with descriptive text
+  - Calculate derived metrics (avg scene time, success rate) to give users actionable insights
+  - Use emojis consistently for visual categorization: 🎬 for storyboard ops, 📹 for scenes, 🎞️ for stitching, ✨ for completion
+  - Always show output path at the end so users know where to find their result
+---

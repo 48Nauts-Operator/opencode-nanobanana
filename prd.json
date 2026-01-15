@@ -145,7 +145,7 @@
         "Logs total generation time at completion",
         "Returns detailed result with per-scene timing"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "EXTEND-001",
