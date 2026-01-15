@@ -407,7 +407,7 @@
         "generateWebManifestIcons() returns manifest icons array",
         "generateFavicon() creates multi-size ICO file"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "INTEGRATION-001",

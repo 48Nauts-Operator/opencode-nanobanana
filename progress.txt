@@ -550,3 +550,28 @@ Project: opencode-visual-toolkit
   - All quality checks pass (typecheck, lint) - ready for integration
 ---
 
+## 2026-01-15 16:30 - PLATFORM-005
+- Implemented Web platform specifications module with complete icon sizes
+- Files changed:
+  - src/platforms/web.ts (new) - Complete web platform specifications
+  - prd.json - Marked PLATFORM-005 as passes: true
+- **Learnings for future iterations:**
+  - Web icons cover three categories: favicon (browser tabs), apple-touch (iOS home screen), PWA (Progressive Web Apps)
+  - Favicon sizes: 16x16, 32x32, 48x48 pixels for different browser zoom levels
+  - Apple touch icon: 180x180 pixels for iOS home screen shortcuts
+  - PWA icons: 192x192 (standard), 512x512 (large/splash screen) for Android and desktop PWAs
+  - WebIconSize interface includes: size, purpose ('favicon' | 'apple-touch' | 'pwa'), filename, description
+  - generateWebManifestIcons() creates manifest.json icons array with 'any maskable' purpose
+  - 'any maskable' purpose supports both normal and adaptive icons on Android
+  - generateFavicon() returns three things: sizes array, HTML snippets, ICO conversion instructions
+  - HTML snippets include: favicon.ico reference, PNG favicons with size hints, apple-touch-icon, SVG favicon
+  - generatePWAManifest() creates complete manifest.json with name, short_name, theme/bg colors, display mode, orientation
+  - Display modes: standalone (app-like), fullscreen, minimal-ui, browser
+  - getWebIconFilename() helper generates filenames following web conventions
+  - Filename patterns: favicon-{size}x{size}.png, apple-touch-icon.png, icon-{size}x{size}.png
+  - ICO conversion instructions reference ImageMagick, online converters, or npm packages (png-to-ico)
+  - Pattern follows ios.ts, android.ts, macos.ts, watchos.ts for consistency across platform modules
+  - This module completes the platform suite: iOS, Android, macOS, watchOS, Web
+  - All quality checks pass (typecheck, lint) - ready for integration
+---
+
