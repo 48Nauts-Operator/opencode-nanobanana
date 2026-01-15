@@ -6512,5 +6512,22 @@
       "workdir": "/Volumes/DevHub_ext/factory/toolbox/ralph-ultra"
     },
     "timestamp": "2026-01-15T11:33:50.061Z"
+  },
+  {
+    "tool": "bash",
+    "args": {
+      "command": "export CI=true DEBIAN_FRONTEND=noninteractive GIT_TERMINAL_PROMPT=0 GCM_INTERACTIVE=never HOMEBREW_NO_AUTO_UPDATE=1 GIT_EDITOR=: EDITOR=: VISUAL='' GIT_SEQUENCE_EDITOR=: GIT_MERGE_AUTOEDIT=no GIT_PAGER=cat PAGER=cat npm_config_yes=true PIP_NO_INPUT=1 YARN_ENABLE_IMMUTABLE_INSTALLS=false; cd /Volumes/DevHub_ext/factory/toolbox/ralph-ultra && git status && echo \"---\" && git log --oneline -5",
+      "description": "Check ralph-ultra git status",
+      "workdir": "/Volumes/DevHub_ext/factory/toolbox/ralph-ultra"
+    },
+    "timestamp": "2026-01-15T11:50:10.439Z"
+  },
+  {
+    "tool": "bash",
+    "args": {
+      "command": "diff ~/.config/opencode/scripts/ralph-ultra/ralph.sh /Volumes/DevHub_ext/factory/toolbox/ralph-ultra/scripts/ralph.sh && echo \"ralph.sh: IN SYNC\" || echo \"ralph.sh: DIFFERS\"\ndiff ~/.config/opencode/scripts/ralph-ultra/ralph-monitor.sh /Volumes/DevHub_ext/factory/toolbox/ralph-ultra/scripts/ralph-monitor.sh && echo \"ralph-monitor.sh: IN SYNC\" || echo \"ralph-monitor.sh: DIFFERS\"",
+      "description": "Check installed vs repo scripts"
+    },
+    "timestamp": "2026-01-15T11:50:17.556Z"
   }
 ]

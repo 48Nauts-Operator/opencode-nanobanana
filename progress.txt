@@ -239,3 +239,25 @@ Project: opencode-visual-toolkit
   - This AI-powered compositing approach is different from traditional image overlays - Gemini generates the entire mockup scene
   - Output suitable for App Store marketing materials and promotional content
 ---
+## 2026-01-15 21:00 - APP-005
+- Implemented generate_launch_images tool for splash screen generation
+- Files changed:
+  - src/tools/app-assets/launch-images.ts (new) - Complete launch images tool
+  - prd.json - Marked APP-005 as passes: true
+- **Learnings for future iterations:**
+  - Launch images (splash screens) use same dimensions as screenshots (IOS_SCREENSHOT_SIZES, ANDROID_SCREENSHOT_SIZES)
+  - Tool supports two input modes: text description (prompt) or existing image path
+  - isFilePath() helper detects file paths by checking for path separators or image extensions
+  - Optimization: Group sizes by aspect ratio (9:16 portrait, 16:9 landscape) to minimize Gemini API calls
+  - Generate one master image per aspect ratio at largest size in group, then downscale to all other sizes
+  - This reduces Gemini API calls from N device sizes down to 2 calls (portrait + landscape)
+  - For image mode: Load source once, then resize to all target sizes using Sharp 'cover' fit
+  - Output structure: outputDir/platform/launch-{device-name}.png for organization
+  - Similar to screenshots, but simpler (no device frame option, always cover fit)
+  - Prompt engineering for splash screens: Emphasize "clean, minimal, centered" design suitable for loading screens
+  - Include aspect ratio and orientation in prompt to guide Gemini's composition
+  - Always validate that Gemini returns at least one image before attempting resize operations
+  - TypeScript null checks: Filter array first, then check [0] exists before using path.dirname()
+  - Tool pattern remains consistent with other app asset tools: validate input → process → save → return user message
+  - This completes the core app asset generation suite (icons, screenshots, device mockups, launch images)
+---
