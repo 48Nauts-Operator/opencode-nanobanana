@@ -101,3 +101,17 @@ Project: opencode-visual-toolkit
   - Error handling covers three cases: missing API key, file load failures, Gemini errors
   - All tool execution returns strings (user messages), never throws
 ---
+## 2026-01-15 14:30 - CORE-003
+- Implemented restore_image tool for image restoration and enhancement
+- Files changed:
+  - src/tools/core/restore-image.ts (new) - Restore image tool implementation
+  - prd.json - Marked CORE-003 as passes: true
+- **Learnings for future iterations:**
+  - Image restoration is implemented using GeminiProvider.editImage() method with restoration prompts
+  - Default restoration instruction: 'restore and enhance this image'
+  - Can accept custom instructions for specific restoration needs (e.g., "remove scratches", "enhance colors")
+  - Follows same error handling pattern as edit-image tool
+  - Uses '_restored' suffix for output filenames to distinguish from source
+  - Tool pattern remains consistent: load → process with Gemini → save with suffix
+  - All quality checks pass (typecheck, lint) - tests not yet implemented (TEST-001/TEST-002 pending)
+---

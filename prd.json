@@ -127,7 +127,7 @@
         "Saves result with '_restored' suffix",
         "Returns new file path"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "PLATFORM-001",
