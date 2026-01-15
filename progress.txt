@@ -20,6 +20,10 @@ Project: opencode-visual-toolkit
 - Gemini responses: Access `result.candidates[0].content.parts` directly for image/text data
 - Image data in Gemini: Use `inlineData: { data: base64, mimeType }` format
 - Always add TypeScript null checks for optional API response fields
+- For AI-guided operations: Always provide fallback behavior when AI fails
+- Use regex to extract JSON from Gemini responses: `analysis.match(/\{[^}]+\}/)`
+- Cross-platform tools: Create unified types to handle iOS and Android consistently
+- Device-specific outputs: Use directory structure `outputDir/platform/device-name/`
 
 ---
 
@@ -188,4 +192,27 @@ Project: opencode-visual-toolkit
   - Device frames (addDeviceFrame param) prepared for future enhancement but not yet implemented
   - Always ensure device-specific directories exist before saving screenshots
   - This pattern extends the platform module approach used in APP-001 (app icons)
+---
+## 2026-01-15 19:00 - APP-003
+- Implemented resize_for_devices tool with three intelligent crop modes
+- Files changed:
+  - src/tools/app-assets/resize-devices.ts (new) - Complete smart resize tool
+  - prd.json - Marked APP-003 as passes: true
+- **Learnings for future iterations:**
+  - Three crop modes address different use cases: fit (letterbox), fill (crop to fill), smart (AI-guided)
+  - Smart mode uses GeminiProvider.analyzeImage() to identify important content regions
+  - Unified screenshot size type helps handle both iOS and Android sizes consistently
+  - Created unifyIOSSize() and unifyAndroidSize() converters for cross-platform handling
+  - Smart crop prompts Gemini to return JSON with crop coordinates {left, top, width, height}
+  - Extract JSON from Gemini response using regex - handles markdown code blocks
+  - Fallback to center crop if AI analysis fails (no API key or parsing errors)
+  - calculateSmartCrop() validates and constrains returned regions to image boundaries
+  - Use getMetadata() to check source dimensions before cropping decisions
+  - Smart crop should maintain target aspect ratio while capturing important content
+  - For each device: create platform/device-specific directory structure (outputDir/platform/device-name/)
+  - Track smart crop warnings separately - don't fail entire operation if AI unavailable for some devices
+  - Filter functionality: filterSizes() handles platform and screenshotType combinations
+  - Android device names need normalization: replace spaces with hyphens, convert to lowercase
+  - Crop mode "fit" uses Sharp's contain (letterbox), "fill" uses cover (crop), "smart" uses extract then fill
+  - This tool pattern (AI-assisted image processing) is reusable for other advanced image tools
 ---

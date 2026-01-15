@@ -205,7 +205,7 @@
         "Smart mode: uses Gemini to identify important content before cropping",
         "Outputs device-specific images"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "APP-004",
