@@ -14,5 +14,7 @@ export * from './providers/gemini.js';
 // Re-export utilities
 export * from './utils/file-handler.js';
 export * from './utils/image-processing.js';
+export * from './utils/ffmpeg.js';
 
-// Tools will be exported as they're implemented
+// Re-export tools
+export * from './tools/video/storyboard-video.js';
