@@ -70,3 +70,16 @@ Started: Thu Jan 15 22:01:15 CET 2026
   - Reference images max limit is 3 (validated before loading)
   - Console.log messages help users understand what consistency features are being used
 ---
+## 2026-01-15 22:17 - STORY-003
+- Implemented audio control options for storyboard video generation
+- Files changed:
+  - src/tools/video/storyboard-video.ts (modified) - Added audio options and mixing logic
+- **Learnings for future iterations:**
+  - The addAudioTrack() FFmpeg utility already handles mixing native video audio with background music using amix filter
+  - Audio mixing happens AFTER stitching - create temporary stitched video, then mix audio, then clean up
+  - Use two-stage output path approach: stitchedVideoPath (temp if music) vs outputPath (final)
+  - musicVolume parameter controls background music level (0.0-1.0), native audio stays at full volume
+  - Console.log progress messages help users understand when audio mixing is happening
+  - generateAudio option is passed directly to Veo API calls to control native audio generation
+  - All acceptance criteria met: generateAudio option, backgroundMusic option, musicVolume control, proper mixing
+---
