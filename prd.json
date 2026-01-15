@@ -284,7 +284,7 @@
         "Parameters: imagePath (required), framework (required: react|vue|swiftui|html), styling (optional: tailwind|css|styled-components)",
         "Returns generated component code"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "DESIGN-002",

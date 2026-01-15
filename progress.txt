@@ -316,3 +316,31 @@ Project: opencode-visual-toolkit
   - This completes the analyze tool suite: screenshot (UI debugging), compare (regression), mockup (design specs)
   - All quality checks pass (typecheck, lint) - ready for integration
 ---
+## 2026-01-15 23:45 - DESIGN-001
+- Implemented mockup_to_code tool for design-to-code conversion
+- Files changed:
+  - src/tools/design/mockup-to-code.ts (new) - Complete mockup to code tool
+  - prd.json - Marked DESIGN-001 as passes: true
+- **Learnings for future iterations:**
+  - Design-to-code tools use GeminiProvider.analyzeImage() with framework-specific prompts
+  - Four supported frameworks: React, Vue, SwiftUI, HTML with different coding patterns
+  - Three styling systems: Tailwind, CSS (modules/scoped), styled-components
+  - Framework-specific prompt engineering is critical for quality code generation
+  - React: TypeScript interfaces, functional components, JSX with className
+  - Vue: Composition API, <script setup>, <template>, <style scoped>
+  - SwiftUI: View protocol, body computed property, VStack/HStack modifiers
+  - HTML: Semantic HTML5, BEM naming, custom CSS or Tailwind classes
+  - buildCodeGenerationPrompt() helper constructs framework-aware prompts
+  - Separate prompt builders: generateReactPrompt(), generateVuePrompt(), generateSwiftUIPrompt(), generateHTMLPrompt()
+  - Prompt structure includes: base analysis (layout, colors, spacing) + framework-specific patterns
+  - componentName parameter allows custom naming, falls back to framework defaults
+  - Default names: DesignComponent (React/Vue), DesignView (SwiftUI), design-component (HTML)
+  - Gemini can generate production-ready code with proper structure, types, and accessibility
+  - Tool pattern: load mockup → analyze with framework prompt → return formatted code string
+  - User-facing message includes framework, styling, component name for context
+  - Styling defaults: React→tailwind, Vue→css, HTML→css (SwiftUI has no styling param)
+  - Always include note about reviewing/adjusting code for project-specific requirements
+  - This tool bridges design and development, accelerating UI implementation
+  - Tool definition pattern: no 'name' property, export const with ToolDefinition type, async execute
+  - All quality checks pass (typecheck, lint) - ready for integration
+---
