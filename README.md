@@ -5,10 +5,12 @@ An OpenCode plugin providing comprehensive visual capabilities powered by Google
 ## Features
 
 - **🎬 Storyboard Video Generation** - Create multi-scene videos with transitions, character consistency, and audio mixing
+- **🎥 Video Generation** - Generate videos from text prompts with Veo 3.1 and native audio
+- **🖼️ Image to Video** - Animate static images into videos with motion and audio
 - **🎥 Video Extension** - Extend existing videos with new content using Veo 3.1
 - **🎨 Image Generation** - Generate images using Nano Banana (Imagen 3)
 - **📱 App Asset Pipelines** - Generate complete icon sets for iOS, Android, macOS, and Web
-- **🖼️ Visual Analysis** - Analyze images and screenshots
+- **🔍 Visual Analysis** - Analyze images and screenshots
 - **🎞️ Video Processing** - FFmpeg utilities for concatenation, transitions, and audio mixing
 
 ## Installation
@@ -44,10 +46,30 @@ choco install ffmpeg
 ## Quick Start
 
 ```typescript
-import { generateStoryboardVideo, extendVideo } from 'opencode-visual-toolkit';
+import {
+  generateVideo,
+  imageToVideo,
+  generateStoryboardVideo,
+  extendVideo
+} from 'opencode-visual-toolkit';
+
+// Generate a video from a text prompt
+const video = await generateVideo({
+  apiKey: 'your-gemini-api-key',
+  prompt: 'A serene mountain landscape at sunrise',
+  outputPath: './mountain.mp4'
+});
+
+// Animate an image
+const animated = await imageToVideo({
+  apiKey: 'your-gemini-api-key',
+  imagePath: './photo.jpg',
+  prompt: 'Slow camera pan from left to right',
+  outputPath: './animated.mp4'
+});
 
 // Generate a multi-scene storyboard video
-const result = await generateStoryboardVideo({
+const storyboard = await generateStoryboardVideo({
   apiKey: 'your-gemini-api-key',
   scenes: [
     'A serene mountain landscape at sunrise',
@@ -58,8 +80,6 @@ const result = await generateStoryboardVideo({
   transition: 'crossfade',
   outputPath: './mountain-journey.mp4'
 });
-
-console.log(`Video created: ${result.videoPath}`);
 ```
 
 ## Storyboard Video Generation
@@ -302,6 +322,181 @@ const final = await extendVideo({
   videoPath: storyboard.videoPath,
   prompt: 'Text overlay fades in: "Order now - Limited time offer"',
   outputPath: './product-final.mp4'
+});
+```
+
+## Video Generation
+
+The `generateVideo` tool creates videos from text prompts using Veo 3.1 with native audio support.
+
+### API Reference
+
+```typescript
+interface GenerateVideoOptions {
+  /** Description of the video to generate */
+  prompt: string;
+
+  /** Aspect ratio for the video (default: '16:9') */
+  aspectRatio?: '16:9' | '9:16' | '1:1';
+
+  /** Resolution for the video (default: '720p') */
+  resolution?: '720p' | '1080p';
+
+  /** Video duration in seconds (default: 8) */
+  duration?: 4 | 6 | 8;
+
+  /** Enable native audio generation (default: true) */
+  generateAudio?: boolean;
+
+  /** Output path for the video (optional, defaults to temp file) */
+  outputPath?: string;
+
+  /** Gemini API key */
+  apiKey: string;
+}
+```
+
+### Examples
+
+#### Basic Video Generation
+
+```typescript
+const result = await generateVideo({
+  apiKey: 'your-api-key',
+  prompt: 'A serene mountain landscape at sunrise',
+  outputPath: './mountain.mp4'
+});
+
+console.log(`Video created: ${result.videoPath}`);
+console.log(`Generation time: ${result.generationTime / 1000}s`);
+```
+
+#### High Quality with Custom Settings
+
+```typescript
+const result = await generateVideo({
+  apiKey: 'your-api-key',
+  prompt: 'A bustling city street at night with neon lights',
+  resolution: '1080p',
+  duration: 8,
+  aspectRatio: '16:9',
+  generateAudio: true,
+  outputPath: './city-night.mp4'
+});
+```
+
+#### Silent Video (No Audio)
+
+```typescript
+const result = await generateVideo({
+  apiKey: 'your-api-key',
+  prompt: 'A peaceful garden with blooming flowers',
+  generateAudio: false,
+  outputPath: './silent-garden.mp4'
+});
+```
+
+#### Short Duration Video
+
+```typescript
+const result = await generateVideo({
+  apiKey: 'your-api-key',
+  prompt: 'Product logo reveal with dynamic motion',
+  duration: 4,  // 4 second video
+  resolution: '1080p',
+  aspectRatio: '1:1',  // Square format for social media
+  outputPath: './logo-reveal.mp4'
+});
+```
+
+## Image to Video
+
+The `imageToVideo` tool animates static images into videos using Veo 3.1 with native audio support.
+
+### API Reference
+
+```typescript
+interface ImageToVideoOptions {
+  /** Path to the image to animate */
+  imagePath: string;
+
+  /** Description of the animation */
+  prompt: string;
+
+  /** Aspect ratio for the video (default: '16:9') */
+  aspectRatio?: '16:9' | '9:16' | '1:1';
+
+  /** Resolution for the video (default: '720p') */
+  resolution?: '720p' | '1080p';
+
+  /** Video duration in seconds (default: 8) */
+  duration?: 4 | 6 | 8;
+
+  /** Enable native audio generation (default: true) */
+  generateAudio?: boolean;
+
+  /** Output path for the video (optional, defaults to temp file) */
+  outputPath?: string;
+
+  /** Gemini API key */
+  apiKey: string;
+}
+```
+
+### Examples
+
+#### Basic Image Animation
+
+```typescript
+const result = await imageToVideo({
+  apiKey: 'your-api-key',
+  imagePath: './landscape.jpg',
+  prompt: 'Slow camera pan from left to right',
+  outputPath: './animated-landscape.mp4'
+});
+
+console.log(`Animated video: ${result.videoPath}`);
+```
+
+#### Product Showcase
+
+```typescript
+const result = await imageToVideo({
+  apiKey: 'your-api-key',
+  imagePath: './product.png',
+  prompt: 'Product rotates 360 degrees on a pedestal',
+  resolution: '1080p',
+  duration: 6,
+  generateAudio: true,
+  outputPath: './product-showcase.mp4'
+});
+```
+
+#### Portrait Animation
+
+```typescript
+const result = await imageToVideo({
+  apiKey: 'your-api-key',
+  imagePath: './portrait.jpg',
+  prompt: 'Subtle breathing motion and eye blinks',
+  aspectRatio: '9:16',  // Vertical format
+  duration: 4,
+  outputPath: './animated-portrait.mp4'
+});
+```
+
+#### Logo Animation for Social Media
+
+```typescript
+const result = await imageToVideo({
+  apiKey: 'your-api-key',
+  imagePath: './logo.png',
+  prompt: 'Logo pulses with energy and glows',
+  aspectRatio: '1:1',  // Square format
+  duration: 4,
+  resolution: '1080p',
+  generateAudio: false,  // Silent for social media
+  outputPath: './logo-animation.mp4'
 });
 ```
 

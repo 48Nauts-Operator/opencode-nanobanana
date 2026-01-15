@@ -127,3 +127,19 @@ Started: Thu Jan 15 22:01:15 CET 2026
   - Test both happy path and error scenarios for robust coverage
   - All 20 tests passing: multi-scene generation, FFmpeg stitching, transitions, character consistency, error handling, progress reporting
 ---
+## 2026-01-15 22:37 - DOCS-001
+- Created comprehensive README.md with complete documentation
+- Files changed:
+  - README.md (new) - 513 lines of comprehensive documentation
+  - prd.json (modified) - Marked DOCS-001 as complete
+- **Learnings for future iterations:**
+  - README should be comprehensive yet scannable - use clear sections and hierarchies
+  - Include both API reference (parameters, types) and practical examples (code snippets)
+  - Document requirements prominently (FFmpeg, Node version) early in the README
+  - Best practices section helps users avoid common pitfalls
+  - Multiple examples for different use cases (basic, advanced, edge cases) improve usability
+  - Troubleshooting section addresses common setup issues proactively
+  - Progress logging output in examples helps users understand what to expect
+  - The README serves both as reference documentation and tutorial/guide
+  - Include TypeScript type definitions reference for better developer experience
+---

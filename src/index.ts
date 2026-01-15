@@ -17,5 +17,7 @@ export * from './utils/image-processing.js';
 export * from './utils/ffmpeg.js';
 
 // Re-export tools
+export * from './tools/video/generate-video.js';
+export * from './tools/video/image-to-video.js';
 export * from './tools/video/storyboard-video.js';
 export * from './tools/video/extend-video.js';

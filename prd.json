@@ -194,7 +194,7 @@
         "Document FFmpeg requirement",
         "Update feature list at top of README"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "UPDATE-001",
