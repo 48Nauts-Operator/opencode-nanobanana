@@ -26,6 +26,12 @@
       "type": "story_complete",
       "message": "Completed: FFMPEG-001 in 5m",
       "story": "FFMPEG-001"
+    },
+    {
+      "timestamp": "2026-01-15T22:21:26+01:00",
+      "type": "story_complete",
+      "message": "Completed: STORY-002 in 5m",
+      "story": "STORY-002"
     }
   ],
   "stories_completed": [
@@ -69,6 +75,43 @@
           "src/tools/video/storyboard-video.ts",
           "src/utils/ffmpeg.ts",
           "tests/utils/ffmpeg.test.ts"
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-01-15T22:21:26+01:00",
+      "story": "STORY-002",
+      "duration": 5,
+      "estimate": 20,
+      "git": {
+        "start_commit": "0a2ad94",
+        "end_commit": "fa16746",
+        "files_changed": 22,
+        "lines_added": 1204,
+        "lines_removed": 13,
+        "files": [
+          ".ralph-events.json",
+          ".ralph-last-branch",
+          ".ralph-monitor-state.json",
+          ".ralph-monitor.pid",
+          ".ralph-timing.json",
+          "docs/PLUGIN-VERIFICATION.md",
+          "logs/notifications.jsonl",
+          "prd.json",
+          "progress.txt",
+          "ralph-report.html",
+          "src/tools/video/storyboard-video.ts",
+          "test-analyze-screenshot.ts",
+          "test-app-icons.ts",
+          "test-cat-sunset.ts",
+          "test-icon-gen.ts",
+          "test-plugin-load.js",
+          "test-product-ad.ts",
+          "test-ralph-droid.ts",
+          "test-social-preview.ts",
+          "test-video-gen.ts",
+          "test-video-veo.ts",
+          "test-zurich-video.ts"
         ]
       }
     }

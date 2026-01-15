@@ -9,6 +9,7 @@ import { GeminiProvider, type ReferenceImage } from '../../providers/gemini.js';
 import {
   checkFfmpegInstalled,
   concatenateVideos,
+  addAudioTrack,
   type ConcatenateOptions,
 } from '../../utils/ffmpeg.js';
 import { writeFile, unlink, readFile } from 'fs/promises';
@@ -30,6 +31,12 @@ export interface StoryboardVideoOptions {
   transition?: 'cut' | 'crossfade' | 'fade';
   /** Transition duration in seconds (default: 0.5) */
   transitionDuration?: number;
+  /** Enable native Veo audio generation (default: true) */
+  generateAudio?: boolean;
+  /** Path to background music audio file (optional) */
+  backgroundMusic?: string;
+  /** Volume level for background music (0.0-1.0, default: 0.3) */
+  musicVolume?: number;
   /** Output path for the final video */
   outputPath?: string;
   /** Gemini API key */
@@ -90,6 +97,19 @@ export interface StoryboardVideoResult {
  *   transition: 'crossfade'
  * });
  * ```
+ *
+ * @example
+ * With background music:
+ * ```typescript
+ * const result = await generateStoryboardVideo({
+ *   apiKey: 'your-api-key',
+ *   scenes: ['Scene 1', 'Scene 2', 'Scene 3'],
+ *   generateAudio: true,           // Native Veo audio (default)
+ *   backgroundMusic: './music.mp3', // Add background music
+ *   musicVolume: 0.3,               // 30% volume for background music
+ *   transition: 'crossfade'
+ * });
+ * ```
  */
 export async function generateStoryboardVideo(
   options: StoryboardVideoOptions
@@ -121,6 +141,9 @@ export async function generateStoryboardVideo(
     aspectRatio = '16:9',
     transition = 'crossfade',
     transitionDuration = 0.5,
+    generateAudio = true,
+    backgroundMusic,
+    musicVolume = 0.3,
     outputPath = join(tmpdir(), `storyboard-${Date.now()}.mp4`),
   } = options;
 
@@ -181,7 +204,7 @@ export async function generateStoryboardVideo(
             aspectRatio,
             resolution: '720p',
             duration: 8,
-            generateAudio: true,
+            generateAudio,
             numberOfVideos: 1,
           }
         );
@@ -191,7 +214,7 @@ export async function generateStoryboardVideo(
           aspectRatio,
           resolution: '720p',
           duration: 8,
-          generateAudio: true,
+          generateAudio,
           numberOfVideos: 1,
         });
       }
@@ -254,8 +277,21 @@ export async function generateStoryboardVideo(
     transitionDuration,
   };
 
+  // Determine final output path based on whether we need to add background music
+  const stitchedVideoPath = backgroundMusic
+    ? join(tmpdir(), `stitched-${Date.now()}.mp4`)
+    : outputPath;
+
   try {
-    await concatenateVideos(videoPaths, outputPath, concatenateOptions);
+    await concatenateVideos(videoPaths, stitchedVideoPath, concatenateOptions);
+
+    // Add background music if provided
+    if (backgroundMusic) {
+      console.log(`🎵 Mixing background music at ${(musicVolume * 100).toFixed(0)}% volume...`);
+      await addAudioTrack(stitchedVideoPath, backgroundMusic, outputPath, musicVolume);
+      // Clean up temporary stitched video
+      await unlink(stitchedVideoPath).catch(() => {});
+    }
   } finally {
     // Clean up temporary scene files
     for (const videoPath of videoPaths) {

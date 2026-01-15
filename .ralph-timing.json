@@ -7,6 +7,10 @@
     "FFMPEG-001": {
       "actual": 5,
       "estimate": 20
+    },
+    "STORY-002": {
+      "actual": 5,
+      "estimate": 20
     }
   },
   "averages": {
