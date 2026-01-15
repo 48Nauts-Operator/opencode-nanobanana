@@ -27,6 +27,10 @@
     "DESIGN-002": {
       "actual": 5,
       "estimate": 45
+    },
+    "DOCS-002": {
+      "actual": 5,
+      "estimate": 20
     }
   },
   "averages": {

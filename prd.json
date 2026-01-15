@@ -321,7 +321,7 @@
         "Parameters: description (required), format (optional: png|mermaid)",
         "Returns sequence diagram image or mermaid code"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "DOCS-003",

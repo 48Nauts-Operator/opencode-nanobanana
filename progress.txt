@@ -391,3 +391,29 @@ Project: opencode-visual-toolkit
   - This is the first of four docs tools (architecture, sequence, banner, social preview)
   - All quality checks pass (typecheck, lint) - ready for integration
 ---
+## 2026-01-15 01:00 - DOCS-002
+- Implemented generate_sequence_diagram tool for interaction flow diagrams
+- Files changed:
+  - src/tools/docs/sequence-diagram.ts (new) - Complete sequence diagram tool
+  - prd.json - Marked DOCS-002 as passes: true
+- **Learnings for future iterations:**
+  - Sequence diagrams visualize interactions between actors/systems over time
+  - Two output formats: PNG (visual via Gemini) and Mermaid (text-based for docs)
+  - Mermaid sequence diagrams use simple syntax: participant declarations → arrows with messages
+  - Tool follows architecture diagram pattern: object form with execute method
+  - Must use tool() with object parameter containing description, args, and execute function
+  - Export with ToolDefinition type annotation for type safety
+  - execute method receives (args, _context) parameters
+  - Prompt engineering for sequence diagrams emphasizes UML conventions:
+    - Swimlanes for each actor/system/component
+    - Activation boxes showing processing time
+    - Synchronous (solid) vs asynchronous (dashed) message arrows
+    - Return messages, alt/opt/loop control flow frames
+  - Used 16:9 aspect ratio for better horizontal layout when multiple actors interact
+  - Mermaid template includes examples of activate/deactivate, alt/opt/loop for control flow
+  - generateMermaidSequence() creates template with placeholder participants and flow
+  - Instructions included for users to customize Mermaid code after generation
+  - Mermaid format requires no API key - perfect for version control and GitHub rendering
+  - Tool pattern matches architecture-diagram.ts: format detection → API or template generation
+  - All quality checks pass (typecheck, lint) - ready for integration
+---
