@@ -38,3 +38,31 @@ Project: opencode-visual-toolkit
   - Always add proper TypeScript null checks for optional fields
   - Prefix unused parameters with underscore to avoid TS6133 errors
 ---
+## 2026-01-15 13:45 - SETUP-003
+- Verified file-handler.ts implementation (already completed in SETUP-002)
+- Files changed:
+  - prd.json - Marked SETUP-003 as passes: true
+- **Learnings for future iterations:**
+  - File handler was implemented alongside GeminiProvider in SETUP-002
+  - All acceptance criteria met: saveImage, loadImage, ensureDirectory, generateFilename, getOutputDir
+  - Duplicate handling implemented via internal getUniqueFilepath() function
+  - Uses fs/promises for async file operations
+  - Sanitization: limits to 50 chars, replaces spaces with underscores, removes special chars
+  - Default output dir: './generated-assets' (overridable via OUTPUT_DIR env var)
+---
+
+## 2026-01-15 13:50 - SETUP-004
+- Verified image-processing.ts implementation (already completed in SETUP-002)
+- Files changed:
+  - prd.json - Marked SETUP-004 as passes: true
+- **Learnings for future iterations:**
+  - Image processing uses Sharp library for all transformations
+  - All acceptance criteria met: resize, crop, optimize, convertFormat, getMetadata, resizeToSizes
+  - resize() supports fit modes: cover, contain, fill, inside, outside
+  - crop() uses Sharp's extract() method with CropRegion interface
+  - optimize() defaults to quality 80 with PNG compression level 9
+  - convertFormat() supports PNG, JPEG, WebP with quality parameter
+  - getMetadata() returns comprehensive info: dimensions, format, space, channels, hasAlpha
+  - resizeToSizes() uses Promise.all for concurrent batch processing
+---
+

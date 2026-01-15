@@ -35,8 +35,9 @@
   },
   "dependencies": {
     "@google/genai": "^1.36.0",
+    "@opencode-ai/plugin": "file:.opencode/node_modules/@opencode-ai/plugin",
     "sharp": "^0.33.0",
-    "zod": "^3.22.0"
+    "zod": "^4.1.8"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

@@ -6252,5 +6252,22 @@
       "description": "Check progress.txt"
     },
     "timestamp": "2026-01-15T11:15:12.406Z"
+  },
+  {
+    "tool": "bash",
+    "args": {
+      "command": "export CI=true DEBIAN_FRONTEND=noninteractive GIT_TERMINAL_PROMPT=0 GCM_INTERACTIVE=never HOMEBREW_NO_AUTO_UPDATE=1 GIT_EDITOR=: EDITOR=: VISUAL='' GIT_SEQUENCE_EDITOR=: GIT_MERGE_AUTOEDIT=no GIT_PAGER=cat PAGER=cat npm_config_yes=true PIP_NO_INPUT=1 YARN_ENABLE_IMMUTABLE_INSTALLS=false; sleep 120 && echo \"=== TMUX ===\" && tmux capture-pane -t ralph -p -S -100 2>&1 | tail -50 && echo \"=== PROGRESS ===\" && cat /Volumes/DevHub_ext/factory/toolbox/opencode-nanobanana/progress.txt | tail -30 && echo \"=== GIT ===\" && cd /Volumes/DevHub_ext/factory/toolbox/opencode-nanobanana && git log --oneline -5 2>/dev/null",
+      "description": "Wait 2 min and check full status",
+      "timeout": 130000
+    },
+    "timestamp": "2026-01-15T11:15:20.364Z"
+  },
+  {
+    "tool": "bash",
+    "args": {
+      "command": "ps aux | grep claude | grep -v grep && echo \"---\" && jq '[.userStories[] | select(.passes == true)] | length' /Volumes/DevHub_ext/factory/toolbox/opencode-nanobanana/prd.json && echo \"stories completed\"",
+      "description": "Check claude status and completed stories"
+    },
+    "timestamp": "2026-01-15T11:17:29.164Z"
   }
 ]
