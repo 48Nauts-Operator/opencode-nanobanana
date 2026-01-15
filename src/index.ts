@@ -18,3 +18,4 @@ export * from './utils/ffmpeg.js';
 
 // Re-export tools
 export * from './tools/video/storyboard-video.js';
+export * from './tools/video/extend-video.js';
