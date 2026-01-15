@@ -175,7 +175,7 @@
         "Outputs to AppIcon.appiconset/ (iOS) and mipmap-*/ (Android)",
         "Returns paths to all generated assets"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "APP-002",

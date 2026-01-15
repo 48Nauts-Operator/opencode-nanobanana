@@ -150,3 +150,22 @@ Project: opencode-visual-toolkit
   - Helper functions: getDensityPath(), getIconSizeForDensity(), dpToPixels() for conversions
   - This module will be used by APP-001 (Generate App Icon Tool) for Android icon generation
 ---
+## 2026-01-15 17:00 - APP-001
+- Implemented generate_app_icon tool for iOS and Android platforms
+- Files changed:
+  - src/tools/app-assets/app-icon.ts (new) - Complete app icon generation tool
+  - prd.json - Marked APP-001 as passes: true
+- **Learnings for future iterations:**
+  - App icon generation follows pattern: generate 1024x1024 master → downscale to all platform sizes
+  - Never upscale images - always generate largest size first, then downscale for quality
+  - iOS icons require AppIcon.appiconset/ directory structure with Contents.json metadata
+  - Contents.json must include: images array (filename, idiom, scale, size) + info object (author, version)
+  - Android icons go to mipmap-{density}/ directories (mdpi through xxxhdpi)
+  - Android adaptive icons require mipmap-anydpi-v26/ic_launcher.xml with foreground/background references
+  - Tool schema: define args separately with .describe() for descriptions, not inline objects
+  - Extract args with defaults: `const { param = defaultValue } = args` handles optional parameters
+  - Use platforms.includes('ios') and platforms.includes('android') to check array membership
+  - Tool returns user-friendly message strings, not objects or throws
+  - For batch operations (multiple icon sizes), use Promise.all or sequential loops as appropriate
+  - This pattern will be reused for screenshots (APP-002), launch images (APP-005), and other asset tools
+---
