@@ -12,6 +12,29 @@ Project: opencode-visual-toolkit
 - Android icons go to `mipmap-{density}/` with `ic_launcher.xml`
 - Always generate 1024x1024 master first, then downscale (never upscale)
 - Direct Gemini API calls only - no intermediary services
+- @google/genai: Use `GoogleGenAI({ apiKey })` constructor, access via `client.models.generateContent()`
+- Gemini responses: Access `result.candidates[0].content.parts` directly for image/text data
+- Image data in Gemini: Use `inlineData: { data: base64, mimeType }` format
+- Always add TypeScript null checks for optional API response fields
 
 ---
 
+
+## 2026-01-15 12:15 - SETUP-002
+- Implemented GeminiProvider class with full Google Gemini API integration
+- Files changed: 
+  - src/providers/gemini.ts (new) - Main provider implementation
+  - src/utils/file-handler.ts (new) - File operations for images
+  - src/utils/image-processing.ts (new) - Sharp-based image processing
+- **Learnings for future iterations:**
+  - The @google/genai package exports `GoogleGenAI` class, not `GoogleGenerativeAI`
+  - Constructor takes options object: `new GoogleGenAI({ apiKey })`
+  - Use `client.models.generateContent()` for all operations (generation, editing, analysis)
+  - Response object IS the `GenerateContentResponse` - access `result.candidates` directly
+  - For image generation, set `config.responseModalities: ['image']` in request
+  - For image input, use `inlineData: { data: base64, mimeType }` in parts array
+  - Extract image from `candidate.content.parts[].inlineData.data` (base64 string)
+  - Extract text from `candidate.content.parts[].text`
+  - Always add proper TypeScript null checks for optional fields
+  - Prefix unused parameters with underscore to avoid TS6133 errors
+---

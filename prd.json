@@ -51,7 +51,7 @@
         "Supports batch generation (1-8 images)",
         "Handles API errors gracefully"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "SETUP-003",
