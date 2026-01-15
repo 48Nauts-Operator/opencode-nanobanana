@@ -161,7 +161,7 @@
         "Returns path to extended video",
         "Add tool to plugin exports"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "TEST-001",
