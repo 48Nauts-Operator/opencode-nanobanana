@@ -17,29 +17,16 @@ import { join } from 'path';
 import { tmpdir } from 'os';
 
 export interface StoryboardVideoOptions {
-  /** Array of scene descriptions */
   scenes: string[];
-  /** Style to apply to all scenes (e.g., 'cinematic', 'commercial') */
   style?: string;
-  /** Character description to prepend to each scene for consistency */
   characterDescription?: string;
-  /** Array of reference image paths for character/scene consistency (max 3) */
   referenceImages?: string[];
-  /** Aspect ratio for all scenes (default: '16:9') */
-  aspectRatio?: '16:9' | '9:16' | '1:1';
-  /** Transition type between scenes (default: 'crossfade') */
+  aspectRatio?: '16:9' | '9:16';
   transition?: 'cut' | 'crossfade' | 'fade';
-  /** Transition duration in seconds (default: 0.5) */
   transitionDuration?: number;
-  /** Enable native Veo audio generation (default: true) */
-  generateAudio?: boolean;
-  /** Path to background music audio file (optional) */
   backgroundMusic?: string;
-  /** Volume level for background music (0.0-1.0, default: 0.3) */
   musicVolume?: number;
-  /** Output path for the final video */
   outputPath?: string;
-  /** Gemini API key */
   apiKey: string;
 }
 
@@ -132,7 +119,6 @@ export async function generateStoryboardVideo(
   // Initialize provider
   const provider = new GeminiProvider(options.apiKey);
 
-  // Set default values
   const {
     scenes,
     style,
@@ -141,7 +127,6 @@ export async function generateStoryboardVideo(
     aspectRatio = '16:9',
     transition = 'crossfade',
     transitionDuration = 0.5,
-    generateAudio = true,
     backgroundMusic,
     musicVolume = 0.3,
     outputPath = join(tmpdir(), `storyboard-${Date.now()}.mp4`),
@@ -170,7 +155,7 @@ export async function generateStoryboardVideo(
   console.log(`⚙️  Configuration:`);
   console.log(`   - Aspect ratio: ${aspectRatio}`);
   console.log(`   - Transition: ${transition} (${transitionDuration}s)`);
-  console.log(`   - Audio: ${generateAudio ? 'enabled' : 'disabled'}${backgroundMusic ? ' + background music' : ''}`);
+  console.log(`   - Audio: native (Veo 3.0)${backgroundMusic ? ' + background music' : ''}`);
 
   if (characterDescription) {
     console.log(`👤 Using character description: "${characterDescription}"`);
@@ -179,31 +164,36 @@ export async function generateStoryboardVideo(
     console.log(`🖼️  Using ${loadedReferences.length} reference image(s) for consistency`);
   }
 
-  console.log(`\n📹 Generating scenes...`);
+  console.log(`\n📹 Generating scenes sequentially (to avoid rate limits)...`);
 
-  // Generate all scenes in parallel
-  const scenePromises = scenes.map(async (sceneDescription, index) => {
+  type SceneResult = {
+    index: number;
+    path: string | null;
+    time: number;
+    success: boolean;
+    error?: string;
+  };
+  
+  const sceneResults: SceneResult[] = [];
+  
+  for (let index = 0; index < scenes.length; index++) {
+    const sceneDescription = scenes[index]!;
     const sceneStartTime = Date.now();
-    console.log(`   [${index + 1}/${scenes.length}] Starting: "${sceneDescription.slice(0, 50)}${sceneDescription.length > 50 ? '...' : ''}"`);
+    console.log(`   [${index + 1}/${scenes.length}] Generating: "${sceneDescription.slice(0, 50)}${sceneDescription.length > 50 ? '...' : ''}"`);
 
     try {
-      // Build prompt with character description, style, and scene
       let prompt = sceneDescription;
 
-      // Prepend character description if provided
       if (characterDescription) {
         prompt = `${characterDescription}. ${prompt}`;
       }
 
-      // Add style prefix if provided
       if (style) {
         prompt = `${style} style: ${prompt}`;
       }
 
-      // Generate video for this scene
       let result;
       if (loadedReferences && loadedReferences.length > 0) {
-        // Use reference images for consistency
         result = await provider.generateVideoWithReferences(
           prompt,
           loadedReferences,
@@ -211,50 +201,43 @@ export async function generateStoryboardVideo(
             aspectRatio,
             resolution: '720p',
             duration: 8,
-            generateAudio,
             numberOfVideos: 1,
           }
         );
       } else {
-        // Generate without references
         result = await provider.generateVideo(prompt, {
           aspectRatio,
           resolution: '720p',
           duration: 8,
-          generateAudio,
           numberOfVideos: 1,
         });
       }
 
-      // Save to temporary file
       const tempPath = join(tmpdir(), `scene-${index}-${Date.now()}.mp4`);
       await writeFile(tempPath, result.buffer);
 
       const sceneTime = Date.now() - sceneStartTime;
       console.log(`   ✅ [${index + 1}/${scenes.length}] Completed in ${(sceneTime / 1000).toFixed(1)}s`);
 
-      return {
+      sceneResults.push({
         index,
         path: tempPath,
         time: sceneTime,
         success: true,
-      };
+      });
     } catch (error) {
       const sceneTime = Date.now() - sceneStartTime;
       console.error(`   ❌ [${index + 1}/${scenes.length}] Failed after ${(sceneTime / 1000).toFixed(1)}s:`, error);
 
-      return {
+      sceneResults.push({
         index,
         path: null,
         time: sceneTime,
         success: false,
         error: error instanceof Error ? error.message : String(error),
-      };
+      });
     }
-  });
-
-  // Wait for all scenes to complete
-  const sceneResults = await Promise.all(scenePromises);
+  }
 
   // Filter successful scenes
   const successfulScenes = sceneResults.filter(

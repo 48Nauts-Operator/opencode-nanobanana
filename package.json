@@ -1,7 +1,7 @@
 {
-  "name": "opencode-visual-toolkit",
-  "version": "0.1.0",
-  "description": "OpenCode plugin providing visual capabilities: image generation, analysis, design-to-code, and app asset pipelines",
+  "name": "opencode-nanobanana",
+  "version": "0.2.1",
+  "description": "OpenCode plugin for visual AI: FREE image generation (Nano Banana / Gemini Flash), video generation (Veo 3), storyboards powered by Google Gemini",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -18,23 +18,39 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "opencode",
+    "mcp",
     "plugin",
-    "image-generation",
     "gemini",
+    "veo",
+    "imagen",
+    "video-generation",
+    "image-generation",
+    "ai",
     "visual-toolkit",
-    "app-icons"
+    "app-icons",
+    "storyboard"
   ],
   "author": "NautCoder",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/48Nauts-Operator/opencode-nanobanana.git"
+  },
+  "bugs": {
+    "url": "https://github.com/48Nauts-Operator/opencode-nanobanana/issues"
+  },
+  "homepage": "https://github.com/48Nauts-Operator/opencode-nanobanana#readme",
   "engines": {
     "node": ">=18.0.0"
   },
   "dependencies": {
     "@google/genai": "^1.36.0",
+    "@opencode-ai/plugin": "^1.1.25",
     "sharp": "^0.33.0",
     "zod": "^3.22.0"
   },

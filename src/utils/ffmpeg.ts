@@ -166,16 +166,12 @@ async function concatenateWithCut(videoPaths: string[], outputPath: string): Pro
   }
 }
 
-/**
- * Concatenate videos with crossfade transition
- */
 async function concatenateWithCrossfade(
   videoPaths: string[],
   outputPath: string,
-  duration: number
+  transitionDuration: number
 ): Promise<void> {
   if (videoPaths.length === 1) {
-    // No transition needed for single video
     const fs = await import('fs/promises');
     const firstVideo = videoPaths[0];
     if (!firstVideo) {
@@ -185,23 +181,39 @@ async function concatenateWithCrossfade(
     return;
   }
 
-  // Build complex filter for crossfade
-  let filterComplex = '';
-  let currentLabel = '[0:v]';
-
-  for (let i = 1; i < videoPaths.length; i++) {
-    const nextLabel = i === videoPaths.length - 1 ? '[outv]' : `[v${i}]`;
-    // Using offset=0 for simplicity - real implementation would calculate actual offsets
-    filterComplex += `${currentLabel}[${i}:v]xfade=transition=fade:duration=${duration}:offset=0${nextLabel};`;
-    currentLabel = nextLabel;
+  const durations: number[] = [];
+  for (const videoPath of videoPaths) {
+    const dur = await getVideoDuration(videoPath);
+    durations.push(dur);
   }
 
-  // For simplicity with crossfade, use a basic approach
-  // Build input flags
+  let filterComplex = '';
+  let audioFilterComplex = '';
+  let currentVideoLabel = '[0:v]';
+  let currentAudioLabel = '[0:a]';
+  let cumulativeOffset = durations[0]! - transitionDuration;
+
+  for (let i = 1; i < videoPaths.length; i++) {
+    const isLast = i === videoPaths.length - 1;
+    const nextVideoLabel = isLast ? '[outv]' : `[v${i}]`;
+    const nextAudioLabel = isLast ? '[outa]' : `[a${i}]`;
+    
+    filterComplex += `${currentVideoLabel}[${i}:v]xfade=transition=fade:duration=${transitionDuration}:offset=${cumulativeOffset}${nextVideoLabel};`;
+    audioFilterComplex += `${currentAudioLabel}[${i}:a]acrossfade=d=${transitionDuration}${nextAudioLabel};`;
+    
+    currentVideoLabel = nextVideoLabel;
+    currentAudioLabel = nextAudioLabel;
+    
+    if (!isLast) {
+      cumulativeOffset += durations[i]! - transitionDuration;
+    }
+  }
+
+  const fullFilter = filterComplex + audioFilterComplex.slice(0, -1);
   const inputs = videoPaths.map(path => `-i "${path}"`).join(' ');
 
   await execAsync(
-    `ffmpeg ${inputs} -filter_complex "${filterComplex}" -map "[outv]" "${outputPath}" -y`
+    `ffmpeg ${inputs} -filter_complex "${fullFilter}" -map "[outv]" -map "[outa]" "${outputPath}" -y`
   );
 }
 

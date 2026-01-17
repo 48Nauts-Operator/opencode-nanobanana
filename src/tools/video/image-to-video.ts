@@ -1,86 +1,23 @@
-/**
- * Image to Video Tool
- *
- * Animates an image into a video using Veo 3.1 with native audio support.
- */
-
 import { GeminiProvider } from '../../providers/gemini.js';
 import { readFile, writeFile } from 'fs/promises';
 import { join } from 'path';
 import { tmpdir } from 'os';
 
 export interface ImageToVideoOptions {
-  /** Path to the image to animate */
   imagePath: string;
-  /** Description of the animation */
   prompt: string;
-  /** Aspect ratio for the video (default: '16:9') */
-  aspectRatio?: '16:9' | '9:16' | '1:1';
-  /** Resolution for the video (default: '720p') */
+  aspectRatio?: '16:9' | '9:16';
   resolution?: '720p' | '1080p';
-  /** Video duration in seconds (default: 8) */
   duration?: 4 | 6 | 8;
-  /** Enable native audio generation (default: true) */
-  generateAudio?: boolean;
-  /** Output path for the video (optional, defaults to temp file) */
   outputPath?: string;
-  /** Gemini API key */
   apiKey: string;
 }
 
 export interface ImageToVideoResult {
-  /** Path to the generated video */
   videoPath: string;
-  /** Generation time in milliseconds */
   generationTime: number;
 }
 
-/**
- * Animate an image into a video
- *
- * This function uses Veo 3.1 to animate a static image with motion described
- * by the prompt. The model supports native audio generation, multiple resolutions,
- * and configurable durations.
- *
- * @param options - Configuration options for image animation
- * @returns Result object with video path and timing information
- *
- * @example
- * Basic usage:
- * ```typescript
- * const result = await imageToVideo({
- *   apiKey: 'your-api-key',
- *   imagePath: './landscape.jpg',
- *   prompt: 'Slow camera pan from left to right',
- *   outputPath: './animated-landscape.mp4'
- * });
- * ```
- *
- * @example
- * Product showcase with audio:
- * ```typescript
- * const result = await imageToVideo({
- *   apiKey: 'your-api-key',
- *   imagePath: './product.png',
- *   prompt: 'Product rotates 360 degrees on a pedestal',
- *   resolution: '1080p',
- *   duration: 6,
- *   generateAudio: true
- * });
- * ```
- *
- * @example
- * Portrait animation:
- * ```typescript
- * const result = await imageToVideo({
- *   apiKey: 'your-api-key',
- *   imagePath: './portrait.jpg',
- *   prompt: 'Subtle breathing motion and eye blinks',
- *   aspectRatio: '9:16',
- *   duration: 4
- * });
- * ```
- */
 export async function imageToVideo(
   options: ImageToVideoOptions
 ): Promise<ImageToVideoResult> {
@@ -92,7 +29,6 @@ export async function imageToVideo(
     aspectRatio = '16:9',
     resolution = '720p',
     duration = 8,
-    generateAudio = true,
     outputPath,
     apiKey,
   } = options;
@@ -103,30 +39,23 @@ export async function imageToVideo(
   console.log(`   Resolution: ${resolution}`);
   console.log(`   Duration: ${duration}s`);
   console.log(`   Aspect Ratio: ${aspectRatio}`);
-  console.log(`   Audio: ${generateAudio ? 'enabled' : 'disabled'}`);
+  console.log(`   Audio: native (Veo 3.0)`);
 
-  // Initialize provider
   const provider = new GeminiProvider(apiKey);
 
   try {
-    // Read the input image
     console.log('   Loading image...');
     const imageBuffer = await readFile(imagePath);
 
-    // Animate the image
-    console.log('   Animating with Veo 3.1...');
+    console.log('   Animating with Veo 3.0...');
     const result = await provider.animateImage(imageBuffer, prompt, {
       aspectRatio,
       resolution,
       duration,
-      generateAudio,
     });
 
-    // Determine output path
-    const finalOutputPath =
-      outputPath || join(tmpdir(), `animated-${Date.now()}.mp4`);
+    const finalOutputPath = outputPath || join(tmpdir(), `animated-${Date.now()}.mp4`);
 
-    // Write the video
     console.log('   Saving video...');
     await writeFile(finalOutputPath, result.buffer);
 

@@ -1,0 +1,45 @@
+# Test files
+test-*.ts
+tests/
+
+# Test output
+test-output/
+
+# Logs and temp files
+logs/
+*.log
+
+# Ralph agent files
+.ralph-*
+ralph-report.html
+prd.json
+progress.txt
+
+# Source files (dist is included)
+src/
+
+# Config files not needed in package
+tsconfig.json
+vitest.config.ts
+.env*
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Dev docs
+docs/
+
+# Templates (empty)
+templates/
+
+# Generated assets (examples)
+generated-assets/
