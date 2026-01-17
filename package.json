@@ -1,6 +1,6 @@
 {
   "name": "opencode-nanobanana",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "OpenCode plugin for visual AI: FREE image generation (Nano Banana / Gemini Flash), video generation (Veo 3), storyboards powered by Google Gemini",
   "type": "module",
   "main": "dist/index.js",
