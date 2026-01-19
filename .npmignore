@@ -43,3 +43,9 @@ templates/
 
 # Generated assets (examples)
 generated-assets/
+
+# Screenshot artifacts
+github-*.png
+
+# Test scripts in root
+test-*.js
