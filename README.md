@@ -1,5 +1,9 @@
 # OpenCode Nanobanana
 
+<p align="center">
+  <img src="assets/logo.png" alt="OpenCode Nanobanana" width="200">
+</p>
+
 > Visual AI capabilities for OpenCode - FREE image generation, video generation, and more.
 
 [![version](https://img.shields.io/npm/v/opencode-nanobanana?label=version&color=blue)](https://www.npmjs.com/package/opencode-nanobanana)
