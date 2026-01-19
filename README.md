@@ -1,6 +1,9 @@
-# OpenCode Visual Toolkit
+# OpenCode Nanobanana
 
-An OpenCode plugin providing comprehensive visual capabilities powered by Google's Gemini API, including advanced video generation with Veo 3.1, storyboard creation, and video extension features.
+[![npm version](https://img.shields.io/npm/v/opencode-nanobanana.svg)](https://www.npmjs.com/package/opencode-nanobanana)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+An OpenCode plugin providing comprehensive visual AI capabilities powered by Google's Gemini API. **FREE image generation** with Nano Banana (Gemini 2.5 Flash), video generation with Veo 3, and more.
 
 ## Features
 
@@ -16,7 +19,17 @@ An OpenCode plugin providing comprehensive visual capabilities powered by Google
 ## Installation
 
 ```bash
-npm install opencode-visual-toolkit
+npm install opencode-nanobanana
+```
+
+Or add to your OpenCode config (`~/.opencode/package.json`):
+
+```json
+{
+  "dependencies": {
+    "opencode-nanobanana": "^0.3.0"
+  }
+}
 ```
 
 ### Requirements
@@ -51,7 +64,7 @@ import {
   imageToVideo,
   generateStoryboardVideo,
   extendVideo
-} from 'opencode-visual-toolkit';
+} from 'opencode-nanobanana';
 
 // Generate a video from a text prompt
 const video = await generateVideo({
@@ -521,7 +534,7 @@ import {
   getVideoDuration,
   trimVideo,
   addAudioTrack
-} from 'opencode-visual-toolkit';
+} from 'opencode-nanobanana';
 
 // Check if FFmpeg is installed
 const isInstalled = await checkFfmpegInstalled();
@@ -683,7 +696,7 @@ import type {
   ExtendVideoOptions,
   ExtendVideoResult,
   ConcatenateOptions
-} from 'opencode-visual-toolkit';
+} from 'opencode-nanobanana';
 ```
 
 ## Examples

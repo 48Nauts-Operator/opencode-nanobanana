@@ -86,7 +86,7 @@ export function generateWatchContentsJson(sizes: WatchOSIconSize[]): string {
   return JSON.stringify({
     images: images.filter(img => img.subtype !== undefined),
     info: {
-      author: 'opencode-visual-toolkit',
+      author: 'opencode-nanobanana',
       version: 1,
     },
   }, null, 2);

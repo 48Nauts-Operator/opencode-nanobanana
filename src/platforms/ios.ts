@@ -171,7 +171,7 @@ export function generateContentsJson(sizes: IconSize[]): object {
   return {
     images,
     info: {
-      author: 'opencode-visual-toolkit',
+      author: 'opencode-nanobanana',
       version: 1,
     },
   };

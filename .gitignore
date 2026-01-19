@@ -28,6 +28,24 @@ generated-assets/
 # Logs
 *.log
 npm-debug.log*
+logs/
+
+# OpenCode runtime (session data, not part of plugin)
+.opencode/
+
+# Ralph dev artifacts (not part of plugin)
+.ralph-*
+*.html
+prd.json
+progress.txt
+
+# Test files (keep in tests/ directory only)
+test-*.ts
+test-*.js
+test-output/
+
+# Outdated docs
+docs/PLUGIN-VERIFICATION.md
 
 # Temporary files
 *.tmp
