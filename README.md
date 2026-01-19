@@ -1,10 +1,11 @@
 # OpenCode Nanobanana
 
-[![npm version](https://img.shields.io/npm/v/opencode-nanobanana.svg)](https://www.npmjs.com/package/opencode-nanobanana)
-[![npm downloads](https://img.shields.io/npm/dm/opencode-nanobanana.svg)](https://www.npmjs.com/package/opencode-nanobanana)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+> Visual AI capabilities for OpenCode - FREE image generation, video generation, and more.
 
-**[View on npm](https://www.npmjs.com/package/opencode-nanobanana)**
+![version](https://img.shields.io/badge/version-0.3.0-blue)
+![npm](https://img.shields.io/npm/v/opencode-nanobanana?color=green)
+![license](https://img.shields.io/badge/license-MIT-yellow)
+![OpenCode](https://img.shields.io/badge/OpenCode-Compatible-purple)
 
 An OpenCode plugin providing comprehensive visual AI capabilities powered by Google's Gemini API. **FREE image generation** with Nano Banana (Gemini 2.5 Flash), video generation with Veo 3, and more.
 
