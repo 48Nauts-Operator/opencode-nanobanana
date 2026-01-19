@@ -44,8 +44,8 @@ test-*.ts
 test-*.js
 test-output/
 
-# Outdated docs
-docs/PLUGIN-VERIFICATION.md
+# Ralph docs (not part of plugin)
+docs/
 
 # Temporary files
 *.tmp
